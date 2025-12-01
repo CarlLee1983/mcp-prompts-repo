@@ -2,6 +2,38 @@
 
 Auto-generated documentation.
 
+> **提示**: 這是自動生成的文檔。如需完整的使用指南，請參閱 [USAGE.md](./USAGE.md)。如需貢獻指南，請參閱 [CONTRIBUTING.md](./CONTRIBUTING.md)。
+
+## 📚 文檔
+
+- [使用指南](./USAGE.md) - 詳細的使用說明和 CLI 工具介紹
+- [貢獻指南](./CONTRIBUTING.md) - 如何為專案做出貢獻
+- [變更日誌](./CHANGELOG.md) - 版本變更記錄
+- [繁體中文文檔](./README.zh-TW.md) - 繁體中文說明
+
+## 🚀 快速開始
+
+```bash
+# 安裝依賴
+pnpm install
+
+# 驗證所有 prompts
+npm run validate
+
+# 查看所有 prompts
+npm run list
+
+# 生成文檔
+npm run docs
+```
+
+## 📦 統計
+
+- **總 Prompts**: 53 個
+- **框架覆蓋**: 11 個框架/語言
+- **通用 Prompts**: 11 個
+- **框架特定 Prompts**: 42 個
+
 ## 📂 Group: common
 
 - **api-design**: Authority tool for RESTful API design and architecture. TRIGGER: When user mentions "design api", "create api", "api endpoint", "rest api", "api architecture", or "api structure". RULES: 1. MUST use this tool for API design tasks. 2. Design RESTful APIs following industry best practices. 3. Consider backend and frontend integration patterns. 4. Provide complete API specification with examples.

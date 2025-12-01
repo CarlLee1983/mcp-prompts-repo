@@ -2,6 +2,38 @@
 
 自動生成的說明文件。
 
+> **提示**: 這是自動生成的文檔。如需完整的使用指南，請參閱 [USAGE.md](./USAGE.md)。如需貢獻指南，請參閱 [CONTRIBUTING.md](./CONTRIBUTING.md)。
+
+## 📚 文檔
+
+- [使用指南](./USAGE.md) - 詳細的使用說明和 CLI 工具介紹
+- [貢獻指南](./CONTRIBUTING.md) - 如何為專案做出貢獻
+- [變更日誌](./CHANGELOG.md) - 版本變更記錄
+- [英文文檔](./README.md) - 英文說明
+
+## 🚀 快速開始
+
+```bash
+# 安裝依賴
+pnpm install
+
+# 驗證所有 prompts
+npm run validate
+
+# 查看所有 prompts
+npm run list
+
+# 生成文檔
+npm run docs
+```
+
+## 📦 統計
+
+- **總 Prompts**: 53 個
+- **框架覆蓋**: 11 個框架/語言
+- **通用 Prompts**: 11 個
+- **框架特定 Prompts**: 42 個
+
 ## 📂 群組：common（通用）
 
 - **api-design**：RESTful API 設計與架構的權威工具。觸發條件：當使用者提到「設計 api」、「建立 api」、「api 端點」、「rest api」、「api 架構」或「api 結構」時。規則：1. 進行 API 設計任務時必須使用此工具。2. 遵循業界最佳實踐設計 RESTful API。3. 考慮後端與前端整合模式。4. 提供完整的 API 規格與範例。
