@@ -1,0 +1,249 @@
+id: "vue-documentation"
+title: "Vue Documentation Generator"
+description: >
+  Authority tool for generating comprehensive Vue documentation including component docs, JSDoc comments, and README files.
+  TRIGGER: When user mentions "generate vue docs", "create vue documentation", "vue component docs", "jsdoc", "vue code comments", "vue readme", or "document vue code".
+  RULES:
+  1. MUST use this tool for Vue documentation generation tasks.
+  2. Generate documentation following JSDoc and Vue documentation standards.
+  3. Support JSDoc, Markdown, and component documentation formats.
+  4. Include Vue-specific examples and usage patterns.
+  5. Ensure documentation is clear, comprehensive, and maintainable.
+
+args:
+  code:
+    type: "string"
+    description: "Vue code to generate documentation for (optional)"
+  doc_type:
+    type: "string"
+    description: "Documentation type (required): api, code, readme, component"
+  vue_version:
+    type: "string"
+    description: "Vue version (optional, auto-detect if not provided): 3"
+  format:
+    type: "string"
+    description: "Documentation format (optional): markdown, jsdoc, component-docs"
+    default: "jsdoc"
+  include_examples:
+    type: "boolean"
+    description: "Include code examples and usage patterns"
+    default: true
+  include_diagrams:
+    type: "boolean"
+    description: "Include diagrams and visual representations"
+    default: false
+
+template: |
+  {{> role-vue-expert}}
+
+  # Context
+  You are generating {{doc_type}} documentation for Vue code.
+  {{#if vue_version}}
+  **Vue Version**: {{vue_version}}
+  {{/if}}
+  **Format**: {{format}}
+
+  # Objective
+  Generate comprehensive, production-ready Vue documentation that:
+  - Follows JSDoc and Vue documentation standards
+  - Is clear, concise, and easy to understand
+  - Includes Vue-specific examples and usage patterns
+  - Is maintainable and up-to-date
+  - Covers all relevant aspects of the {{doc_type}} documentation
+
+  # Style
+  Provide well-structured documentation in {{format}} format with clear sections, examples, and explanations.
+
+  # Tone
+  Professional, clear, and instructional. Focus on helping Vue developers understand and use the code/components effectively.
+
+  # Audience
+  Vue developers who will use, maintain, or integrate with the documented code/components.
+
+  # Response Format
+
+  {{#if (eq doc_type "component")}}
+  ## Vue Component Documentation
+
+  {{#if code}}
+  ### Component Code Analysis
+  ```vue
+  {{code}}
+  ```
+
+  ### Component Overview
+  [Analyze the Vue component code and provide overview]
+  {{else}}
+  ### Component Overview
+  [Provide general Vue component documentation structure]
+  {{/if}}
+
+  ### Component API
+
+  #### Props
+  ```typescript
+  interface Props {
+    // [List all props with types and descriptions]
+  }
+  ```
+
+  #### Emits
+  ```typescript
+  interface Emits {
+    // [List all emits with types and descriptions]
+  }
+  ```
+
+  #### Slots
+  - [List all slots with descriptions]
+
+  #### Exposed Methods
+  ```typescript
+  interface Exposed {
+    // [List all exposed methods]
+  }
+  ```
+
+  {{#if include_examples}}
+  ### Usage Examples
+
+  ```vue
+  <template>
+    <[ComponentName]
+      :prop="value"
+      @event="handler"
+    >
+      <template #slot>
+        Content
+      </template>
+    </[ComponentName]>
+  </template>
+  ```
+  {{/if}}
+
+  {{else if (eq doc_type "code")}}
+  ## Vue Code Documentation
+
+  {{#if code}}
+  ### Code to Document
+  ```vue
+  {{code}}
+  ```
+
+  ### Generated JSDoc Documentation
+
+  {{#if (eq format "jsdoc")}}
+  ```typescript
+  /**
+   * [Function/Composable description]
+   * 
+   * @param {Type} param - Parameter description
+   * @returns {Type} Return description
+   * @example
+   * const result = functionName(param);
+   */
+  export function functionName(param: Type): Type {
+    // Implementation
+  }
+  ```
+  {{else}}
+  ### Function/Composable Documentation
+
+  #### [Function/Composable Name]
+
+  **Description**: [Clear description of what the function/composable does]
+
+  **Parameters**:
+  - `paramName` (Type): [Parameter description]
+
+  **Returns**: [Return value description]
+
+  {{#if include_examples}}
+  **Example Usage**:
+  ```typescript
+  // Example code demonstrating usage
+  ```
+  {{/if}}
+  {{/if}}
+
+  {{else if (eq doc_type "readme")}}
+  ## Vue README Documentation
+
+  {{#if code}}
+  ### Project Code Analysis
+  ```vue
+  {{code}}
+  ```
+
+  [Analyze Vue project structure and generate appropriate README]
+  {{/if}}
+
+  ### README Structure
+
+  ```markdown
+  # Vue Project Name
+
+  [Brief project description]
+
+  ## Features
+
+  - [Feature 1]
+  - [Feature 2]
+  - [Feature 3]
+
+  ## Requirements
+
+  - Node.js {{#if vue_version}}{{vue_version}}{{else}}latest{{/if}}
+  - Vue {{#if vue_version}}{{vue_version}}{{else}}3{{/if}}
+  - [Other dependencies]
+
+  ## Installation
+
+  \`\`\`bash
+  npm install
+  # or
+  pnpm install
+  \`\`\`
+
+  ## Usage
+
+  {{#if include_examples}}
+  ### Basic Usage
+  \`\`\`vue
+  // Example Vue component
+  \`\`\`
+  {{/if}}
+
+  ## Component Documentation
+
+  [Link to component documentation or inline component reference]
+
+  ## Testing
+
+  \`\`\`bash
+  npm run test
+  # or
+  pnpm test
+  \`\`\`
+
+  ## Contributing
+
+  [Contributing guidelines]
+
+  ## License
+
+  [License information]
+  ```
+  {{/if}}
+
+  ### Vue Documentation Best Practices
+
+  1. **JSDoc Standards**: Follow JSDoc standard for TypeScript/JavaScript
+  2. **Clarity**: Use clear, concise language
+  3. **Completeness**: Cover all important aspects
+  4. **Examples**: Provide practical Vue examples
+  5. **Structure**: Organize content logically
+  6. **Maintenance**: Keep documentation up-to-date
+
+  {{output_lang_rule}}
+

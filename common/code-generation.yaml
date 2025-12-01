@@ -1,0 +1,455 @@
+id: "code-generation"
+title: "Code Generation"
+description: >
+  Authority tool for generating code skeletons and implementations from specifications.
+  TRIGGER: When user mentions "generate code", "create code", "code skeleton", "scaffold code", "implement from spec", "code from requirements", or "generate implementation".
+  RULES:
+  1. MUST use this tool for code generation tasks.
+  2. Generate code from specifications following language and framework best practices.
+  3. Create complete, production-ready code structures.
+  4. Include proper error handling, validation, and documentation.
+  5. Follow SOLID principles and design patterns when applicable.
+
+args:
+  specification:
+    type: "string"
+    description: "Code specification and requirements (required)"
+  language:
+    type: "string"
+    description: "Programming language (required): php, javascript, typescript, python, go, java, csharp, ruby, etc."
+  framework:
+    type: "string"
+    description: "Framework (optional, e.g., laravel, express, django, spring, react, vue)"
+  code_type:
+    type: "string"
+    description: "Code type (optional): class, function, module, api, component, service, or auto-detect"
+    default: "class"
+  include_tests:
+    type: "boolean"
+    description: "Include test code generation"
+    default: false
+  include_docs:
+    type: "boolean"
+    description: "Include code documentation and comments"
+    default: true
+  coding_style:
+    type: "string"
+    description: "Coding style (optional): follow language conventions, or specify style guide"
+    default: "auto"
+
+template: |
+  {{> role-expert}}
+
+  # Context
+  You are generating code from specifications.
+  **Programming Language**: {{language}}
+  {{#if framework}}
+  **Framework**: {{framework}}
+  {{/if}}
+  **Code Type**: {{code_type}}
+  **Coding Style**: {{coding_style}}
+
+  # Objective
+  Generate complete, production-ready code that:
+  - Implements the specified requirements
+  - Follows language and framework best practices
+  - Includes proper error handling and validation
+  - Is well-structured and maintainable
+  - Follows SOLID principles and design patterns
+  - Includes documentation when requested
+  - Includes tests when requested
+
+  # Style
+  Provide complete, executable code following {{language}} conventions and best practices.
+
+  # Tone
+  Technical, precise, and implementation-focused. Generate production-quality code.
+
+  # Audience
+  Developers implementing features from specifications.
+
+  # Response Format
+
+  ## Code Generation Report
+
+  ### Specification
+  {{specification}}
+
+  ### Analysis
+
+  #### Requirements Breakdown
+  - [Break down requirements into components]
+  - [Identify key functionality]
+  - [Identify dependencies]
+  - [Identify error handling needs]
+  - [Identify validation requirements]
+
+  #### Design Decisions
+  - [Explain architectural decisions]
+  - [Explain design pattern choices]
+  - [Explain data structure choices]
+  - [Explain error handling strategy]
+
+  ### Generated Code
+
+  {{#if (eq code_type "class")}}
+  #### Class Implementation
+
+  ```{{language}}
+  {{#if include_docs}}
+  /**
+   * [Class description]
+   * 
+   * [Additional documentation]
+   */
+  {{/if}}
+  {{#if (eq language "php")}}
+  class {{ClassName}} {
+      {{#if include_docs}}
+      /**
+       * [Property description]
+       * @var Type
+       */
+      {{/if}}
+      private $property;
+
+      {{#if include_docs}}
+      /**
+       * Constructor
+       * 
+       * @param Type $param Parameter description
+       */
+      {{/if}}
+      public function __construct($param) {
+          // Implementation
+      }
+
+      {{#if include_docs}}
+      /**
+       * [Method description]
+       * 
+       * @param Type $param Parameter description
+       * @return Type Return description
+       * @throws ExceptionType Exception description
+       */
+      {{/if}}
+      public function methodName($param) {
+          // Implementation
+      }
+  }
+  {{else if (eq language "javascript")}}
+  {{#if (eq framework "react")}}
+  import React from 'react';
+
+  {{#if include_docs}}
+  /**
+   * [Component description]
+   * 
+   * @param {Object} props Component props
+   */
+  {{/if}}
+  const {{ComponentName}} = ({ prop1, prop2 }) => {
+      // Component implementation
+      return (
+          <div>
+              {/* JSX content */}
+          </div>
+      );
+  };
+
+  export default {{ComponentName}};
+  {{else}}
+  {{#if include_docs}}
+  /**
+   * [Class description]
+   */
+  {{/if}}
+  class {{ClassName}} {
+      {{#if include_docs}}
+      /**
+       * [Property description]
+       * @type {Type}
+       */
+      {{/if}}
+      #property;
+
+      {{#if include_docs}}
+      /**
+       * Constructor
+       * @param {Type} param Parameter description
+       */
+      {{/if}}
+      constructor(param) {
+          // Implementation
+      }
+
+      {{#if include_docs}}
+      /**
+       * [Method description]
+       * @param {Type} param Parameter description
+       * @returns {Type} Return description
+       */
+      {{/if}}
+      methodName(param) {
+          // Implementation
+      }
+  }
+
+  export default {{ClassName}};
+  {{/if}}
+  {{else if (eq language "typescript")}}
+  {{#if include_docs}}
+  /**
+   * [Class description]
+   */
+  {{/if}}
+  class {{ClassName}} {
+      {{#if include_docs}}
+      /**
+       * [Property description]
+       */
+      {{/if}}
+      private property: Type;
+
+      {{#if include_docs}}
+      /**
+       * Constructor
+       * @param param Parameter description
+       */
+      {{/if}}
+      constructor(param: Type) {
+          // Implementation
+      }
+
+      {{#if include_docs}}
+      /**
+       * [Method description]
+       * @param param Parameter description
+       * @returns Return description
+       */
+      {{/if}}
+      public methodName(param: Type): ReturnType {
+          // Implementation
+      }
+  }
+
+  export default {{ClassName}};
+  {{else if (eq language "python")}}
+  {{#if include_docs}}
+  """
+  [Class description]
+  """
+  {{/if}}
+  class {{ClassName}}:
+      {{#if include_docs}}
+      """
+      [Property description]
+      """
+      {{/if}}
+      def __init__(self, param: Type):
+          """
+          Constructor
+          
+          Args:
+              param: Parameter description
+          """
+          self.property = param
+
+      {{#if include_docs}}
+      def method_name(self, param: Type) -> ReturnType:
+          """
+          [Method description]
+          
+          Args:
+              param: Parameter description
+          
+          Returns:
+              Return description
+          
+          Raises:
+              ExceptionType: Exception description
+          """
+          {{else}}
+      def method_name(self, param: Type) -> ReturnType:
+          {{/if}}
+          # Implementation
+          pass
+  {{else}}
+  // [Language-specific class implementation]
+  class {{ClassName}} {
+      // Implementation
+  }
+  {{/if}}
+  ```
+
+  {{else if (eq code_type "function")}}
+  #### Function Implementation
+
+  ```{{language}}
+  {{#if include_docs}}
+  /**
+   * [Function description]
+   * 
+   * @param {Type} param Parameter description
+   * @returns {Type} Return description
+   */
+  {{/if}}
+  function functionName(param) {
+      // Implementation
+  }
+  ```
+
+  {{else if (eq code_type "api")}}
+  #### API Implementation
+
+  ```{{language}}
+  {{#if (eq framework "laravel")}}
+  // Controller
+  class {{ControllerName}} extends Controller {
+      public function index() {
+          // Implementation
+      }
+  }
+
+  // Route
+  Route::get('/api/endpoint', [{{ControllerName}}::class, 'index']);
+  {{else if (eq framework "express")}}
+  const express = require('express');
+  const router = express.Router();
+
+  router.get('/api/endpoint', (req, res) => {
+      // Implementation
+  });
+
+  module.exports = router;
+  {{else}}
+  // API endpoint implementation
+  {{/if}}
+  ```
+
+  {{else if (eq code_type "component")}}
+  #### Component Implementation
+
+  ```{{language}}
+  {{#if (eq framework "react")}}
+  import React from 'react';
+
+  const {{ComponentName}} = ({ props }) => {
+      return (
+          <div>
+              {/* Component implementation */}
+          </div>
+      );
+  };
+
+  export default {{ComponentName}};
+  {{else if (eq framework "vue")}}
+  <template>
+      <div>
+          <!-- Component template -->
+      </div>
+  </template>
+
+  <script setup>
+  // Component logic
+  </script>
+  {{else}}
+  // Component implementation
+  {{/if}}
+  ```
+
+  {{else}}
+  #### Code Implementation
+
+  ```{{language}}
+  // Generated code based on specification
+  [Complete code implementation]
+  ```
+  {{/if}}
+
+  ### Code Structure
+
+  #### Key Components
+  - [List key components and their purposes]
+  - [Explain component interactions]
+  - [Explain data flow]
+
+  #### Error Handling
+  ```{{language}}
+  // Error handling implementation
+  [Error handling code]
+  ```
+
+  #### Validation
+  ```{{language}}
+  // Input validation implementation
+  [Validation code]
+  ```
+
+  {{#if include_tests}}
+  ### Generated Tests
+
+  ```{{language}}
+  {{#if (eq language "javascript")}}
+  import { describe, it, expect } from 'vitest';
+  import {{ClassName}} from './{{ClassName}}';
+
+  describe('{{ClassName}}', () => {
+      it('should [test description]', () => {
+          // Test implementation
+      });
+  });
+  {{else if (eq language "php")}}
+  <?php
+
+  use PHPUnit\Framework\TestCase;
+
+  class {{ClassName}}Test extends TestCase {
+      public function testMethodName() {
+          // Test implementation
+      }
+  }
+  {{else if (eq language "python")}}
+  import unittest
+
+  class {{ClassName}}Test(unittest.TestCase):
+      def test_method_name(self):
+          # Test implementation
+          pass
+  {{else}}
+  // Test implementation
+  {{/if}}
+  ```
+  {{/if}}
+
+  ### Implementation Notes
+
+  #### Design Patterns Applied
+  - [List design patterns used]
+  - [Explain pattern choices]
+
+  #### Best Practices Followed
+  - [List best practices applied]
+  - [Explain implementation decisions]
+
+  #### Dependencies
+  - [List required dependencies]
+  - [List optional dependencies]
+
+  ### Usage Example
+
+  ```{{language}}
+  // Example usage
+  [Usage example code]
+  ```
+
+  ### Next Steps
+
+  1. **Review**: Review generated code for correctness
+  2. **Test**: {{#if include_tests}}Tests are included. Run tests to verify functionality.{{else}}Add and run tests to verify functionality.{{/if}}
+  3. **Refine**: Refine implementation based on specific requirements
+  4. **Document**: {{#if include_docs}}Documentation is included.{{else}}Add additional documentation as needed.{{/if}}
+  5. **Integrate**: Integrate code into existing codebase
+
+  {{output_lang_rule}}
+

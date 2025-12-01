@@ -1,0 +1,339 @@
+id: "laravel-api-implementation"
+title: "Laravel API Implementation"
+description: >
+  Authority tool for Laravel RESTful API implementation.
+  TRIGGER: When user mentions "implement laravel api", "create laravel api", "laravel api endpoint", "laravel rest api", or "laravel api routes".
+  RULES:
+  1. MUST use this tool for Laravel API implementation tasks.
+  2. Implement RESTful APIs following Laravel best practices.
+  3. Provide complete Laravel implementation with controllers, requests, services, and routes.
+  4. Consider Laravel API resources and form requests.
+
+args:
+  resource:
+    type: "string"
+    description: "Resource name (e.g., users, products, orders)"
+  requirements:
+    type: "string"
+    description: "API requirements and use cases"
+  php_version:
+    type: "string"
+    description: "PHP version (optional, auto-detect if not provided): 8.1, 8.2, 8.3"
+  laravel_version:
+    type: "string"
+    description: "Laravel version (optional, auto-detect if not provided): 10, 11"
+  include_auth:
+    type: "boolean"
+    description: "Include authentication and authorization implementation"
+    default: true
+  include_validation:
+    type: "boolean"
+    description: "Include Form Request validation"
+    default: true
+  version:
+    type: "string"
+    description: "API version (e.g., v1, v2)"
+    default: "v1"
+
+template: |
+  {{> role-laravel-expert}}
+
+  # Context
+  You are implementing a RESTful API in Laravel.
+
+  {{#if php_version}}
+  **PHP Version**: {{php_version}}
+  {{else}}
+  **PHP Version**: Auto-detecting from code...
+  {{/if}}
+
+  {{#if laravel_version}}
+  **Laravel Version**: {{laravel_version}}
+  {{else}}
+  **Laravel Version**: Auto-detecting from code patterns...
+  {{/if}}
+
+  # Objective
+  Implement a complete, production-ready Laravel API including:
+  - API Controller with CRUD operations
+  - Form Request validation
+  - Service layer (optional but recommended)
+  - API Resource for response formatting
+  - Route definitions
+  - Authentication and authorization
+  - Error handling
+
+  # Style
+  Provide complete Laravel implementation code following Laravel conventions.
+
+  # Tone
+  Technical, comprehensive, and implementation-focused.
+
+  # Audience
+  Laravel developers implementing RESTful APIs.
+
+  # Response Format
+
+  ## Laravel API Implementation
+
+  ### Resource: {{resource}}
+  **API Version**: {{version}}
+
+  ### Requirements
+  {{requirements}}
+
+  {{#if include_auth}}
+  ### Authentication & Authorization
+  - **Authentication Method**: [Specify: Sanctum, Passport, or JWT]
+  - **Authorization**: [Define policies or gates]
+  - **Protected Endpoints**: [List which endpoints require auth]
+  {{/if}}
+
+  ### Laravel Implementation
+
+  #### 1. Controller
+
+  ```php
+  namespace App\Http\Controllers\Api\{{version}};
+
+  use App\Http\Controllers\Controller;
+  use App\Http\Requests\Api\{{version}}\{{resource}}Request;
+  use App\Http\Resources\Api\{{version}}\{{resource}}Resource;
+  use App\Services\{{resource}}Service;
+  use Illuminate\Http\JsonResponse;
+  use Illuminate\Http\Request;
+
+  class {{resource}}Controller extends Controller
+  {
+      public function __construct(
+          private {{resource}}Service $service
+      ) {}
+
+      /**
+       * Display a listing of the resource.
+       */
+      public function index(Request $request): JsonResponse
+      {
+          ${{resource}} = $this->service->getAll($request->all());
+          
+          return {{resource}}Resource::collection(${{resource}})
+              ->response()
+              ->setStatusCode(200);
+      }
+
+      /**
+       * Store a newly created resource in storage.
+       */
+      public function store({{resource}}Request $request): JsonResponse
+      {
+          ${{resource}} = $this->service->create($request->validated());
+          
+          return (new {{resource}}Resource(${{resource}}))
+              ->response()
+              ->setStatusCode(201);
+      }
+
+      /**
+       * Display the specified resource.
+       */
+      public function show(string $id): JsonResponse
+      {
+          ${{resource}} = $this->service->findOrFail($id);
+          
+          return (new {{resource}}Resource(${{resource}}))
+              ->response()
+              ->setStatusCode(200);
+      }
+
+      /**
+       * Update the specified resource in storage.
+       */
+      public function update({{resource}}Request $request, string $id): JsonResponse
+      {
+          ${{resource}} = $this->service->update($id, $request->validated());
+          
+          return (new {{resource}}Resource(${{resource}}))
+              ->response()
+              ->setStatusCode(200);
+      }
+
+      /**
+       * Remove the specified resource from storage.
+       */
+      public function destroy(string $id): JsonResponse
+      {
+          $this->service->delete($id);
+          
+          return response()->json(null, 204);
+      }
+  }
+  ```
+
+  {{#if include_validation}}
+  #### 2. Form Request Validation
+
+  ```php
+  namespace App\Http\Requests\Api\{{version}};
+
+  use Illuminate\Foundation\Http\FormRequest;
+
+  class {{resource}}Request extends FormRequest
+  {
+      /**
+       * Determine if the user is authorized to make this request.
+       */
+      public function authorize(): bool
+      {
+          return true; // Or implement authorization logic
+      }
+
+      /**
+       * Get the validation rules that apply to the request.
+       */
+      public function rules(): array
+      {
+          $method = $this->method();
+          
+          if ($method === 'POST') {
+              return $this->storeRules();
+          } elseif ($method === 'PUT' || $method === 'PATCH') {
+              return $this->updateRules();
+          }
+          
+          return [];
+      }
+
+      protected function storeRules(): array
+      {
+          return [
+              // Add validation rules for creating
+          ];
+      }
+
+      protected function updateRules(): array
+      {
+          return [
+              // Add validation rules for updating
+          ];
+      }
+  }
+  ```
+  {{/if}}
+
+  #### 3. API Resource
+
+  ```php
+  namespace App\Http\Resources\Api\{{version}};
+
+  use Illuminate\Http\Request;
+  use Illuminate\Http\Resources\Json\JsonResource;
+
+  class {{resource}}Resource extends JsonResource
+  {
+      /**
+       * Transform the resource into an array.
+       */
+      public function toArray(Request $request): array
+      {
+          return [
+              'id' => $this->id,
+              'type' => '{{resource}}',
+              'attributes' => [
+                  // Resource attributes
+              ],
+              'relationships' => [
+                  // Relationships if needed
+              ],
+          ];
+      }
+  }
+  ```
+
+  #### 4. Service Layer
+
+  ```php
+  namespace App\Services;
+
+  use App\Models\{{resource}};
+  use Illuminate\Database\Eloquent\Collection;
+  use Illuminate\Pagination\LengthAwarePaginator;
+
+  class {{resource}}Service
+  {
+      public function getAll(array $filters = []): LengthAwarePaginator
+      {
+          $query = {{resource}}::query();
+          
+          // Apply filters
+          // Apply sorting
+          // Apply pagination
+          
+          return $query->paginate(15);
+      }
+
+      public function findOrFail(string $id): {{resource}}
+      {
+          return {{resource}}::findOrFail($id);
+      }
+
+      public function create(array $data): {{resource}}
+      {
+          return {{resource}}::create($data);
+      }
+
+      public function update(string $id, array $data): {{resource}}
+      {
+          ${{resource}} = $this->findOrFail($id);
+          ${{resource}}->update($data);
+          
+          return ${{resource}}->fresh();
+      }
+
+      public function delete(string $id): bool
+      {
+          ${{resource}} = $this->findOrFail($id);
+          
+          return ${{resource}}->delete();
+      }
+  }
+  ```
+
+  #### 5. Routes
+
+  ```php
+  // routes/api.php
+
+  use App\Http\Controllers\Api\{{version}}\{{resource}}Controller;
+  use Illuminate\Support\Facades\Route;
+
+  Route::prefix('api/{{version}}')->group(function () {
+      {{#if include_auth}}
+      Route::middleware('auth:sanctum')->group(function () {
+          Route::apiResource('{{resource}}', {{resource}}Controller::class);
+      });
+      {{else}}
+      Route::apiResource('{{resource}}', {{resource}}Controller::class);
+      {{/if}}
+  });
+  ```
+
+  ### Laravel Best Practices
+
+  {{#if (eq laravel_version "11")}}
+  **Laravel 11 Features**:
+  - [Use Laravel 11 streamlined structure]
+  - [Leverage new exception handling]
+  - [Use improved routing features]
+  {{/if}}
+
+  1. **Controller**: Keep controllers thin, delegate to services
+  2. **Validation**: Use Form Requests for validation
+  3. **Resources**: Use API Resources for response formatting
+  4. **Services**: Extract business logic to service layer
+  5. **Routes**: Use `apiResource` for RESTful routes
+  6. **Authentication**: Use Sanctum for SPA/token authentication
+  7. **Error Handling**: Use Laravel's exception handling
+  8. **Response Format**: Consistent JSON response format
+
+  {{output_lang_rule}}
+

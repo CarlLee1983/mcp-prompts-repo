@@ -1,0 +1,153 @@
+id: "vue-refactor-code"
+title: "Vue Code Refactoring"
+description: >
+  Authority tool for Vue code refactoring.
+  TRIGGER: When user mentions "refactor vue", "improve vue code", "optimize vue code", "restructure vue code", or "vue code cleanup".
+  RULES:
+  1. MUST use this tool for Vue code refactoring tasks.
+  2. Maintain existing functionality while improving code structure.
+  3. Apply Vue best practices and Composition API patterns.
+  4. Auto-infer refactoring opportunities if intent is not specified.
+
+args:
+  code:
+    type: "string"
+    description: "Vue code to refactor (required)"
+  vue_version:
+    type: "string"
+    description: "Vue version (optional, auto-detect if not provided): 3"
+  intent:
+    type: "string"
+    description: "Specific refactoring intent (optional): extract-composables, single-responsibility, component-split, or auto-infer"
+  preserve_api:
+    type: "boolean"
+    description: "Preserve existing component API (props, emits, slots)"
+    default: true
+  use_composition:
+    type: "boolean"
+    description: "Refactor to Composition API if using Options API"
+    default: true
+
+template: |
+  {{> role-vue-expert}}
+
+  # Context
+  You are refactoring Vue code to improve code quality, maintainability, and adherence to best practices.
+  {{#if vue_version}}
+  **Vue Version**: {{vue_version}}
+  {{/if}}
+
+  # Objective
+  Refactor the provided Vue code while:
+  - Maintaining all existing functionality
+  - Improving code structure and readability
+  - Applying Vue {{#if vue_version}}{{vue_version}}{{else}}best practices{{/if}} best practices
+  - Ensuring backward compatibility when preserve_api is enabled
+  - Leveraging Vue Composition API patterns
+
+  # Style
+  Provide structured refactoring plan and refactored code with explanations.
+
+  # Tone
+  Technical, precise, and focused on Vue-specific improvements.
+
+  # Audience
+  Vue developers working on the codebase.
+
+  # Response Format
+
+  ## Vue Code Refactoring Analysis
+
+  ### Original Code
+  ```vue
+  {{code}}
+  ```
+
+  ### Refactoring Intent
+  {{#if intent}}
+  **User Intent**: {{intent}}
+  {{else}}
+  **Auto-Inferred Intent**: Analyzing Vue code structure to identify refactoring opportunities:
+  - Composable extraction needs
+  - Component splitting opportunities
+  - Single Responsibility Principle violations
+  - Composition API migration
+  - Code duplication
+  - Reactivity optimization
+  - Template simplification
+  {{/if}}
+
+  {{#if preserve_api}}
+  ### ⚠️ API Preservation Mode
+  All existing component APIs (props, emits, slots) must remain unchanged.
+  {{/if}}
+
+  ### Issues Identified
+
+  #### 1. Code Structure Issues
+  - [List structural problems]
+  - [Identify violations of Vue {{#if vue_version}}{{vue_version}}{{else}}best practices{{/if}}]
+  - [Identify code organization issues]
+
+  #### 2. Composition API Issues
+  - [Identify Options API patterns that should be migrated]
+  - [Identify composable extraction opportunities]
+  - [Identify reactivity issues]
+
+  #### 3. Vue Best Practices
+  - [Check Vue {{#if vue_version}}{{vue_version}}{{else}}conventions{{/if}}]
+  - [Identify framework misuse]
+  - [Suggest Vue-specific improvements]
+
+  ### Refactoring Plan
+
+  #### Phase 1: Composable Extraction
+  - [Identify reusable logic to extract]
+  - [Define composable interfaces]
+  - [Extract composables]
+
+  #### Phase 2: Component Splitting
+  - [Identify components to split]
+  - [Define component boundaries]
+  - [Extract child components]
+
+  #### Phase 3: Composition API Migration
+  {{#if use_composition}}
+  - [Migrate Options API to Composition API]
+  - [Use script setup if applicable]
+  - [Optimize reactivity]
+  {{/if}}
+
+  #### Phase 4: Template Optimization
+  - [Simplify template logic]
+  - [Extract complex expressions to computed]
+  - [Optimize directives usage]
+
+  ### Refactored Code
+
+  ```vue
+  [Provide complete refactored Vue code with all improvements applied]
+  ```
+
+  ### Key Improvements
+
+  1. **Structure**: [Explain structural improvements]
+  2. **Maintainability**: [Explain maintainability gains]
+  3. **Reusability**: [Explain reusability improvements]
+  4. **Performance**: [Explain performance optimizations if any]
+  5. **Vue Patterns**: [Explain Vue pattern applications]
+
+  ### Vue-Specific Improvements
+
+  - [Composition API usage]
+  - [Composable extraction]
+  - [Reactivity optimization]
+  - [Component organization]
+
+  ### Migration Notes
+  - [Any breaking changes or considerations]
+  - [Testing recommendations]
+  - [Component API compatibility notes]
+
+  {{output_lang_rule}}
+

@@ -1,0 +1,368 @@
+id: "laravel-documentation"
+title: "Laravel Documentation Generator"
+description: >
+  Authority tool for generating comprehensive Laravel documentation including API docs, PHPDoc comments, and README files.
+  TRIGGER: When user mentions "generate laravel docs", "create laravel documentation", "laravel api docs", "phpdoc", "laravel code comments", "laravel readme", or "document laravel code".
+  RULES:
+  1. MUST use this tool for Laravel documentation generation tasks.
+  2. Generate documentation following PHPDoc and Laravel documentation standards.
+  3. Support PHPDoc, Markdown, and OpenAPI formats.
+  4. Include Laravel-specific examples and usage patterns.
+  5. Ensure documentation is clear, comprehensive, and maintainable.
+
+args:
+  code:
+    type: "string"
+    description: "Laravel code to generate documentation for (optional)"
+  doc_type:
+    type: "string"
+    description: "Documentation type (required): api, code, readme"
+  php_version:
+    type: "string"
+    description: "PHP version (optional, auto-detect if not provided): 8.1, 8.2, 8.3"
+  laravel_version:
+    type: "string"
+    description: "Laravel version (optional, auto-detect if not provided): 10, 11"
+  format:
+    type: "string"
+    description: "Documentation format (optional): markdown, openapi, phpdoc"
+    default: "phpdoc"
+  include_examples:
+    type: "boolean"
+    description: "Include code examples and usage patterns"
+    default: true
+  include_diagrams:
+    type: "boolean"
+    description: "Include diagrams and visual representations"
+    default: false
+
+template: |
+  {{> role-laravel-expert}}
+
+  # Context
+  You are generating {{doc_type}} documentation for Laravel code.
+  {{#if php_version}}
+  **PHP Version**: {{php_version}}
+  {{/if}}
+  {{#if laravel_version}}
+  **Laravel Version**: {{laravel_version}}
+  {{/if}}
+  **Format**: {{format}}
+
+  # Objective
+  Generate comprehensive, production-ready Laravel documentation that:
+  - Follows PHPDoc and Laravel documentation standards
+  - Is clear, concise, and easy to understand
+  - Includes Laravel-specific examples and usage patterns
+  - Is maintainable and up-to-date
+  - Covers all relevant aspects of the {{doc_type}} documentation
+
+  # Style
+  Provide well-structured documentation in {{format}} format with clear sections, examples, and explanations.
+
+  # Tone
+  Professional, clear, and instructional. Focus on helping Laravel developers understand and use the code/API effectively.
+
+  # Audience
+  Laravel developers who will use, maintain, or integrate with the documented code/API.
+
+  # Response Format
+
+  {{#if (eq doc_type "api")}}
+  ## Laravel API Documentation
+
+  {{#if code}}
+  ### API Code Analysis
+  ```php
+  {{code}}
+  ```
+
+  ### API Overview
+  [Analyze the Laravel API code and provide overview]
+  {{else}}
+  ### API Overview
+  [Provide general Laravel API documentation structure]
+  {{/if}}
+
+  {{#if (eq format "openapi")}}
+  ### OpenAPI Specification
+
+  ```yaml
+  openapi: 3.0.0
+  info:
+    title: Laravel API Documentation
+    version: 1.0.0
+    description: |
+      [Laravel API description]
+  
+  servers:
+    - url: https://api.example.com/v1
+      description: Production server
+  
+  paths:
+    # [Define Laravel API endpoints]
+  
+  components:
+    schemas:
+      # [Define data models]
+    securitySchemes:
+      # [Define authentication schemes (Sanctum, Passport)]
+  ```
+  {{else}}
+  ### Laravel API Endpoints
+
+  #### Endpoint 1: [Endpoint Name]
+  - **Method**: [HTTP Method]
+  - **Route**: `/api/endpoint`
+  - **Controller**: `App\Http\Controllers\Api\[ControllerName]`
+  - **Description**: [Endpoint description]
+  
+  **Request Parameters**:
+  - [List request parameters]
+  
+  **Form Request Validation**:
+  ```php
+  // app/Http/Requests/[RequestName].php
+  [Validation rules]
+  ```
+  
+  **Response**:
+  ```json
+  {
+    // Response structure
+  }
+  ```
+  
+  **Status Codes**:
+  - `200 OK`: [Description]
+  - `400 Bad Request`: [Description]
+  - `401 Unauthorized`: [Description]
+  - `422 Unprocessable Entity`: [Description]
+  - `500 Internal Server Error`: [Description]
+
+  {{#if include_examples}}
+  **Example Request**:
+  ```bash
+  curl -X POST https://api.example.com/endpoint \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer {token}" \
+    -d '{"key": "value"}'
+  ```
+
+  **Example Response**:
+  ```json
+  {
+    "status": "success",
+    "data": {}
+  }
+  ```
+  {{/if}}
+  {{/if}}
+
+  ### Laravel Authentication
+  [Document Laravel authentication methods: Sanctum, Passport, etc.]
+
+  ### Laravel Error Handling
+  [Document Laravel error response formats and codes]
+
+  {{#if include_diagrams}}
+  ### API Flow Diagrams
+  [Include sequence diagrams or flow charts]
+  {{/if}}
+
+  {{else if (eq doc_type "code")}}
+  ## Laravel Code Documentation
+
+  {{#if code}}
+  ### Code to Document
+  ```php
+  {{code}}
+  ```
+
+  ### Generated PHPDoc Documentation
+
+  {{#if (eq format "phpdoc")}}
+  ```php
+  <?php
+
+  namespace App\[Namespace];
+
+  /**
+   * [Class description]
+   * 
+   * @package App\[Namespace]
+   * @author [Author]
+   * @since Laravel {{#if laravel_version}}{{laravel_version}}{{else}}latest{{/if}}
+   */
+  class [ClassName]
+  {
+      /**
+       * [Property description]
+       * 
+       * @var Type
+       */
+      private $property;
+
+      /**
+       * Constructor
+       * 
+       * @param Type $param Parameter description
+       */
+      public function __construct($param)
+      {
+          // Implementation
+      }
+
+      /**
+       * [Method description]
+       * 
+       * @param Type $param Parameter description
+       * @return Type Return description
+       * @throws ExceptionType Exception description
+       * 
+       * @example
+       * $instance = new [ClassName]($param);
+       * $result = $instance->methodName($value);
+       */
+      public function methodName($param)
+      {
+          // Implementation
+      }
+  }
+  ```
+  {{else}}
+  ### Function/Class Documentation
+
+  #### [Function/Class Name]
+
+  **Description**: [Clear description of what the function/class does]
+
+  **Parameters**:
+  - `paramName` (Type): [Parameter description]
+
+  **Returns**: [Return value description]
+
+  **Throws**: [Exception types and conditions]
+
+  {{#if include_examples}}
+  **Example Usage**:
+  ```php
+  // Example code demonstrating usage
+  ```
+  {{/if}}
+
+  **Notes**: [Additional notes or considerations]
+  {{/if}}
+
+  ### Laravel Documentation Standards Applied
+
+  - [ ] All public functions/classes are documented
+  - [ ] Parameters and return types are clearly specified
+  - [ ] Examples are provided for complex functions
+  - [ ] Edge cases and error conditions are documented
+  - [ ] Documentation follows PHPDoc and Laravel conventions
+
+  {{else if (eq doc_type "readme")}}
+  ## Laravel README Documentation
+
+  {{#if code}}
+  ### Project Code Analysis
+  ```php
+  {{code}}
+  ```
+
+  [Analyze Laravel project structure and generate appropriate README]
+  {{/if}}
+
+  ### README Structure
+
+  ```markdown
+  # Laravel Project Name
+
+  [Brief project description]
+
+  ## Features
+
+  - [Feature 1]
+  - [Feature 2]
+  - [Feature 3]
+
+  ## Requirements
+
+  - PHP {{#if php_version}}{{php_version}}{{else}}8.1+{{/if}}
+  - Laravel {{#if laravel_version}}{{laravel_version}}{{else}}latest{{/if}}
+  - Composer
+  - [Other dependencies]
+
+  ## Installation
+
+  ```bash
+  composer install
+  cp .env.example .env
+  php artisan key:generate
+  php artisan migrate
+  php artisan db:seed
+  ```
+
+  ## Usage
+
+  {{#if include_examples}}
+  ### Basic Usage
+  ```php
+  // Example Laravel code
+  ```
+
+  ### API Usage
+  ```bash
+  # Example API calls
+  ```
+  {{/if}}
+
+  ## Configuration
+
+  [Laravel configuration options and environment variables]
+
+  ## API Documentation
+
+  [Link to API documentation or inline API reference]
+
+  ## Testing
+
+  ```bash
+  php artisan test
+  # or
+  vendor/bin/phpunit
+  ```
+
+  ## Contributing
+
+  [Contributing guidelines]
+
+  ## License
+
+  [License information]
+
+  ## Support
+
+  [Support and contact information]
+  ```
+
+  {{#if include_diagrams}}
+  ### Laravel Project Architecture
+
+  [Include architecture diagrams or flow charts]
+  {{/if}}
+
+  {{/if}}
+
+  ### Laravel Documentation Best Practices
+
+  1. **PHPDoc Standards**: Follow PSR-5 PHPDoc standard
+  2. **Clarity**: Use clear, concise language
+  3. **Completeness**: Cover all important aspects
+  4. **Examples**: Provide practical Laravel examples
+  5. **Structure**: Organize content logically
+  6. **Maintenance**: Keep documentation up-to-date
+
+  {{output_lang_rule}}
+

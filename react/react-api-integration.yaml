@@ -1,0 +1,89 @@
+id: "react-api-integration"
+title: "React API Integration"
+description: >
+  Authority tool for React API integration patterns and implementation.
+  TRIGGER: When user mentions "react api", "react fetch", "react axios", "react api integration", "react http client", or "react data fetching".
+  RULES:
+  1. MUST use this tool for React API integration tasks.
+  2. Implement API integration using React patterns (hooks, context, etc.).
+  3. Provide hooks for API calls with proper error handling and loading states.
+  4. Follow React best practices for API integration.
+
+args:
+  api_endpoint:
+    type: "string"
+    description: "API endpoint or resource name (e.g., /api/users, users)"
+  react_version:
+    type: "string"
+    description: "React version (optional, auto-detect if not provided): 18, 19"
+  http_client:
+    type: "string"
+    description: "HTTP client library (optional, e.g., fetch, axios, ky)"
+  use_typescript:
+    type: "boolean"
+    description: "Include TypeScript types and interfaces"
+    default: true
+
+template: |
+  {{> role-react-expert}}
+
+  # Context
+  You are implementing API integration in React.
+  {{#if react_version}}
+  **React Version**: {{react_version}}
+  {{/if}}
+  {{#if http_client}}
+  **HTTP Client**: {{http_client}}
+  {{/if}}
+
+  # Objective
+  Implement React API integration that:
+  - Uses React hooks for data fetching
+  - Handles loading and error states
+  - Provides proper TypeScript types
+  - Follows React {{#if react_version}}{{react_version}}{{else}}best practices{{/if}} best practices
+
+  # Response Format
+
+  ## React API Integration
+
+  ### API Endpoint
+  {{api_endpoint}}
+
+  ### Implementation
+
+  ```{{#if use_typescript}}typescript{{else}}javascript{{/if}}
+  import { useState, useEffect } from 'react';
+
+  interface ApiResponse {
+    // Response type definition
+  }
+
+  export function use[ApiName]() {
+    const [data, setData] = useState{{#if use_typescript}}<ApiResponse | null>{{/if}}(null);
+    const [isLoading, setIsLoading] = useState{{#if use_typescript}}<boolean>{{/if}}(false);
+    const [error, setError] = useState{{#if use_typescript}}<Error | null>{{/if}}(null);
+
+    useEffect(() => {
+      const fetchData = async () => {
+        setIsLoading(true);
+        try {
+          const response = await fetch('{{api_endpoint}}');
+          const result = await response.json();
+          setData(result);
+        } catch (err) {
+          setError(err instanceof Error ? err : new Error('Unknown error'));
+        } finally {
+          setIsLoading(false);
+        }
+      };
+
+      fetchData();
+    }, []);
+
+    return { data, isLoading, error };
+  }
+  ```
+
+  {{output_lang_rule}}
+

@@ -1,0 +1,231 @@
+id: "laravel-performance"
+title: "Laravel Performance Analysis"
+description: >
+  Authority tool for analyzing Laravel code performance and identifying non-database performance bottlenecks.
+  TRIGGER: When user mentions "laravel performance", "optimize laravel performance", "slow laravel code", "laravel bottleneck", "laravel cpu usage", "laravel memory usage", or "laravel performance profiling".
+  RULES:
+  1. MUST use this tool for Laravel performance analysis tasks (excluding database-specific optimizations, use eloquent-optimization for that).
+  2. Analyze CPU, memory, network, I/O, and algorithm performance in Laravel context.
+  3. Identify Laravel-specific performance bottlenecks and optimization opportunities.
+  4. Provide actionable Laravel performance improvement recommendations.
+  5. Consider Laravel caching, queues, and optimization features.
+
+args:
+  code:
+    type: "string"
+    description: "Laravel code to analyze for performance (required)"
+  php_version:
+    type: "string"
+    description: "PHP version (optional, auto-detect if not provided): 8.1, 8.2, 8.3"
+  laravel_version:
+    type: "string"
+    description: "Laravel version (optional, auto-detect if not provided): 10, 11"
+  focus:
+    type: "string"
+    description: "Focus area (optional): cpu, memory, network, io, algorithm, concurrency, caching, or all"
+  include_profiling:
+    type: "boolean"
+    description: "Include performance profiling recommendations"
+    default: true
+  include_benchmarks:
+    type: "boolean"
+    description: "Include benchmark testing recommendations"
+    default: false
+
+template: |
+  {{> role-laravel-expert}}
+
+  # Context
+  You are analyzing Laravel code performance for optimization opportunities.
+  {{#if php_version}}
+  **PHP Version**: {{php_version}}
+  {{/if}}
+  {{#if laravel_version}}
+  **Laravel Version**: {{laravel_version}}
+  {{/if}}
+
+  # Objective
+  Analyze the provided Laravel code for performance issues and optimization opportunities in:
+  - CPU usage and computational efficiency
+  - Memory usage and memory management
+  - Network I/O and API calls
+  - File I/O and disk operations
+  - Algorithm complexity and efficiency
+  - Laravel-specific performance features (caching, queues, etc.)
+  - Framework overhead and optimization
+
+  # Style
+  Provide detailed Laravel performance analysis with before/after comparisons, optimization strategies, and measurable improvements.
+
+  # Tone
+  Technical, analytical, and focused on Laravel-specific performance gains.
+
+  # Audience
+  Laravel developers optimizing application performance.
+
+  # Response Format
+
+  ## Laravel Performance Analysis Report
+
+  ### Code to Analyze
+  ```php
+  {{code}}
+  ```
+
+  {{#if focus}}
+  ### Focus Area
+  **Requested focus**: {{focus}}
+  {{else}}
+  ### Comprehensive Analysis
+  Analyzing all performance aspects: CPU, memory, network, I/O, algorithms, and Laravel-specific optimizations.
+  {{/if}}
+
+  ### Performance Issues Identified
+
+  {{#if (or (eq focus "cpu") (eq focus "all"))}}
+  #### 1. CPU Performance Issues
+
+  **Inefficient Algorithms**:
+  - [Identify algorithms with high time complexity]
+  - [Suggest more efficient algorithms]
+  - [Estimate complexity improvements]
+
+  **Redundant Computations**:
+  - [Identify repeated calculations]
+  - [Suggest Laravel caching strategies]
+  - [Identify loop optimizations]
+
+  **Synchronous Blocking Operations**:
+  - [Identify blocking I/O operations]
+  - [Suggest Laravel queue usage]
+  - [Identify CPU-intensive operations that could be optimized]
+  {{/if}}
+
+  {{#if (or (eq focus "memory") (eq focus "all"))}}
+  #### 2. Memory Performance Issues
+
+  **Memory Leaks**:
+  - [Identify potential memory leaks in Laravel context]
+  - [Suggest proper cleanup and resource management]
+  - [Identify circular references]
+
+  **Excessive Memory Allocation**:
+  - [Identify unnecessary object creation]
+  - [Suggest object pooling or reuse]
+  - [Identify large data structures that could be optimized]
+
+  **Laravel Collection Memory Usage**:
+  - [Identify inefficient Collection usage]
+  - [Suggest Collection optimization]
+  {{/if}}
+
+  {{#if (or (eq focus "caching") (eq focus "all"))}}
+  #### 3. Laravel Caching Opportunities
+
+  **Missing Cache Usage**:
+  - [Identify cacheable computations]
+  - [Suggest Laravel Cache facade usage]
+  - [Estimate performance improvements]
+
+  **Inefficient Cache Strategy**:
+  - [Identify cache key design issues]
+  - [Suggest cache invalidation strategies]
+  - [Suggest cache driver selection (Redis, Memcached, etc.)]
+
+  **Example Optimization**:
+  ```php
+  // Before: No caching
+  $data = ExpensiveOperation::calculate();
+
+  // After: With Laravel Cache
+  $data = Cache::remember('key', 3600, function () {
+      return ExpensiveOperation::calculate();
+  });
+  ```
+  {{/if}}
+
+  {{#if (or (eq focus "concurrency") (eq focus "all"))}}
+  #### 4. Laravel Queue Opportunities
+
+  **Synchronous Heavy Operations**:
+  - [Identify operations suitable for queues]
+  - [Suggest Laravel Queue usage]
+  - [Estimate performance gains]
+
+  **Queue Job Design**:
+  - [Review queue job structure]
+  - [Suggest optimal queue configuration]
+  - [Suggest job batching if applicable]
+  {{/if}}
+
+  ### Laravel-Specific Optimizations
+
+  #### Strategy 1: Laravel Caching
+  - [Identify cacheable data]
+  - [Suggest Cache facade usage]
+  - [Suggest cache tags if applicable]
+  - [Estimate performance improvements]
+
+  #### Strategy 2: Laravel Queues
+  - [Identify queueable operations]
+  - [Suggest queue job creation]
+  - [Estimate performance improvements]
+
+  #### Strategy 3: Laravel Collections
+  - [Review Collection usage]
+  - [Suggest Collection method optimization]
+  - [Estimate performance improvements]
+
+  #### Strategy 4: Service Container Optimization
+  - [Review service binding patterns]
+  - [Suggest singleton bindings where appropriate]
+  - [Estimate performance improvements]
+
+  ### Optimized Code
+
+  ```php
+  [Provide complete optimized Laravel code with all improvements applied]
+  ```
+
+  ### Performance Metrics
+
+  **Before Optimization**:
+  - Execution Time: [Time]
+  - Memory Usage: [Memory]
+  - CPU Usage: [CPU %]
+  - Request Count: [Count]
+
+  **After Optimization**:
+  - Execution Time: [Time] (Improved by X%)
+  - Memory Usage: [Memory] (Reduced by X%)
+  - CPU Usage: [CPU %] (Reduced by X%)
+  - Request Count: [Count] (Optimized)
+
+  {{#if include_profiling}}
+  ### Laravel Performance Profiling Recommendations
+
+  #### Profiling Tools
+  - **Laravel Debugbar**: [Usage for development profiling]
+  - **Laravel Telescope**: [Usage for application monitoring]
+  - **Blackfire**: [Usage for production profiling]
+  - **Xdebug**: [Usage for detailed profiling]
+
+  #### Profiling Strategy
+  1. **Baseline Measurement**: [Establish performance baseline]
+  2. **Identify Hotspots**: [Use profiling to find bottlenecks]
+  3. **Optimize Hotspots**: [Focus optimization efforts]
+  4. **Measure Improvements**: [Verify performance gains]
+  {{/if}}
+
+  ### Laravel Best Practices Checklist
+
+  - [ ] Appropriate use of Laravel caching
+  - [ ] Heavy operations moved to queues
+  - [ ] Collections used efficiently
+  - [ ] Service Container optimized
+  - [ ] Code is profiled to identify bottlenecks
+  - [ ] Performance improvements are measured and verified
+  - [ ] Laravel {{#if laravel_version}}{{laravel_version}}{{else}}latest{{/if}} performance features are utilized
+
+  {{output_lang_rule}}
+

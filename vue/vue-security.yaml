@@ -1,0 +1,199 @@
+id: "vue-security"
+title: "Vue Security Audit"
+description: >
+  Authority tool for comprehensive Vue security vulnerability assessment and security audit.
+  TRIGGER: When user mentions "vue security audit", "vue security review", "vue vulnerability", "vue security check", "vue security scan", "vue xss", or "vue security assessment".
+  RULES:
+  1. MUST use this tool for Vue security audit and vulnerability assessment tasks.
+  2. Focus on identifying Vue-specific security vulnerabilities and risks.
+  3. Check against OWASP Top 10, Vue security best practices, and XSS prevention.
+  4. Provide actionable Vue security recommendations.
+  5. Prioritize vulnerabilities by severity and impact.
+
+args:
+  code:
+    type: "string"
+    description: "Vue code to audit for security vulnerabilities (required)"
+  vue_version:
+    type: "string"
+    description: "Vue version (optional, auto-detect if not provided): 3"
+  focus:
+    type: "string"
+    description: "Security focus area (optional): xss, csrf, injection, auth, input_validation, or all"
+  compliance:
+    type: "string"
+    description: "Compliance standards (optional): owasp, cwe"
+  severity_level:
+    type: "string"
+    description: "Severity level filter (optional): critical, high, medium, low, or all"
+    default: "all"
+
+template: |
+  {{> role-vue-expert}}
+
+  # Context
+  You are performing a comprehensive security audit on Vue code.
+  {{#if vue_version}}
+  **Vue Version**: {{vue_version}}
+  {{/if}}
+  {{#if compliance}}
+  **Compliance Standards**: {{compliance}}
+  {{/if}}
+
+  # Objective
+  Conduct a thorough Vue security audit to identify:
+  - Cross-Site Scripting (XSS) vulnerabilities
+  - Cross-Site Request Forgery (CSRF) vulnerabilities
+  - Injection vulnerabilities
+  - Authentication and authorization weaknesses
+  - Input validation and sanitization problems
+  - Vue-specific security misconfigurations
+  - Insecure dependencies
+  - Other Vue security vulnerabilities
+
+  # Style
+  Provide structured Vue security audit report with vulnerability classifications, severity ratings, and remediation recommendations.
+
+  # Tone
+  Technical, security-focused, and urgent. Prioritize critical vulnerabilities that pose immediate risks.
+
+  # Audience
+  Security engineers, Vue developers, and security-conscious development teams.
+
+  # Response Format
+
+  ## Vue Security Audit Report
+
+  ### Code to Audit
+  ```vue
+  {{code}}
+  ```
+
+  {{#if focus}}
+  ### Security Focus Area
+  **Requested focus**: {{focus}}
+  {{else}}
+  ### Comprehensive Security Audit
+  Analyzing all security aspects: XSS, CSRF, injection, authentication, and input validation.
+  {{/if}}
+
+  ### Vulnerabilities Identified
+
+  {{#if (or (eq focus "xss") (eq focus "all"))}}
+  #### 1. Cross-Site Scripting (XSS) Vulnerabilities
+
+  **v-html Usage**:
+  - [Identify unsafe v-html usage]
+  - [List affected components]
+  - **Severity**: [Critical/High]
+  - **Impact**: [Session hijacking, data theft]
+  - **Remediation**: [Sanitize HTML or avoid v-html]
+
+  **Example Vulnerable Code**:
+  ```vue
+  <!-- VULNERABLE: XSS -->
+  <div v-html="userInput"></div>
+  ```
+
+  **Example Secure Code**:
+  ```vue
+  <!-- SECURE: Escaped -->
+  <div>{{ userInput }}</div>
+  
+  <!-- SECURE: Sanitized if v-html is necessary -->
+  <div v-html="sanitizeHtml(userInput)"></div>
+  ```
+  {{/if}}
+
+  {{#if (or (eq focus "csrf") (eq focus "all"))}}
+  #### 2. CSRF Protection Issues
+
+  **Missing CSRF Tokens**:
+  - [Identify API calls without CSRF protection]
+  - [List affected endpoints]
+  - **Severity**: [High/Medium]
+  - **Impact**: [Unauthorized actions]
+  - **Remediation**: [Include CSRF tokens in API requests]
+
+  **Example Secure Implementation**:
+  ```typescript
+  // Include CSRF token in requests
+  axios.defaults.headers.common['X-CSRF-TOKEN'] = getCsrfToken();
+  ```
+  {{/if}}
+
+  {{#if (or (eq focus "input_validation") (eq focus "all"))}}
+  #### 3. Input Validation Issues
+
+  **Missing Input Validation**:
+  - [Identify unvalidated user input]
+  - [List affected components]
+  - **Severity**: [High/Medium]
+  - **Impact**: [Injection attacks, data corruption]
+  - **Remediation**: [Implement client-side and server-side validation]
+
+  **Example Secure Implementation**:
+  ```typescript
+  import { z } from 'zod';
+
+  const schema = z.object({
+    email: z.string().email(),
+    password: z.string().min(8),
+  });
+
+  const validated = schema.parse(userInput);
+  ```
+  {{/if}}
+
+  ### Vue Security Features Check
+
+  #### XSS Protection
+  - [ ] v-html is avoided or properly sanitized
+  - [ ] User input is escaped by default ({{ }})
+  - [ ] HTML sanitization library is used when needed
+
+  #### Input Validation
+  - [ ] Client-side validation is implemented
+  - [ ] Server-side validation is enforced
+  - [ ] Validation libraries are used (e.g., Zod, Yup)
+
+  #### Authentication
+  - [ ] Secure token storage (httpOnly cookies preferred)
+  - [ ] Token refresh mechanism is implemented
+  - [ ] Authentication state is properly managed
+
+  #### API Security
+  - [ ] CSRF tokens are included in requests
+  - [ ] API endpoints use HTTPS
+  - [ ] Sensitive data is not exposed in URLs
+
+  ### OWASP Top 10 Compliance
+
+  - [ ] **A03: Injection** - [Assessment]
+  - [ ] **A07: XSS** - [Assessment]
+  - [ ] **A01: Broken Access Control** - [Assessment]
+  - [ ] **A05: Security Misconfiguration** - [Assessment]
+
+  ### Remediation Priority
+
+  #### Immediate Action Required (Critical)
+  1. [Critical vulnerability 1] - [Remediation steps]
+  2. [Critical vulnerability 2] - [Remediation steps]
+
+  #### High Priority (Address Soon)
+  1. [High severity vulnerability 1] - [Remediation steps]
+  2. [High severity vulnerability 2] - [Remediation steps]
+
+  ### Vue Security Best Practices
+
+  - [ ] All user input is validated and sanitized
+  - [ ] v-html is avoided or properly sanitized
+  - [ ] CSRF protection is implemented
+  - [ ] Secure authentication mechanisms are in place
+  - [ ] Sensitive data is not exposed in client-side code
+  - [ ] Dependencies are kept up-to-date
+  - [ ] Security headers are properly configured
+  - [ ] Error messages don't expose sensitive information
+
+  {{output_lang_rule}}
+

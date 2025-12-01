@@ -1,0 +1,219 @@
+id: "laravel-model-design"
+title: "Laravel Model Design"
+description: >
+  Authority tool for designing Laravel Eloquent models, relationships, and model structures.
+  TRIGGER: When user mentions "laravel model", "eloquent model", "laravel model design", "model relationships", "model structure", "laravel model optimization", or "eloquent relationships".
+  RULES:
+  1. MUST use this tool for Laravel model design tasks.
+  2. Design Eloquent models following Laravel best practices.
+  3. Define relationships, accessors, mutators, and scopes.
+  4. Consider mass assignment protection and model events.
+  5. Provide complete model implementation with relationships.
+
+args:
+  requirements:
+    type: "string"
+    description: "Model requirements and specifications (required)"
+  php_version:
+    type: "string"
+    description: "PHP version (optional, auto-detect if not provided): 8.1, 8.2, 8.3"
+  laravel_version:
+    type: "string"
+    description: "Laravel version (optional, auto-detect if not provided): 10, 11"
+  include_relationships:
+    type: "boolean"
+    description: "Include relationship definitions"
+    default: true
+  include_accessors:
+    type: "boolean"
+    description: "Include accessors and mutators"
+    default: false
+  include_scopes:
+    type: "boolean"
+    description: "Include query scopes"
+    default: false
+  include_events:
+    type: "boolean"
+    description: "Include model events and observers"
+    default: false
+
+template: |
+  {{> role-laravel-expert}}
+
+  # Context
+  You are designing Laravel Eloquent models.
+  {{#if php_version}}
+  **PHP Version**: {{php_version}}
+  {{/if}}
+  {{#if laravel_version}}
+  **Laravel Version**: {{laravel_version}}
+  {{/if}}
+
+  # Objective
+  Design comprehensive Laravel Eloquent models that:
+  - Follow Laravel {{#if laravel_version}}{{laravel_version}}{{else}}best practices{{/if}} best practices
+  - Define proper relationships
+  - Include accessors, mutators, and scopes when needed
+  - Implement mass assignment protection
+  - Use model events appropriately
+  - Are well-structured and maintainable
+
+  # Style
+  Provide complete Laravel model implementation with relationships, accessors, mutators, and scopes.
+
+  # Tone
+  Technical, precise, and focused on Laravel model best practices.
+
+  # Audience
+  Laravel developers designing Eloquent models.
+
+  # Response Format
+
+  ## Laravel Model Design
+
+  ### Requirements
+  {{requirements}}
+
+  ### Model Implementation
+
+  ```php
+  <?php
+
+  namespace App\Models;
+
+  use Illuminate\Database\Eloquent\Model;
+  use Illuminate\Database\Eloquent\Relations\BelongsTo;
+  use Illuminate\Database\Eloquent\Relations\HasMany;
+  use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+  use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+  /**
+   * [Model description]
+   * 
+   * @package App\Models
+   */
+  class [ModelName] extends Model
+  {
+      use HasFactory;
+
+      /**
+       * The attributes that are mass assignable.
+       *
+       * @var array<int, string>
+       */
+      protected $fillable = [
+          // Fillable attributes
+      ];
+
+      /**
+       * The attributes that should be hidden for serialization.
+       *
+       * @var array<int, string>
+       */
+      protected $hidden = [
+          'password', 'remember_token',
+      ];
+
+      /**
+       * The attributes that should be cast.
+       *
+       * @var array<string, string>
+       */
+      protected $casts = [
+          'email_verified_at' => 'datetime',
+          'created_at' => 'datetime',
+          'updated_at' => 'datetime',
+      ];
+
+      {{#if include_relationships}}
+      /**
+       * [Relationship description]
+       * 
+       * @return BelongsTo
+       */
+      public function [relationshipName](): BelongsTo
+      {
+          return $this->belongsTo([RelatedModel]::class);
+      }
+
+      /**
+       * [Relationship description]
+       * 
+       * @return HasMany
+       */
+      public function [relationshipName](): HasMany
+      {
+          return $this->hasMany([RelatedModel]::class);
+      }
+
+      /**
+       * [Relationship description]
+       * 
+       * @return BelongsToMany
+       */
+      public function [relationshipName](): BelongsToMany
+       {
+          return $this->belongsToMany([RelatedModel]::class);
+      }
+      {{/if}}
+
+      {{#if include_accessors}}
+      /**
+       * Get the [attribute] attribute.
+       * 
+       * @param mixed $value
+       * @return mixed
+       */
+      public function get[Attribute]Attribute($value)
+      {
+          return $value; // Transform value
+      }
+
+      /**
+       * Set the [attribute] attribute.
+       * 
+       * @param mixed $value
+       * @return void
+       */
+      public function set[Attribute]Attribute($value)
+      {
+          $this->attributes['[attribute]'] = $value; // Transform value
+      }
+      {{/if}}
+
+      {{#if include_scopes}}
+      /**
+       * Scope a query to only include [condition].
+       * 
+       * @param \Illuminate\Database\Eloquent\Builder $query
+       * @return \Illuminate\Database\Eloquent\Builder
+       */
+      public function scope[ScopeName]($query)
+      {
+          return $query->where('[field]', '[value]');
+      }
+      {{/if}}
+  }
+  ```
+
+  ### Model Relationships
+
+  {{#if include_relationships}}
+  #### Relationship Definitions
+  - [List all relationships]
+  - [Explain relationship types]
+  - [Explain relationship usage]
+  {{/if}}
+
+  ### Model Best Practices
+
+  - [ ] Mass assignment protection is configured
+  - [ ] Relationships are properly defined
+  - [ ] Accessors and mutators are used appropriately
+  - [ ] Query scopes are defined for reusable queries
+  - [ ] Model events are handled appropriately
+  - [ ] Factories are available for testing
+  - [ ] Model follows Laravel {{#if laravel_version}}{{laravel_version}}{{else}}conventions{{/if}}
+
+  {{output_lang_rule}}
+

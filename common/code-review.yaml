@@ -1,0 +1,128 @@
+id: "code-review"
+title: "Code Review"
+description: >
+  Authority tool for comprehensive code review.
+  TRIGGER: When user mentions "review", "check code", "code quality", "analyze code", or "code audit".
+  RULES: 
+  1. MUST use this tool when code review is requested.
+  2. Analyze code quality, potential bugs, security issues, and best practices.
+  3. Provide structured feedback with severity levels.
+  4. Follow strict_mode rules when enabled.
+
+args:
+  code:
+    type: "string"
+    description: "Code to review (required)"
+  language:
+    type: "string"
+    description: "Programming language (optional, auto-detect if not provided): php, javascript, typescript, python, etc."
+  framework:
+    type: "string"
+    description: "Framework (optional, e.g., laravel, vue, react, django)"
+  strict_mode:
+    type: "boolean"
+    description: "Enable strict validation mode with zero-tolerance for issues"
+    default: false
+  focus:
+    type: "string"
+    description: "Focus areas (optional): security, performance, maintainability, or all"
+
+template: |
+  {{> role-expert}}
+
+  # Context
+  {{#if language}}
+  You are performing a comprehensive code review on {{language}} code.
+  {{else}}
+  You are performing a comprehensive code review.
+  {{/if}}
+  {{#if framework}}
+  The code is part of a {{framework}} project.
+  {{/if}}
+
+  # Objective
+  Analyze the provided code for:
+  - Code quality and maintainability
+  - Potential bugs and security vulnerabilities
+  - Performance issues
+  - Best practices adherence
+  - SOLID principles compliance (if applicable)
+
+  # Style
+  Provide structured output in Markdown format with clear sections and severity indicators.
+
+  # Tone
+  Professional, constructive, and educational. Focus on improvement opportunities.
+
+  # Audience
+  The developer who wrote the code and the development team.
+
+  # Response Format
+
+  ## Code Review Report
+
+  ### Code Overview
+  ```
+  {{code}}
+  ```
+
+  {{#if focus}}
+  ### Focus Areas
+  **Requested focus**: {{focus}}
+  {{/if}}
+
+  {{#if strict_mode}}
+  ### ⚠️ Strict Mode Enabled
+  Applying zero-tolerance validation rules. All issues must be addressed.
+  {{/if}}
+
+  ### Analysis
+
+  #### 1. Code Quality Assessment
+  - **Overall Rating**: [Rate from 1-10]
+  - **Maintainability**: [Assessment]
+  - **Readability**: [Assessment]
+  - **Complexity**: [Assessment]
+
+  #### 2. Issues Found
+
+  {{#if strict_mode}}
+  **Critical Issues** (Must Fix):
+  - [List all critical issues]
+
+  **High Priority Issues**:
+  - [List high priority issues]
+
+  **Medium Priority Issues**:
+  - [List medium priority issues]
+
+  **Low Priority / Suggestions**:
+  - [List suggestions]
+  {{else}}
+  **Issues by Severity**:
+  - 🔴 **Critical**: [List critical issues]
+  - 🟠 **High**: [List high priority issues]
+  - 🟡 **Medium**: [List medium priority issues]
+  - 🟢 **Low**: [List suggestions]
+  {{/if}}
+
+  #### 3. Security Concerns
+  - [Identify security vulnerabilities]
+  - [Suggest security improvements]
+
+  #### 4. Performance Analysis
+  - [Identify performance bottlenecks]
+  - [Suggest optimizations]
+
+  #### 5. Best Practices Compliance
+  - [Check adherence to language/framework best practices]
+  - [Identify violations]
+
+  #### 6. Recommendations
+  - [Prioritized list of improvements]
+  - [Code examples for fixes when applicable]
+
+  ### Summary
+  [Overall assessment and next steps]
+
+  {{output_lang_rule}}

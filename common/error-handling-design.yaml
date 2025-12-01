@@ -1,0 +1,331 @@
+id: "error-handling-design"
+title: "Error Handling Design"
+description: >
+  Authority tool for designing comprehensive error handling patterns and exception structures.
+  TRIGGER: When user mentions "error handling", "exception design", "error management", "error recovery", "error logging", or "error patterns".
+  RULES:
+  1. MUST use this tool for error handling design tasks.
+  2. Design error handling patterns following language and framework best practices.
+  3. Create exception hierarchies and error response structures.
+  4. Include logging and monitoring strategies.
+  5. Provide error recovery mechanisms.
+
+args:
+  code:
+    type: "string"
+    description: "Existing code to analyze for error handling (optional)"
+  language:
+    type: "string"
+    description: "Programming language (optional, auto-detect if not provided): php, javascript, typescript, python, go, java, csharp, ruby, etc."
+  framework:
+    type: "string"
+    description: "Framework (optional, e.g., laravel, express, django, spring, react, vue)"
+  error_types:
+    type: "string"
+    description: "Error types to focus on (optional): validation, business, system, network, authentication, authorization, or all"
+  include_logging:
+    type: "boolean"
+    description: "Include logging strategy design"
+    default: true
+  include_monitoring:
+    type: "boolean"
+    description: "Include monitoring and alerting design"
+    default: true
+  error_response_format:
+    type: "string"
+    description: "Error response format (optional): json, xml, or custom"
+    default: "json"
+
+template: |
+  {{> role-expert}}
+
+  # Context
+  {{#if language}}
+  You are designing error handling patterns for {{language}} code.
+  {{else}}
+  You are designing error handling patterns.
+  {{/if}}
+  {{#if framework}}
+  The code is part of a {{framework}} project.
+  {{/if}}
+
+  # Objective
+  Design a comprehensive error handling system that:
+  - Defines exception/error hierarchies
+  - Standardizes error response formats
+  - Implements proper error logging
+  - Provides error recovery mechanisms
+  - Ensures user-friendly error messages
+  - Follows language and framework best practices
+
+  # Style
+  Provide structured error handling design with code examples, exception hierarchies, and implementation guidelines.
+
+  # Tone
+  Technical, systematic, and focused on robustness and maintainability.
+
+  # Audience
+  Developers implementing error handling in their applications.
+
+  # Response Format
+
+  ## Error Handling Design
+
+  {{#if code}}
+  ### Existing Code Analysis
+  ```{{#if language}}{{language}}{{else}}code{{/if}}
+  {{code}}
+  ```
+
+  ### Current Error Handling Assessment
+  - [Analyze existing error handling patterns]
+  - [Identify gaps and issues]
+  - [Suggest improvements]
+  {{/if}}
+
+  ### Error Types and Categories
+
+  {{#if error_types}}
+  **Focus Areas**: {{error_types}}
+  {{else}}
+  **Comprehensive Error Handling**: Covering all error types
+  {{/if}}
+
+  #### 1. Validation Errors
+  - **Purpose**: Input validation failures
+  - **Examples**: Invalid email format, missing required fields, type mismatches
+  - **HTTP Status**: 400 Bad Request / 422 Unprocessable Entity
+  - **Recovery**: User can correct input and retry
+
+  #### 2. Business Logic Errors
+  - **Purpose**: Business rule violations
+  - **Examples**: Insufficient funds, duplicate entry, invalid state transition
+  - **HTTP Status**: 400 Bad Request / 409 Conflict
+  - **Recovery**: User action required or business process adjustment
+
+  #### 3. System Errors
+  - **Purpose**: Internal system failures
+  - **Examples**: Database connection failures, file system errors, service unavailability
+  - **HTTP Status**: 500 Internal Server Error / 503 Service Unavailable
+  - **Recovery**: Automatic retry, fallback mechanisms, or admin intervention
+
+  #### 4. Network Errors
+  - **Purpose**: Communication failures
+  - **Examples**: Timeout, connection refused, DNS resolution failure
+  - **HTTP Status**: 502 Bad Gateway / 504 Gateway Timeout
+  - **Recovery**: Retry with exponential backoff, circuit breaker pattern
+
+  #### 5. Authentication/Authorization Errors
+  - **Purpose**: Access control failures
+  - **Examples**: Invalid credentials, expired token, insufficient permissions
+  - **HTTP Status**: 401 Unauthorized / 403 Forbidden
+  - **Recovery**: Re-authentication or permission request
+
+  ### Exception Hierarchy Design
+
+  ```{{#if language}}{{language}}{{else}}code{{/if}}
+  // Base Exception Class
+  [Define base exception class with common properties]
+
+  // Specific Exception Classes
+  [Define exception classes for each error category]
+
+  // Example structure:
+  // - BaseException
+  //   - ValidationException
+  //   - BusinessException
+  //   - SystemException
+  //     - DatabaseException
+  //     - FileSystemException
+  //   - NetworkException
+  //   - AuthenticationException
+  //   - AuthorizationException
+  ```
+
+  ### Error Response Format
+
+  **Format**: {{error_response_format}}
+
+  #### Standard Error Response Structure
+
+  ```json
+  {
+    "error": {
+      "code": "ERROR_CODE",
+      "message": "Human-readable error message",
+      "type": "error_type",
+      "details": {
+        // Additional error details
+      },
+      "timestamp": "ISO 8601 timestamp",
+      "path": "/api/endpoint",
+      "request_id": "unique_request_id"
+    }
+  }
+  ```
+
+  #### HTTP Status Code Mapping
+
+  - **400 Bad Request**: Validation errors, malformed requests
+  - **401 Unauthorized**: Authentication required
+  - **403 Forbidden**: Authorization failed
+  - **404 Not Found**: Resource not found
+  - **409 Conflict**: Resource conflict (e.g., duplicate)
+  - **422 Unprocessable Entity**: Validation failed (semantic)
+  - **429 Too Many Requests**: Rate limit exceeded
+  - **500 Internal Server Error**: System errors
+  - **502 Bad Gateway**: Upstream server error
+  - **503 Service Unavailable**: Service temporarily unavailable
+  - **504 Gateway Timeout**: Upstream timeout
+
+  ### Error Handling Patterns
+
+  #### Pattern 1: Try-Catch with Specific Exceptions
+
+  ```{{#if language}}{{language}}{{else}}code{{/if}}
+  try {
+    // Code that may throw exceptions
+  } catch (ValidationException e) {
+    // Handle validation errors
+  } catch (BusinessException e) {
+    // Handle business logic errors
+  } catch (SystemException e) {
+    // Handle system errors
+  } catch (Exception e) {
+    // Handle unexpected errors
+  }
+  ```
+
+  #### Pattern 2: Error Boundaries (Frontend)
+
+  ```{{#if language}}{{language}}{{else}}code{{/if}}
+  // React/Vue error boundary pattern
+  [Implement error boundary component]
+  ```
+
+  #### Pattern 3: Global Error Handler
+
+  ```{{#if language}}{{language}}{{else}}code{{/if}}
+  // Global exception handler
+  [Implement global error handler middleware/handler]
+  ```
+
+  #### Pattern 4: Error Recovery Mechanisms
+
+  ```{{#if language}}{{language}}{{else}}code{{/if}}
+  // Retry with exponential backoff
+  [Implement retry logic]
+
+  // Circuit breaker pattern
+  [Implement circuit breaker]
+
+  // Fallback mechanisms
+  [Implement fallback strategies]
+  ```
+
+  {{#if include_logging}}
+  ### Logging Strategy
+
+  #### Log Levels
+  - **ERROR**: System errors, exceptions that require attention
+  - **WARN**: Recoverable errors, deprecated usage
+  - **INFO**: Important business events, successful operations
+  - **DEBUG**: Detailed diagnostic information
+
+  #### Logging Structure
+
+  ```{{#if language}}{{language}}{{else}}code{{/if}}
+  // Structured logging example
+  logger.error({
+    error_code: "ERROR_CODE",
+    message: "Error message",
+    stack_trace: "...",
+    context: {
+      user_id: "...",
+      request_id: "...",
+      // Additional context
+    }
+  });
+  ```
+
+  #### Logging Best Practices
+  - Log all exceptions with full context
+  - Include request IDs for traceability
+  - Avoid logging sensitive information (passwords, tokens)
+  - Use structured logging for better searchability
+  - Implement log rotation and retention policies
+  {{/if}}
+
+  {{#if include_monitoring}}
+  ### Monitoring and Alerting
+
+  #### Key Metrics to Monitor
+  - Error rate by type
+  - Error rate by endpoint
+  - Response time for error cases
+  - Recovery success rate
+  - System health indicators
+
+  #### Alerting Rules
+  - Critical errors: Immediate alert
+  - High error rate: Alert if threshold exceeded
+  - System errors: Alert for service degradation
+  - Authentication failures: Alert for potential security issues
+
+  #### Monitoring Implementation
+
+  ```{{#if language}}{{language}}{{else}}code{{/if}}
+  // Error tracking integration
+  [Integrate error tracking service (e.g., Sentry, Rollbar)]
+  ```
+  {{/if}}
+
+  ### Implementation Guidelines
+
+  #### 1. Error Propagation
+  - Let exceptions bubble up to appropriate handlers
+  - Don't swallow exceptions without logging
+  - Transform exceptions at appropriate boundaries
+
+  #### 2. User-Friendly Messages
+  - Provide clear, actionable error messages
+  - Avoid exposing internal system details
+  - Include error codes for support reference
+
+  #### 3. Error Context
+  - Include sufficient context for debugging
+  - Add request IDs for traceability
+  - Log relevant user actions and system state
+
+  #### 4. Error Recovery
+  - Implement retry logic for transient errors
+  - Use circuit breakers for external services
+  - Provide fallback mechanisms where possible
+
+  ### Best Practices Checklist
+
+  - [ ] Exception hierarchy is well-defined
+  - [ ] Error responses are standardized
+  - [ ] All errors are logged appropriately
+  - [ ] User-facing messages are clear and helpful
+  - [ ] Internal errors don't expose sensitive information
+  - [ ] Error recovery mechanisms are implemented
+  - [ ] Monitoring and alerting are configured
+  - [ ] Error handling follows language/framework conventions
+  - [ ] Error codes are documented
+  - [ ] Error handling is tested
+
+  ### Framework-Specific Considerations
+
+  {{#if framework}}
+  **Framework**: {{framework}}
+  - [Provide framework-specific error handling patterns]
+  - [Reference framework best practices]
+  - [Include framework-specific code examples]
+  {{else}}
+  - Follow language-specific error handling conventions
+  - Use framework-agnostic patterns where applicable
+  {{/if}}
+
+  {{output_lang_rule}}
+

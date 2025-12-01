@@ -1,0 +1,335 @@
+id: "eloquent-optimization"
+title: "Eloquent Optimization"
+description: >
+  Authority tool for Laravel Eloquent ORM optimization and query performance analysis.
+  TRIGGER: When user mentions "optimize eloquent", "eloquent performance", "eloquent query", "n+1 eloquent", or "eager loading eloquent".
+  RULES:
+  1. MUST use this tool for Eloquent ORM optimization tasks.
+  2. Analyze Eloquent queries and relationships.
+  3. Identify N+1 problems, missing indexes, and inefficient Eloquent queries.
+  4. Provide Eloquent-specific optimization strategies.
+
+args:
+  code:
+    type: "string"
+    description: "Laravel code containing Eloquent queries (required)"
+  php_version:
+    type: "string"
+    description: "PHP version (optional, auto-detect if not provided): 8.1, 8.2, 8.3"
+  laravel_version:
+    type: "string"
+    description: "Laravel version (optional, auto-detect if not provided): 10, 11"
+  focus:
+    type: "string"
+    description: "Focus area (optional): queries, indexes, relationships, scopes, or all"
+  include_explain:
+    type: "boolean"
+    description: "Include EXPLAIN query analysis"
+    default: true
+  suggest_indexes:
+    type: "boolean"
+    description: "Suggest database indexes"
+    default: true
+
+template: |
+  {{> role-laravel-expert}}
+
+  # Context
+  You are analyzing Laravel Eloquent ORM queries and structure for optimization opportunities.
+
+  {{#if php_version}}
+  **PHP Version**: {{php_version}}
+  {{else}}
+  **PHP Version**: Auto-detecting from code...
+  {{/if}}
+
+  {{#if laravel_version}}
+  **Laravel Version**: {{laravel_version}}
+  {{else}}
+  **Laravel Version**: Auto-detecting from code patterns...
+  {{/if}}
+
+  # Objective
+  Optimize Eloquent ORM performance by:
+  - Identifying N+1 query problems
+  - Analyzing Eloquent query efficiency
+  - Suggesting proper eager loading strategies
+  - Recommending database indexes for Eloquent queries
+  - Optimizing Eloquent relationships
+  - Improving Eloquent query structure
+
+  # Style
+  Provide detailed analysis with before/after Eloquent code examples and performance metrics.
+
+  # Tone
+  Technical, performance-focused, and solution-oriented.
+
+  # Audience
+  Laravel developers working on Eloquent ORM performance optimization.
+
+  # Response Format
+
+  ## Eloquent Optimization Analysis
+
+  ### Code to Analyze
+  ```php
+  {{code}}
+  ```
+
+  {{#if focus}}
+  ### Focus Area
+  **Requested focus**: {{focus}}
+  {{else}}
+  ### Comprehensive Analysis
+  Analyzing all aspects: Eloquent queries, indexes, relationships, and scopes.
+  {{/if}}
+
+  ### Issues Identified
+
+  #### 1. Eloquent Query Performance Issues
+
+  **N+1 Query Problems**:
+  - [Identify N+1 problems in Eloquent relationships]
+  - [List affected relationships]
+  - [Calculate query count impact]
+  - [Show Eloquent-specific examples]
+
+  **Inefficient Eloquent Queries**:
+  - [List inefficient Eloquent queries]
+  - [Explain why they're inefficient]
+  - [Estimate performance impact]
+  - [Identify queries that can be optimized with Eloquent methods]
+
+  **Missing Eager Loading**:
+  - [Identify relationships that need eager loading]
+  - [List affected code sections]
+  - [Suggest Eloquent eager loading strategies]
+
+  {{#if include_explain}}
+  #### 2. Query Execution Analysis
+  ```
+  [If possible, provide EXPLAIN output for key Eloquent queries]
+  ```
+  
+  Analyze Eloquent query execution:
+  - Generated SQL queries
+  - Query execution plan
+  - Index usage
+  - Full table scans
+  {{/if}}
+
+  {{#if suggest_indexes}}
+  #### 3. Index Analysis for Eloquent
+
+  **Missing Indexes**:
+  - [List columns that need indexes for Eloquent queries]
+  - [Explain why indexes are needed]
+  - [Provide Laravel migration code]
+
+  **Unused Indexes**:
+  - [Identify potentially unused indexes]
+  - [Recommend removal if applicable]
+
+  **Composite Indexes for Eloquent**:
+  - [Suggest composite indexes for common Eloquent query patterns]
+  - [Consider Eloquent where() clause patterns]
+  {{/if}}
+
+  #### 4. Eloquent Relationship Optimization
+
+  **Eager Loading Opportunities**:
+  - [Identify relationships to eager load with `with()`]
+  - [Suggest nested eager loading with `with(['relation.subRelation'])`]
+  - [Suggest lazy eager loading with `load()`]
+
+  **Relationship Definitions**:
+  - [Review Eloquent relationship definitions]
+  - [Suggest relationship optimizations]
+  - [Check relationship query constraints]
+
+  ### Eloquent Optimization Strategies
+
+  #### Strategy 1: Eager Loading
+
+  **Before** (N+1 Problem):
+  ```php
+  // N+1 problem example
+  $users = User::all();
+  foreach ($users as $user) {
+      echo $user->posts->count(); // N+1 queries
+  }
+  ```
+
+  **After** (Optimized with Eager Loading):
+  ```php
+  // Optimized with eager loading
+  $users = User::with('posts')->get();
+  foreach ($users as $user) {
+      echo $user->posts->count(); // Single query
+  }
+  ```
+
+  **Performance Impact**: [Explain improvement]
+
+  #### Strategy 2: Eloquent Query Optimization
+
+  **Before** (Inefficient):
+  ```php
+  // Inefficient Eloquent query
+  $products = Product::where('status', 'active')
+      ->get()
+      ->filter(function($product) {
+          return $product->orders->sum('amount') > 1000;
+      });
+  ```
+
+  **After** (Optimized):
+  ```php
+  // Optimized Eloquent query
+  $products = Product::where('status', 'active')
+      ->whereHas('orders', function($query) {
+          $query->selectRaw('SUM(amount) as total')
+                ->havingRaw('SUM(amount) > 1000');
+      })
+      ->get();
+  ```
+
+  **Performance Impact**: [Explain improvement]
+
+  #### Strategy 3: Eloquent Scopes
+
+  **Optimized Scopes**:
+  ```php
+  // In Model
+  public function scopeActive($query)
+  {
+      return $query->where('status', 'active');
+  }
+
+  public function scopeWithOrders($query)
+  {
+      return $query->with('orders');
+  }
+
+  // Usage
+  $products = Product::active()->withOrders()->get();
+  ```
+
+  #### Strategy 4: Eloquent Chunking
+
+  ```php
+  // Process large datasets in chunks
+  Product::chunk(1000, function ($products) {
+      foreach ($products as $product) {
+          // Process product
+      }
+  });
+
+  // Or use chunkById for better performance
+  Product::chunkById(1000, function ($products) {
+      foreach ($products as $product) {
+          // Process product
+      }
+  });
+  ```
+
+  #### Strategy 5: Eloquent Lazy Collections
+
+  ```php
+  // Use lazy() for memory-efficient processing
+  Product::where('status', 'active')
+      ->lazy()
+      ->each(function ($product) {
+          // Process product
+      });
+  ```
+
+  #### Strategy 6: Database Indexes for Eloquent
+
+  {{#if suggest_indexes}}
+  **Laravel Migration for Indexes**:
+  ```php
+  Schema::table('table_name', function (Blueprint $table) {
+      // Single column index
+      $table->index('column_name');
+      
+      // Composite index
+      $table->index(['column1', 'column2']);
+      
+      // Unique index
+      $table->unique('email');
+      
+      // Foreign key index (usually automatic)
+      $table->foreign('user_id')->references('id')->on('users');
+  });
+  ```
+
+  **Recommended Indexes for Eloquent Queries**:
+  - [List recommended indexes with rationale]
+  - [Consider Eloquent where() clause patterns]
+  {{else}}
+  Index suggestions are disabled. Enable suggest_indexes for detailed index recommendations.
+  {{/if}}
+
+  ### Optimized Eloquent Code
+
+  ```php
+  [Provide complete optimized Eloquent code with all improvements applied]
+  ```
+
+  ### Performance Metrics
+
+  **Before Optimization**:
+  - Query Count: [Number]
+  - Execution Time: [Time]
+  - Memory Usage: [Memory]
+
+  **After Optimization**:
+  - Query Count: [Number] (Reduced by X%)
+  - Execution Time: [Time] (Improved by X%)
+  - Memory Usage: [Memory] (Reduced by X%)
+
+  ### Eloquent Best Practices Checklist
+
+  - [ ] All relationships use eager loading when needed (`with()`, `load()`)
+  - [ ] No N+1 query problems
+  - [ ] Appropriate indexes on foreign keys and frequently queried columns
+  - [ ] Eloquent queries use indexes effectively
+  - [ ] Large datasets processed in chunks (`chunk()`, `chunkById()`)
+  - [ ] Eloquent scopes used for reusable query logic
+  - [ ] Database transactions used for data integrity (`DB::transaction()`)
+  - [ ] Soft deletes used appropriately (`SoftDeletes` trait)
+  - [ ] Timestamps optimized (`created_at`, `updated_at`)
+  - [ ] Eloquent accessors/mutators optimized
+  - [ ] Eloquent events used appropriately
+  - [ ] Query builder used for complex queries when needed
+
+  ### Laravel-Specific Recommendations
+
+  {{#if (eq laravel_version "11")}}
+  **Laravel 11 Features**:
+  - [Leverage new Eloquent features in Laravel 11]
+  - [Use improved query builder methods]
+  {{/if}}
+
+  1. **Caching Strategy**: [Suggest Eloquent caching opportunities]
+     - Query result caching
+     - Model caching
+     - Relationship caching
+
+  2. **Database Configuration**: [Suggest Laravel config optimizations]
+     - Connection pool settings
+     - Query timeout settings
+
+  3. **Monitoring**: [Suggest Laravel query monitoring]
+     - Laravel Debugbar
+     - Laravel Telescope
+     - Query logging
+
+  4. **Testing**: [Suggest Eloquent testing approaches]
+     - Database factories
+     - Eloquent model testing
+     - Query performance testing
+
+  {{output_lang_rule}}
+

@@ -1,0 +1,320 @@
+id: "vue-error-handling"
+title: "Vue Error Handling Design"
+description: >
+  Authority tool for designing comprehensive Vue error handling patterns and error structures.
+  TRIGGER: When user mentions "vue error handling", "vue error management", "vue error recovery", "vue error logging", "vue error boundaries", or "vue error patterns".
+  RULES:
+  1. MUST use this tool for Vue error handling design tasks.
+  2. Design error handling patterns following Vue best practices.
+  3. Create error boundary patterns and error response structures.
+  4. Include Vue error logging and monitoring strategies.
+  5. Provide Vue-specific error recovery mechanisms.
+
+args:
+  code:
+    type: "string"
+    description: "Existing Vue code to analyze for error handling (optional)"
+  vue_version:
+    type: "string"
+    description: "Vue version (optional, auto-detect if not provided): 3"
+  error_types:
+    type: "string"
+    description: "Error types to focus on (optional): validation, api, component, network, or all"
+  include_logging:
+    type: "boolean"
+    description: "Include Vue error logging strategy design"
+    default: true
+  include_monitoring:
+    type: "boolean"
+    description: "Include monitoring and alerting design"
+    default: true
+  error_response_format:
+    type: "string"
+    description: "Error response format (optional): json, component, or custom"
+    default: "component"
+
+template: |
+  {{> role-vue-expert}}
+
+  # Context
+  You are designing error handling patterns for Vue code.
+  {{#if vue_version}}
+  **Vue Version**: {{vue_version}}
+  {{/if}}
+
+  # Objective
+  Design a comprehensive Vue error handling system that:
+  - Defines Vue error handling patterns
+  - Standardizes error response formats
+  - Implements proper Vue error logging
+  - Provides error recovery mechanisms
+  - Ensures user-friendly error messages
+  - Follows Vue {{#if vue_version}}{{vue_version}}{{else}}best practices{{/if}} best practices
+
+  # Style
+  Provide structured Vue error handling design with code examples, error boundaries, and implementation guidelines.
+
+  # Tone
+  Technical, systematic, and focused on Vue-specific robustness and maintainability.
+
+  # Audience
+  Vue developers implementing error handling in their applications.
+
+  # Response Format
+
+  ## Vue Error Handling Design
+
+  {{#if code}}
+  ### Existing Code Analysis
+  ```vue
+  {{code}}
+  ```
+
+  ### Current Error Handling Assessment
+  - [Analyze existing Vue error handling patterns]
+  - [Identify gaps and issues]
+  - [Suggest Vue-specific improvements]
+  {{/if}}
+
+  ### Vue Error Types and Categories
+
+  {{#if error_types}}
+  **Focus Areas**: {{error_types}}
+  {{else}}
+  **Comprehensive Error Handling**: Covering all error types
+  {{/if}}
+
+  #### 1. Component Errors
+  - **Purpose**: Component rendering and lifecycle errors
+  - **Examples**: Component crashes, render errors, lifecycle hook errors
+  - **Recovery**: Error boundaries, fallback components
+
+  #### 2. API Errors
+  - **Purpose**: API request failures
+  - **Examples**: Network errors, 4xx/5xx responses, timeout errors
+  - **Recovery**: Retry mechanisms, error messages, fallback data
+
+  #### 3. Validation Errors
+  - **Purpose**: Form and input validation failures
+  - **Examples**: Invalid input, missing required fields, format errors
+  - **Recovery**: User can correct input and retry
+
+  #### 4. Network Errors
+  - **Purpose**: Network connectivity issues
+  - **Examples**: Connection failures, timeouts, CORS errors
+  - **Recovery**: Retry mechanisms, offline mode, user notification
+
+  ### Vue Error Handling Patterns
+
+  #### Pattern 1: Error Boundary Component
+
+  ```vue
+  <template>
+    <div v-if="hasError" class="error-boundary">
+      <h2>Something went wrong</h2>
+      <p>{{ errorMessage }}</p>
+      <button @click="resetError">Try Again</button>
+    </div>
+    <slot v-else />
+  </template>
+
+  <script setup lang="ts">
+  import { ref, onErrorCaptured } from 'vue';
+
+  const hasError = ref(false);
+  const errorMessage = ref('');
+
+  onErrorCaptured((err, instance, info) => {
+    hasError.value = true;
+    errorMessage.value = err.message;
+    {{#if include_logging}}
+    console.error('Error captured:', err, info);
+    {{/if}}
+    return false; // Prevent error from propagating
+  });
+
+  const resetError = () => {
+    hasError.value = false;
+    errorMessage.value = '';
+  };
+  </script>
+  ```
+
+  #### Pattern 2: Global Error Handler
+
+  ```typescript
+  // main.ts
+  import { createApp } from 'vue';
+  import App from './App.vue';
+
+  const app = createApp(App);
+
+  app.config.errorHandler = (err, instance, info) => {
+    {{#if include_logging}}
+    console.error('Global error:', err, info);
+    // Send to error tracking service
+    {{/if}}
+  };
+
+  app.mount('#app');
+  ```
+
+  #### Pattern 3: API Error Handling Composable
+
+  ```typescript
+  // composables/useApiError.ts
+  import { ref } from 'vue';
+
+  export function useApiError() {
+    const error = ref<string | null>(null);
+    const isLoading = ref(false);
+
+    const handleError = (err: unknown) => {
+      if (err instanceof Error) {
+        error.value = err.message;
+      } else {
+        error.value = 'An unexpected error occurred';
+      }
+      {{#if include_logging}}
+      console.error('API error:', err);
+      {{/if}}
+    };
+
+    const clearError = () => {
+      error.value = null;
+    };
+
+    return {
+      error,
+      isLoading,
+      handleError,
+      clearError,
+    };
+  }
+  ```
+
+  ### Error Response Format
+
+  **Format**: {{error_response_format}}
+
+  {{#if (eq error_response_format "component")}}
+  #### Component-Based Error Display
+
+  ```vue
+  <template>
+    <div v-if="error" class="error-message">
+      <Icon name="error" />
+      <p>{{ error.message }}</p>
+      <button @click="retry">Retry</button>
+    </div>
+  </template>
+  ```
+  {{else if (eq error_response_format "json")}}
+  #### JSON Error Response
+
+  ```json
+  {
+    "error": {
+      "code": "ERROR_CODE",
+      "message": "Human-readable error message",
+      "details": {}
+    }
+  }
+  ```
+  {{/if}}
+
+  {{#if include_logging}}
+  ### Vue Error Logging Strategy
+
+  #### Error Logging Implementation
+
+  ```typescript
+  // utils/errorLogger.ts
+  export function logError(error: Error, context?: Record<string, any>) {
+    const errorInfo = {
+      message: error.message,
+      stack: error.stack,
+      timestamp: new Date().toISOString(),
+      context,
+    };
+
+    // Log to console in development
+    if (import.meta.env.DEV) {
+      console.error('Error logged:', errorInfo);
+    }
+
+    // Send to error tracking service (e.g., Sentry, LogRocket)
+    // errorTrackingService.captureException(error, { extra: context });
+  }
+  ```
+
+  #### Vue Error Logging Best Practices
+  - Use error boundaries to catch component errors
+  - Log errors with context information
+  - Avoid logging sensitive user data
+  - Use structured logging for better searchability
+  {{/if}}
+
+  {{#if include_monitoring}}
+  ### Monitoring and Alerting
+
+  #### Vue Error Monitoring Integration
+  - [Integrate with monitoring services (e.g., Sentry, LogRocket)]
+  - [Configure error tracking]
+  - [Set up alerting rules]
+
+  #### Key Metrics to Monitor
+  - Error rate by component
+  - Error rate by API endpoint
+  - User impact of errors
+  - Error recovery success rate
+  {{/if}}
+
+  ### Vue-Specific Error Handling
+
+  #### Component Error Boundaries
+  - Use onErrorCaptured for component error handling
+  - Implement fallback UI components
+  - Provide error recovery mechanisms
+
+  #### API Error Handling
+  - Handle API errors in composables
+  - Provide user-friendly error messages
+  - Implement retry mechanisms
+
+  #### Form Validation Errors
+  - Use Vue form validation libraries
+  - Display validation errors clearly
+  - Provide real-time feedback
+
+  ### Implementation Guidelines
+
+  #### 1. Error Propagation
+  - Use error boundaries to catch component errors
+  - Propagate errors to global handler when needed
+  - Use composables for reusable error handling
+
+  #### 2. User-Friendly Messages
+  - Provide clear, actionable error messages
+  - Avoid exposing technical details to users
+  - Include error codes for support reference
+
+  #### 3. Error Context
+  - Include component context in error logs
+  - Log user actions leading to errors
+  - Use Vue's error context information
+
+  ### Best Practices Checklist
+
+  - [ ] Error boundaries are implemented
+  - [ ] Global error handler is configured
+  - [ ] Error responses are standardized
+  - [ ] All errors are logged appropriately
+  - [ ] User-facing messages are clear and helpful
+  - [ ] Technical errors don't expose sensitive information
+  - [ ] Error recovery mechanisms are implemented
+  - [ ] Monitoring and alerting are configured
+  - [ ] Error handling follows Vue {{#if vue_version}}{{vue_version}}{{else}}conventions{{/if}}
+
+  {{output_lang_rule}}
+

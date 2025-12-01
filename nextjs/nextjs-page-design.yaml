@@ -1,0 +1,76 @@
+id: "nextjs-page-design"
+title: "Next.js Page Design"
+description: >
+  Authority tool for designing Next.js pages and routing structures.
+  TRIGGER: When user mentions "nextjs page", "next page design", "nextjs routing", "next page structure", or "nextjs page implementation".
+  RULES:
+  1. MUST use this tool for Next.js page design tasks.
+  2. Design pages following Next.js best practices.
+  3. Consider App Router and Pages Router patterns.
+  4. Provide complete page implementation.
+
+args:
+  requirements:
+    type: "string"
+    description: "Page requirements and specifications (required)"
+  nextjs_version:
+    type: "string"
+    description: "Next.js version (optional, auto-detect if not provided): 13, 14, 15"
+  router_type:
+    type: "string"
+    description: "Router type (optional): app, pages, or auto-detect"
+    default: "app"
+  use_typescript:
+    type: "boolean"
+    description: "Use TypeScript"
+    default: true
+
+template: |
+  {{> role-nextjs-expert}}
+
+  # Context
+  You are designing Next.js pages.
+  {{#if nextjs_version}}
+  **Next.js Version**: {{nextjs_version}}
+  {{/if}}
+  **Router Type**: {{router_type}}
+
+  # Objective
+  Design Next.js pages that:
+  - Follow Next.js {{#if nextjs_version}}{{nextjs_version}}{{else}}best practices{{/if}} best practices
+  - Use appropriate router patterns
+  - Include proper metadata and SEO
+  - Are optimized for performance
+
+  # Response Format
+
+  ## Next.js Page Design
+
+  ### Requirements
+  {{requirements}}
+
+  ### Page Implementation
+
+  {{#if (eq router_type "app")}}
+  ```{{#if use_typescript}}typescript{{else}}javascript{{/if}}
+  // app/[route]/page.tsx
+  export default function Page() {
+    return <div>Page content</div>;
+  }
+
+  export const metadata = {
+    title: 'Page Title',
+    description: 'Page description',
+  };
+  ```
+  {{else}}
+  ```{{#if use_typescript}}typescript{{else}}javascript{{/if}}
+  // pages/[route].tsx
+  export default function Page() {
+    return <div>Page content</div>;
+  }
+  ```
+  {{/if}}
+
+  {{output_lang_rule}}
+

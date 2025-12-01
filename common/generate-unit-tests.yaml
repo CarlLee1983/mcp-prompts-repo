@@ -1,0 +1,241 @@
+id: "generate-unit-tests"
+title: "Generate Unit Tests"
+description: >
+  Authority tool for generating unit tests for any programming language.
+  TRIGGER: When user mentions "generate tests", "create tests", "write tests", "unit tests", "test cases", "test coverage", or "testing".
+  RULES:
+  1. MUST use this tool when unit test generation is requested.
+  2. Analyze code structure and generate comprehensive unit tests.
+  3. Use appropriate test framework for the programming language.
+  4. Include edge cases and error handling when requested.
+  5. Follow language and framework best practices.
+
+args:
+  code:
+    type: "string"
+    description: "Code to generate tests for (required)"
+  language:
+    type: "string"
+    description: "Programming language (optional, auto-detect if not provided): javascript, typescript, php, python, go, java, csharp, ruby, etc."
+  test_framework:
+    type: "string"
+    description: "Test framework (optional, auto-detect if not provided): jest, phpunit, pytest, unittest, vitest, mocha, junit, xunit, rspec, etc."
+  include_edge_cases:
+    type: "boolean"
+    description: "Include edge case tests (boundary conditions, null values, empty inputs)"
+    default: true
+  include_error_handling:
+    type: "boolean"
+    description: "Include error handling tests (exceptions, invalid inputs)"
+    default: true
+  test_style:
+    type: "string"
+    description: "Test style (optional): bdd, tdd, or auto-detect"
+
+template: |
+  {{> role-expert}}
+
+  # Context
+  You are generating comprehensive unit tests for the provided code.
+
+  {{#if language}}
+  **Programming Language**: {{language}} (explicitly specified)
+  {{else}}
+  **Programming Language**: Auto-detecting from code structure...
+  - Check syntax patterns (function definitions, class syntax, imports)
+  - Check language-specific keywords and constructs
+  - Check file extensions or module patterns
+  {{/if}}
+
+  {{#if test_framework}}
+  **Test Framework**: {{test_framework}} (explicitly specified)
+  {{else}}
+  **Test Framework**: Auto-detecting based on language...
+  {{#if language}}
+  - JavaScript/TypeScript: Jest, Vitest, Mocha
+  - PHP: PHPUnit
+  - Python: PyTest, unittest
+  - Go: Go Test (testing package)
+  - Java: JUnit
+  - C#: xUnit, NUnit
+  - Ruby: RSpec, Minitest
+  {{else}}
+  - Infer from language detection
+  {{/if}}
+  {{/if}}
+
+  # Objective
+  Generate comprehensive unit tests that:
+  - Test all functions, methods, and classes
+  - Cover normal cases, edge cases, and error scenarios
+  - Follow the language and framework conventions
+  - Are maintainable and readable
+  - Include proper setup and teardown if needed
+
+  # Style
+  Provide complete, production-ready test code following the language and framework best practices.
+
+  # Tone
+  Technical, thorough, and focused on test quality.
+
+  # Audience
+  Developers writing unit tests for their code.
+
+  # Response Format
+
+  ## Unit Test Generation
+
+  ### Code to Test
+  ```{{#if language}}{{language}}{{else}}code{{/if}}
+  {{code}}
+  ```
+
+  ### Analysis
+
+  #### 1. Code Structure Analysis
+  - **Functions/Methods Identified**: [List all testable functions/methods]
+  - **Classes Identified**: [List all testable classes]
+  - **Dependencies**: [Identify external dependencies that need mocking]
+  - **Complexity**: [Assess code complexity and testing requirements]
+
+  #### 2. Test Framework Selection
+  {{#if test_framework}}
+  **Selected Framework**: {{test_framework}}
+  {{else}}
+  **Recommended Framework**: [Based on language detection]
+  - [Explain why this framework is suitable]
+  {{/if}}
+
+  #### 3. Test Coverage Plan
+  - **Normal Cases**: [List normal operation scenarios]
+  {{#if include_edge_cases}}
+  - **Edge Cases**: [List boundary conditions, null values, empty inputs]
+  {{/if}}
+  {{#if include_error_handling}}
+  - **Error Cases**: [List exception scenarios, invalid inputs]
+  {{/if}}
+
+  ### Generated Unit Tests
+
+  ```{{#if language}}{{language}}{{else}}code{{/if}}
+  [Provide complete test code following the selected framework conventions]
+
+  // Test Structure:
+  // 1. Setup/BeforeEach hooks
+  // 2. Test cases for each function/method
+  //    - Normal cases
+  {{#if include_edge_cases}}
+  //    - Edge cases
+  {{/if}}
+  {{#if include_error_handling}}
+  //    - Error cases
+  {{/if}}
+  // 3. Teardown/AfterEach hooks
+  ```
+
+  ### Test Cases Breakdown
+
+  #### Test Suite 1: [Function/Method Name]
+
+  **Test 1: Normal Case**
+  - **Description**: [What this test verifies]
+  - **Input**: [Test input]
+  - **Expected Output**: [Expected result]
+  - **Assertions**: [What is being asserted]
+
+  {{#if include_edge_cases}}
+  **Test 2: Edge Case - [Specific Edge Case]**
+  - **Description**: [What edge case is being tested]
+  - **Input**: [Edge case input]
+  - **Expected Output**: [Expected result]
+  - **Assertions**: [What is being asserted]
+
+  **Test 3: Edge Case - [Another Edge Case]**
+  - [Similar structure]
+  {{/if}}
+
+  {{#if include_error_handling}}
+  **Test 4: Error Case - [Error Scenario]**
+  - **Description**: [What error is being tested]
+  - **Input**: [Invalid input]
+  - **Expected Behavior**: [Exception or error handling]
+  - **Assertions**: [What is being asserted]
+  {{/if}}
+
+  [Repeat for each function/method/class]
+
+  ### Testing Best Practices Applied
+
+  1. **Test Organization**:
+     - [ ] Tests are well-organized and grouped by functionality
+     - [ ] Test names are descriptive and follow naming conventions
+     - [ ] Tests follow AAA pattern (Arrange, Act, Assert)
+
+  2. **Test Coverage**:
+     - [ ] All public functions/methods are tested
+     - [ ] Normal operation paths are covered
+     {{#if include_edge_cases}}
+     - [ ] Edge cases are covered
+     {{/if}}
+     {{#if include_error_handling}}
+     - [ ] Error handling is tested
+     {{/if}}
+
+  3. **Test Quality**:
+     - [ ] Tests are independent and can run in any order
+     - [ ] Tests are isolated (no side effects)
+     - [ ] Mocking is used for external dependencies
+     - [ ] Assertions are clear and specific
+
+  4. **Framework-Specific Best Practices**:
+     - [ ] Follows framework conventions
+     - [ ] Uses appropriate setup/teardown methods
+     - [ ] Uses appropriate assertion methods
+     - [ ] Follows framework naming conventions
+
+  ### Framework-Specific Notes
+
+  {{#if (eq test_framework "jest")}}
+  **Jest Framework**:
+  - Uses `describe()` and `test()` or `it()` blocks
+  - Uses `expect()` for assertions
+  - Supports `beforeEach()`, `afterEach()`, `beforeAll()`, `afterAll()`
+  - Supports mocking with `jest.mock()` and `jest.fn()`
+  {{else if (eq test_framework "phpunit")}}
+  **PHPUnit Framework**:
+  - Uses class-based test structure
+  - Test methods start with `test` prefix or use `@test` annotation
+  - Uses `$this->assert*()` methods
+  - Supports `setUp()` and `tearDown()` methods
+  - Supports data providers with `@dataProvider`
+  {{else if (eq test_framework "pytest")}}
+  **PyTest Framework**:
+  - Uses function-based or class-based tests
+  - Test functions start with `test_`
+  - Uses `assert` statements
+  - Supports fixtures with `@pytest.fixture`
+  - Supports parametrized tests with `@pytest.mark.parametrize`
+  {{else if (eq test_framework "vitest")}}
+  **Vitest Framework**:
+  - Similar to Jest API
+  - Uses `describe()` and `test()` or `it()` blocks
+  - Uses `expect()` for assertions
+  - Optimized for Vite projects
+  {{else}}
+  **Framework Guidelines**:
+  - Follow the standard testing patterns for the selected framework
+  - Use appropriate assertion methods
+  - Implement proper setup and teardown
+  - Follow framework-specific naming conventions
+  {{/if}}
+
+  ### Additional Recommendations
+
+  1. **Test Data**: [Suggest test data strategies]
+  2. **Mocking**: [Suggest what should be mocked]
+  3. **Test Organization**: [Suggest file structure]
+  4. **Running Tests**: [Provide command to run tests]
+  5. **Coverage**: [Suggest how to measure test coverage]
+
+  {{output_lang_rule}}
+

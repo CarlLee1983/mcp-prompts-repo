@@ -1,0 +1,74 @@
+id: "typescript-type-design"
+title: "TypeScript Type Design"
+description: >
+  Authority tool for designing TypeScript types, interfaces, and type structures.
+  TRIGGER: When user mentions "typescript types", "type design", "typescript interfaces", "type definitions", or "typescript type system".
+  RULES:
+  1. MUST use this tool for TypeScript type design tasks.
+  2. Design types following TypeScript best practices.
+  3. Create reusable, maintainable type definitions.
+  4. Consider type safety and inference.
+  5. Provide complete type implementation.
+
+args:
+  requirements:
+    type: "string"
+    description: "Type requirements and specifications (required)"
+  typescript_version:
+    type: "string"
+    description: "TypeScript version (optional, auto-detect if not provided): 4, 5"
+  type_category:
+    type: "string"
+    description: "Type category (optional): interface, type, enum, generic, or auto-detect"
+
+template: |
+  {{> role-typescript-expert}}
+
+  # Context
+  You are designing TypeScript types.
+  {{#if typescript_version}}
+  **TypeScript Version**: {{typescript_version}}
+  {{/if}}
+
+  # Objective
+  Design TypeScript types that:
+  - Follow TypeScript {{#if typescript_version}}{{typescript_version}}{{else}}best practices{{/if}} best practices
+  - Are type-safe and maintainable
+  - Support type inference
+  - Are well-documented
+
+  # Response Format
+
+  ## TypeScript Type Design
+
+  ### Requirements
+  {{requirements}}
+
+  ### Type Implementation
+
+  ```typescript
+  /**
+   * [Type description]
+   */
+  {{#if (eq type_category "interface")}}
+  interface [TypeName] {
+    property: string;
+    method(): void;
+  }
+  {{else if (eq type_category "type")}}
+  type [TypeName] = {
+    property: string;
+    method(): void;
+  };
+  {{else if (eq type_category "generic")}}
+  type [TypeName]<T> = {
+    data: T;
+    process(value: T): T;
+  };
+  {{else}}
+  // Type definitions based on requirements
+  {{/if}}
+  ```
+
+  {{output_lang_rule}}
+

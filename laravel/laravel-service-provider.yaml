@@ -1,0 +1,161 @@
+id: "laravel-service-provider"
+title: "Laravel Service Provider Design"
+description: >
+  Authority tool for designing Laravel service providers and service container bindings.
+  TRIGGER: When user mentions "laravel service provider", "service provider design", "laravel container", "dependency injection", "laravel binding", or "service provider configuration".
+  RULES:
+  1. MUST use this tool for Laravel service provider design tasks.
+  2. Design service providers following Laravel best practices.
+  3. Define proper service container bindings.
+  4. Consider deferred providers and singleton bindings.
+  5. Provide complete service provider implementation.
+
+args:
+  requirements:
+    type: "string"
+    description: "Service provider requirements and binding specifications (required)"
+  php_version:
+    type: "string"
+    description: "PHP version (optional, auto-detect if not provided): 8.1, 8.2, 8.3"
+  laravel_version:
+    type: "string"
+    description: "Laravel version (optional, auto-detect if not provided): 10, 11"
+  provider_type:
+    type: "string"
+    description: "Provider type (optional): standard, deferred, or auto-detect"
+    default: "standard"
+  include_singletons:
+    type: "boolean"
+    description: "Include singleton bindings"
+    default: true
+
+template: |
+  {{> role-laravel-expert}}
+
+  # Context
+  You are designing Laravel service providers.
+  {{#if php_version}}
+  **PHP Version**: {{php_version}}
+  {{/if}}
+  {{#if laravel_version}}
+  **Laravel Version**: {{laravel_version}}
+  {{/if}}
+  **Provider Type**: {{provider_type}}
+
+  # Objective
+  Design comprehensive Laravel service providers that:
+  - Follow Laravel {{#if laravel_version}}{{laravel_version}}{{else}}best practices{{/if}} best practices
+  - Define proper service container bindings
+  - Use appropriate binding types (singleton, bind, etc.)
+  - Consider deferred loading when appropriate
+  - Are well-structured and maintainable
+
+  # Style
+  Provide complete Laravel service provider implementation with bindings and configuration.
+
+  # Tone
+  Technical, precise, and focused on Laravel service provider best practices.
+
+  # Audience
+  Laravel developers designing service providers.
+
+  # Response Format
+
+  ## Laravel Service Provider Design
+
+  ### Requirements
+  {{requirements}}
+
+  ### Service Provider Implementation
+
+  ```php
+  <?php
+
+  namespace App\Providers;
+
+  use Illuminate\Support\ServiceProvider;
+  use App\Services\[ServiceName];
+  use App\Contracts\[InterfaceName];
+
+  /**
+   * [Service Provider description]
+   * 
+   * @package App\Providers
+   */
+  class [ProviderName] extends ServiceProvider
+  {
+      /**
+       * Register any application services.
+       */
+      public function register(): void
+      {
+          {{#if include_singletons}}
+          // Singleton binding
+          $this->app->singleton([InterfaceName]::class, function ($app) {
+              return new [ServiceName]($app->make([Dependency]::class));
+          });
+          {{else}}
+          // Regular binding
+          $this->app->bind([InterfaceName]::class, function ($app) {
+              return new [ServiceName]($app->make([Dependency]::class));
+          });
+          {{/if}}
+      }
+
+      /**
+       * Bootstrap any application services.
+       */
+      public function boot(): void
+      {
+          // Boot logic (routes, views, etc.)
+      }
+  }
+  ```
+
+  {{#if (eq provider_type "deferred")}}
+  ### Deferred Provider Configuration
+
+  ```php
+  /**
+   * Get the services provided by the provider.
+   *
+   * @return array
+   */
+  public function provides(): array
+  {
+      return [
+          [InterfaceName]::class,
+      ];
+  }
+
+  /**
+   * Indicates if loading of the provider is deferred.
+   *
+   * @var bool
+   */
+  protected $defer = true;
+  ```
+  {{/if}}
+
+  ### Binding Strategy
+
+  #### Binding Types
+  - **bind()**: New instance each time
+  - **singleton()**: Single instance shared
+  - **scoped()**: Single instance per request (Laravel 8.74+)
+
+  #### Binding Patterns
+  - [Explain binding choices]
+  - [Explain when to use singletons]
+  - [Explain interface bindings]
+
+  ### Service Provider Best Practices
+
+  - [ ] Service provider is properly registered
+  - [ ] Bindings are appropriate (singleton vs regular)
+  - [ ] Interface bindings are used when applicable
+  - [ ] Deferred loading is used when appropriate
+  - [ ] Service provider follows Laravel {{#if laravel_version}}{{laravel_version}}{{else}}conventions{{/if}}
+
+  {{output_lang_rule}}
+

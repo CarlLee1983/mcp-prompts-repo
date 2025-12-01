@@ -1,0 +1,177 @@
+id: "vue-component-review"
+title: "Vue Component Review"
+description: >
+  Authority tool for Vue 3 component review and analysis.
+  TRIGGER: When user mentions "review vue", "check component", "vue component", "component analysis", or "vue code review".
+  RULES:
+  1. MUST use this tool for Vue 3 component reviews.
+  2. Analyze Composition API usage, reactivity, and Vue 3 best practices.
+  3. Check for performance optimizations and accessibility.
+  4. Provide actionable feedback with code examples.
+
+args:
+  code:
+    type: "string"
+    description: "Vue component code to review (required)"
+  vue_version:
+    type: "string"
+    description: "Vue version (optional, auto-detect if not provided): 3"
+  check_performance:
+    type: "boolean"
+    description: "Include performance analysis and optimization suggestions"
+    default: true
+  check_accessibility:
+    type: "boolean"
+    description: "Include accessibility (a11y) checks"
+    default: true
+  strict_composition:
+    type: "boolean"
+    description: "Enforce strict Composition API patterns (no Options API patterns)"
+    default: false
+
+template: |
+  {{> role-vue-expert}}
+
+  # Context
+  You are reviewing a Vue component for code quality, best practices, and optimization opportunities.
+
+  {{#if vue_version}}
+  **Vue Version**: {{vue_version}} (explicitly specified)
+  {{else}}
+  **Vue Version**: Auto-detecting from code...
+  - Check for Vue 3 Composition API patterns
+  - Check for Vue 3 features (Composition API, script setup, etc.)
+  {{/if}}
+
+  # Objective
+  Analyze the Vue 3 component for:
+  - Composition API usage and patterns
+  - Reactivity system correctness
+  - Performance optimizations
+  - Accessibility compliance
+  - Vue 3 best practices
+  - TypeScript usage (if applicable)
+
+  # Style
+  Provide structured review with code examples and specific recommendations.
+
+  # Tone
+  Technical, constructive, and focused on Vue 3 ecosystem best practices.
+
+  # Audience
+  Vue 3 developers working with Composition API.
+
+  # Response Format
+
+  ## Vue 3 Component Review
+
+  ### Component Code
+  ```vue
+  {{code}}
+  ```
+
+  {{#if strict_composition}}
+  ### ⚠️ Strict Composition API Mode
+  Enforcing pure Composition API patterns. Options API patterns will be flagged.
+  {{/if}}
+
+  ### Analysis
+
+  #### 1. Composition API Usage
+  - **Setup Function**: [Review setup function structure]
+  - **Reactivity**: [Check ref, reactive, computed usage]
+  - **Lifecycle Hooks**: [Review lifecycle hook usage]
+  - **Composables**: [Identify opportunities for composable extraction]
+
+  #### 2. Reactivity System
+  - **Reactive State**: [Check reactive state management]
+  - **Computed Properties**: [Review computed usage]
+  - **Watchers**: [Review watch/watchEffect usage]
+  - **Reactivity Gotchas**: [Identify potential reactivity issues]
+
+  {{#if check_performance}}
+  #### 3. Performance Analysis
+  - **Render Optimization**: [Check v-memo, v-once usage]
+  - **Computed Caching**: [Verify computed properties are properly cached]
+  - **Event Handler Optimization**: [Check event handler patterns]
+  - **Component Lazy Loading**: [Suggest lazy loading opportunities]
+  - **Bundle Size**: [Identify optimization opportunities]
+  {{/if}}
+
+  {{#if check_accessibility}}
+  #### 4. Accessibility (a11y) Review
+  - **ARIA Attributes**: [Check ARIA usage]
+  - **Keyboard Navigation**: [Verify keyboard accessibility]
+  - **Screen Reader Support**: [Check screen reader compatibility]
+  - **Focus Management**: [Review focus handling]
+  - **Semantic HTML**: [Verify semantic element usage]
+  {{/if}}
+
+  #### 5. Vue 3 Best Practices
+  - **Template Syntax**: [Review template patterns]
+  - **Props Validation**: [Check props definition]
+  - **Emits Definition**: [Check emits definition]
+  - **Slot Usage**: [Review slot patterns]
+  - **Provide/Inject**: [Check provide/inject usage if applicable]
+
+  #### 6. Code Organization
+  - **Component Structure**: [Review component organization]
+  - **Composable Extraction**: [Suggest composable opportunities]
+  - **Code Duplication**: [Identify duplicate code]
+  - **Separation of Concerns**: [Check logic separation]
+
+  ### Issues Found
+
+  **Critical Issues**:
+  - [List critical issues that must be fixed]
+
+  **High Priority**:
+  - [List high priority improvements]
+
+  **Medium Priority**:
+  - [List medium priority suggestions]
+
+  **Low Priority / Nice to Have**:
+  - [List minor improvements]
+
+  ### Recommendations
+
+  #### 1. Immediate Actions
+  - [Prioritized list of must-fix issues]
+
+  #### 2. Refactoring Suggestions
+  ```vue
+  [Provide refactored code examples]
+  ```
+
+  #### 3. Performance Optimizations
+  {{#if check_performance}}
+  - [Specific performance optimization suggestions]
+  - [Code examples for optimizations]
+  {{else}}
+  Performance analysis was skipped. Enable check_performance for detailed analysis.
+  {{/if}}
+
+  #### 4. Accessibility Improvements
+  {{#if check_accessibility}}
+  - [Specific a11y improvement suggestions]
+  - [Code examples for accessibility]
+  {{else}}
+  Accessibility analysis was skipped. Enable check_accessibility for detailed analysis.
+  {{/if}}
+
+  ### Best Practices Checklist
+
+  - [ ] Uses Composition API correctly
+  - [ ] Proper reactivity usage
+  - [ ] Computed properties for derived state
+  - [ ] Appropriate lifecycle hooks
+  - [ ] Props properly defined
+  - [ ] Emits properly defined
+  - [ ] No direct DOM manipulation
+  - [ ] Proper event handling
+  - [ ] Accessible markup
+  - [ ] Performance optimized
+
+  {{output_lang_rule}}
+

@@ -1,0 +1,412 @@
+id: "architecture-design"
+title: "Architecture Design"
+description: >
+  Authority tool for designing system architecture and module structures.
+  TRIGGER: When user mentions "architecture", "system design", "module design", "system architecture", "software architecture", "microservices", "monolith", or "system structure".
+  RULES:
+  1. MUST use this tool for architecture and system design tasks.
+  2. Design scalable, maintainable, and robust system architectures.
+  3. Consider different architectural patterns (monolith, microservices, serverless, etc.).
+  4. Provide module structure and component design.
+  5. Include scalability, maintainability, and performance considerations.
+
+args:
+  requirements:
+    type: "string"
+    description: "System requirements and specifications (required)"
+  system_type:
+    type: "string"
+    description: "System architecture type (optional): monolith, microservices, serverless, event_driven, layered, mvc, mvp, mvi, or auto-select"
+    default: "monolith"
+  language:
+    type: "string"
+    description: "Primary programming language (optional): php, javascript, typescript, python, go, java, csharp, ruby, etc."
+  framework:
+    type: "string"
+    description: "Framework (optional, e.g., laravel, express, django, spring, react, vue)"
+  scale:
+    type: "string"
+    description: "Expected scale (optional): small, medium, large, enterprise"
+    default: "medium"
+  include_diagrams:
+    type: "boolean"
+    description: "Include architecture diagrams and visual representations"
+    default: true
+  include_patterns:
+    type: "boolean"
+    description: "Include design patterns recommendations"
+    default: true
+
+template: |
+  {{> role-expert}}
+
+  # Context
+  You are designing a system architecture.
+  {{#if language}}
+  **Primary Language**: {{language}}
+  {{/if}}
+  {{#if framework}}
+  **Framework**: {{framework}}
+  {{/if}}
+  **System Type**: {{system_type}}
+  **Scale**: {{scale}}
+
+  # Objective
+  Design a comprehensive system architecture that:
+  - Meets the specified requirements
+  - Is scalable and maintainable
+  - Follows architectural best practices
+  - Defines clear module boundaries and responsibilities
+  - Considers performance, security, and reliability
+  - Supports future growth and evolution
+
+  # Style
+  Provide structured architecture design with clear component definitions, module structures, and implementation guidelines.
+
+  # Tone
+  Technical, strategic, and architecture-focused. Consider long-term maintainability and scalability.
+
+  # Audience
+  Architects, senior developers, and technical leads designing system architecture.
+
+  # Response Format
+
+  ## System Architecture Design
+
+  ### Requirements
+  {{requirements}}
+
+  ### Architecture Overview
+
+  **Selected Architecture Pattern**: {{system_type}}
+
+  {{#if (eq system_type "monolith")}}
+  **Monolithic Architecture**:
+  - Single deployable unit
+  - Tightly coupled components
+  - Suitable for: Small to medium applications, rapid development
+  - Advantages: Simpler deployment, easier development, better performance for small scale
+  - Disadvantages: Limited scalability, harder to maintain at large scale
+  {{else if (eq system_type "microservices")}}
+  **Microservices Architecture**:
+  - Loosely coupled, independently deployable services
+  - Service-oriented design
+  - Suitable for: Large applications, distributed teams, high scalability needs
+  - Advantages: Independent scaling, technology diversity, fault isolation
+  - Disadvantages: Increased complexity, network latency, distributed system challenges
+  {{else if (eq system_type "serverless")}}
+  **Serverless Architecture**:
+  - Function-as-a-Service (FaaS) based
+  - Event-driven design
+  - Suitable for: Event processing, API backends, scheduled tasks
+  - Advantages: Auto-scaling, pay-per-use, reduced operational overhead
+  - Disadvantages: Cold start latency, vendor lock-in, debugging complexity
+  {{else if (eq system_type "event_driven")}}
+  **Event-Driven Architecture**:
+  - Event-based communication
+  - Asynchronous processing
+  - Suitable for: Real-time systems, high-throughput applications
+  - Advantages: Loose coupling, scalability, responsiveness
+  - Disadvantages: Event ordering, eventual consistency, complexity
+  {{else}}
+  **Architecture Pattern**: {{system_type}}
+  - [Describe architecture pattern characteristics]
+  - [Explain suitability for requirements]
+  {{/if}}
+
+  ### System Components
+
+  #### 1. Core Components
+
+  **Component 1: [Component Name]**
+  - **Purpose**: [Component purpose and responsibility]
+  - **Responsibilities**: [List key responsibilities]
+  - **Dependencies**: [List dependencies on other components]
+  - **Interfaces**: [Define public interfaces/APIs]
+
+  **Component 2: [Component Name]**
+  - [Similar structure]
+
+  #### 2. Supporting Components
+
+  **Infrastructure Components**:
+  - [List infrastructure components (logging, monitoring, caching, etc.)]
+
+  **Integration Components**:
+  - [List integration components (API gateways, message queues, etc.)]
+
+  ### Module Structure
+
+  ```
+  project-root/
+  ├── src/
+  │   ├── modules/
+  │   │   ├── module1/
+  │   │   │   ├── domain/          # Domain logic
+  │   │   │   ├── application/    # Application services
+  │   │   │   ├── infrastructure/  # Infrastructure concerns
+  │   │   │   └── presentation/   # Presentation layer
+  │   │   ├── module2/
+  │   │   │   └── ...
+  │   │   └── shared/             # Shared utilities
+  │   ├── config/                  # Configuration
+  │   └── tests/                   # Tests
+  ├── docs/                        # Documentation
+  └── deployment/                  # Deployment configs
+  ```
+
+  ### Module Responsibilities
+
+  #### Module 1: [Module Name]
+  - **Domain**: [Business domain]
+  - **Responsibilities**: [Module responsibilities]
+  - **Dependencies**: [Module dependencies]
+  - **Public API**: [Public interfaces]
+
+  #### Module 2: [Module Name]
+  - [Similar structure]
+
+  ### Data Flow
+
+  #### Request Flow
+  1. [Step 1: Request entry point]
+  2. [Step 2: Request processing]
+  3. [Step 3: Business logic execution]
+  4. [Step 4: Data persistence]
+  5. [Step 5: Response generation]
+
+  #### Data Flow Diagram
+  {{#if include_diagrams}}
+  ```
+  [User Request]
+       |
+       v
+  [API Gateway/Load Balancer]
+       |
+       v
+  [Application Layer]
+       |
+       v
+  [Business Logic Layer]
+       |
+       v
+  [Data Access Layer]
+       |
+       v
+  [Database/Storage]
+  ```
+  {{/if}}
+
+  ### Communication Patterns
+
+  {{#if (eq system_type "microservices")}}
+  **Inter-Service Communication**:
+  - **Synchronous**: REST APIs, gRPC
+  - **Asynchronous**: Message queues, event streaming
+  - **Service Discovery**: [Service discovery mechanism]
+  - **API Gateway**: [API gateway pattern]
+  {{else if (eq system_type "event_driven")}}
+  **Event Communication**:
+  - **Event Bus**: [Event bus implementation]
+  - **Event Types**: [List event types]
+  - **Event Handlers**: [Event handler patterns]
+  {{else}}
+  **Component Communication**:
+  - [Describe communication patterns]
+  - [Define interfaces and contracts]
+  {{/if}}
+
+  ### Data Architecture
+
+  #### Data Storage Strategy
+  - **Primary Database**: [Database type and purpose]
+  - **Caching Layer**: [Caching strategy]
+  - **File Storage**: [File storage approach]
+  - **Search**: [Search solution if applicable]
+
+  #### Data Models
+  - [Define key data models]
+  - [Describe relationships]
+  - [Specify data access patterns]
+
+  ### Security Architecture
+
+  #### Authentication & Authorization
+  - **Authentication Method**: [Authentication approach]
+  - **Authorization Model**: [Authorization strategy (RBAC, ABAC, etc.)]
+  - **Token Management**: [Token handling strategy]
+
+  #### Security Layers
+  - **API Security**: [API security measures]
+  - **Data Encryption**: [Encryption strategy]
+  - **Network Security**: [Network security measures]
+
+  ### Scalability Design
+
+  **Scale**: {{scale}}
+
+  #### Horizontal Scaling
+  - [Scaling strategy]
+  - [Load balancing approach]
+  - [Stateless design considerations]
+
+  #### Vertical Scaling
+  - [Resource optimization]
+  - [Performance tuning]
+
+  #### Caching Strategy
+  - [Caching layers]
+  - [Cache invalidation strategy]
+  - [Cache distribution]
+
+  ### Performance Considerations
+
+  #### Performance Targets
+  - **Response Time**: [Target response times]
+  - **Throughput**: [Expected throughput]
+  - **Concurrency**: [Concurrent user handling]
+
+  #### Optimization Strategies
+  - [Performance optimization approaches]
+  - [Bottleneck identification]
+  - [Resource optimization]
+
+  {{#if include_patterns}}
+  ### Design Patterns
+
+  #### Architectural Patterns
+  - **Layered Architecture**: [If applicable]
+  - **MVC/MVP/MVI**: [If applicable]
+  - **Repository Pattern**: [If applicable]
+  - **Service Layer Pattern**: [If applicable]
+
+  #### Design Patterns Applied
+  - **Factory Pattern**: [Usage and rationale]
+  - **Strategy Pattern**: [Usage and rationale]
+  - **Observer Pattern**: [Usage and rationale]
+  - **Dependency Injection**: [Usage and rationale]
+  - [Other relevant patterns]
+  {{/if}}
+
+  ### Technology Stack
+
+  {{#if language}}
+  **Primary Language**: {{language}}
+  {{/if}}
+  {{#if framework}}
+  **Framework**: {{framework}}
+  {{/if}}
+
+  #### Recommended Stack
+  - **Backend**: [Backend technologies]
+  - **Frontend**: [Frontend technologies]
+  - **Database**: [Database technologies]
+  - **Caching**: [Caching solutions]
+  - **Message Queue**: [Message queue solutions]
+  - **Monitoring**: [Monitoring tools]
+  - **Deployment**: [Deployment platforms]
+
+  ### Deployment Architecture
+
+  #### Deployment Strategy
+  - **Environment Setup**: [Development, staging, production]
+  - **Containerization**: [Docker, Kubernetes, etc.]
+  - **CI/CD Pipeline**: [Continuous integration/deployment]
+  - **Infrastructure**: [Cloud, on-premise, hybrid]
+
+  #### High Availability
+  - **Redundancy**: [Redundancy strategy]
+  - **Failover**: [Failover mechanisms]
+  - **Disaster Recovery**: [Disaster recovery plan]
+
+  {{#if include_diagrams}}
+  ### Architecture Diagrams
+
+  #### System Architecture Diagram
+  ```
+  [Provide ASCII or describe architecture diagram]
+  ```
+
+  #### Component Interaction Diagram
+  ```
+  [Provide component interaction diagram]
+  ```
+
+  #### Deployment Diagram
+  ```
+  [Provide deployment diagram]
+  ```
+  {{/if}}
+
+  ### Implementation Roadmap
+
+  #### Phase 1: Foundation
+  - [Core infrastructure setup]
+  - [Basic module structure]
+  - [Essential components]
+
+  #### Phase 2: Core Features
+  - [Primary functionality implementation]
+  - [Integration components]
+  - [Basic security]
+
+  #### Phase 3: Enhancement
+  - [Performance optimization]
+  - [Advanced features]
+  - [Monitoring and logging]
+
+  #### Phase 4: Scale & Optimize
+  - [Scaling implementation]
+  - [Advanced optimizations]
+  - [Production hardening]
+
+  ### Architecture Decision Records (ADR)
+
+  #### ADR 1: Architecture Pattern Selection
+  - **Decision**: [Selected architecture pattern]
+  - **Rationale**: [Why this pattern was chosen]
+  - **Alternatives**: [Considered alternatives]
+  - **Consequences**: [Expected consequences]
+
+  #### ADR 2: Technology Stack
+  - **Decision**: [Technology choices]
+  - **Rationale**: [Reasons for selection]
+  - **Alternatives**: [Other options considered]
+
+  ### Best Practices Checklist
+
+  - [ ] Clear separation of concerns
+  - [ ] Modular and maintainable structure
+  - [ ] Scalable design
+  - [ ] Security considerations integrated
+  - [ ] Performance optimization planned
+  - [ ] Error handling strategy defined
+  - [ ] Logging and monitoring planned
+  - [ ] Documentation strategy defined
+  - [ ] Testing strategy defined
+  - [ ] Deployment strategy defined
+
+  ### Risk Assessment
+
+  #### Technical Risks
+  - [Identify technical risks]
+  - [Mitigation strategies]
+
+  #### Scalability Risks
+  - [Identify scalability concerns]
+  - [Mitigation strategies]
+
+  #### Operational Risks
+  - [Identify operational challenges]
+  - [Mitigation strategies]
+
+  ### Recommendations
+
+  1. **Development**: [Development recommendations]
+  2. **Testing**: [Testing strategy recommendations]
+  3. **Deployment**: [Deployment recommendations]
+  4. **Monitoring**: [Monitoring recommendations]
+  5. **Documentation**: [Documentation recommendations]
+
+  {{output_lang_rule}}
+

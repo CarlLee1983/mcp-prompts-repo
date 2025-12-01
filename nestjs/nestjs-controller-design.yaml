@@ -1,0 +1,72 @@
+id: "nestjs-controller-design"
+title: "NestJS Controller Design"
+description: >
+  Authority tool for designing NestJS controllers and endpoints.
+  TRIGGER: When user mentions "nestjs controller", "nestjs api", "nestjs endpoint", "nestjs route", or "nestjs handler".
+  RULES:
+  1. MUST use this tool for NestJS controller design tasks.
+  2. Design controllers following NestJS best practices.
+  3. Create RESTful endpoints with proper decorators.
+  4. Include proper DTOs and validation.
+  5. Provide complete controller implementation.
+
+args:
+  requirements:
+    type: "string"
+    description: "Controller requirements and specifications (required)"
+  nestjs_version:
+    type: "string"
+    description: "NestJS version (optional, auto-detect if not provided): 9, 10"
+  use_typescript:
+    type: "boolean"
+    description: "Use TypeScript"
+    default: true
+
+template: |
+  {{> role-nestjs-expert}}
+
+  # Context
+  You are designing NestJS controllers.
+  {{#if nestjs_version}}
+  **NestJS Version**: {{nestjs_version}}
+  {{/if}}
+
+  # Objective
+  Design NestJS controllers that:
+  - Follow NestJS {{#if nestjs_version}}{{nestjs_version}}{{else}}best practices{{/if}} best practices
+  - Use proper decorators
+  - Include DTOs and validation
+  - Are well-structured and maintainable
+
+  # Response Format
+
+  ## NestJS Controller Design
+
+  ### Requirements
+  {{requirements}}
+
+  ### Controller Implementation
+
+  ```typescript
+  import { Controller, Get, Post, Body } from '@nestjs/common';
+  import { [ServiceName]Service } from './[service-name].service';
+  import { Create[Resource]Dto } from './dto/create-[resource].dto';
+
+  @Controller('[resource]')
+  export class [Resource]Controller {
+    constructor(private readonly service: [ServiceName]Service) {}
+
+    @Get()
+    findAll() {
+      return this.service.findAll();
+    }
+
+    @Post()
+    create(@Body() createDto: Create[Resource]Dto) {
+      return this.service.create(createDto);
+    }
+  }
+  ```
+
+  {{output_lang_rule}}
+

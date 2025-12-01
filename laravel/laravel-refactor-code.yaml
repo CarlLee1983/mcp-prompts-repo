@@ -1,0 +1,177 @@
+id: "laravel-refactor-code"
+title: "Laravel Code Refactoring"
+description: >
+  Authority tool for Laravel code refactoring (general, not just controllers).
+  TRIGGER: When user mentions "refactor laravel", "improve laravel code", "optimize laravel code", "restructure laravel code", or "laravel code cleanup".
+  RULES:
+  1. MUST use this tool for Laravel code refactoring tasks.
+  2. Maintain existing functionality while improving code structure.
+  3. Apply SOLID principles and Laravel best practices.
+  4. Auto-infer refactoring opportunities if intent is not specified.
+
+args:
+  code:
+    type: "string"
+    description: "Laravel code to refactor (required)"
+  php_version:
+    type: "string"
+    description: "PHP version (optional, auto-detect if not provided): 8.1, 8.2, 8.3"
+  laravel_version:
+    type: "string"
+    description: "Laravel version (optional, auto-detect if not provided): 10, 11"
+  intent:
+    type: "string"
+    description: "Specific refactoring intent (optional): extract-methods, single-responsibility, dependency-injection, service-layer, repository-pattern, or auto-infer"
+  preserve_api:
+    type: "boolean"
+    description: "Preserve existing API contracts and response formats"
+    default: true
+  apply_solid:
+    type: "boolean"
+    description: "Apply SOLID principles strictly"
+    default: true
+
+template: |
+  {{> role-laravel-expert}}
+
+  # Context
+  You are refactoring Laravel code to improve code quality, maintainability, and adherence to best practices.
+  {{#if php_version}}
+  **PHP Version**: {{php_version}}
+  {{/if}}
+  {{#if laravel_version}}
+  **Laravel Version**: {{laravel_version}}
+  {{/if}}
+
+  # Objective
+  Refactor the provided Laravel code while:
+  - Maintaining all existing functionality
+  - Improving code structure and readability
+  - Applying SOLID principles
+  - Following Laravel {{#if laravel_version}}{{laravel_version}}{{else}}best practices{{/if}} best practices
+  - Ensuring backward compatibility when preserve_api is enabled
+  - Leveraging Laravel features and patterns
+
+  # Style
+  Provide structured refactoring plan and refactored code with explanations.
+
+  # Tone
+  Technical, precise, and focused on Laravel-specific improvements.
+
+  # Audience
+  Laravel developers working on the codebase.
+
+  # Response Format
+
+  ## Laravel Code Refactoring Analysis
+
+  ### Original Code
+  ```php
+  {{code}}
+  ```
+
+  ### Refactoring Intent
+  {{#if intent}}
+  **User Intent**: {{intent}}
+  {{else}}
+  **Auto-Inferred Intent**: Analyzing Laravel code structure to identify refactoring opportunities:
+  - Method/function extraction needs
+  - Single Responsibility Principle violations
+  - Dependency injection improvements
+  - Service layer introduction
+  - Repository pattern application
+  - Code duplication
+  - Error handling patterns
+  - Laravel pattern violations
+  {{/if}}
+
+  {{#if preserve_api}}
+  ### ⚠️ API Preservation Mode
+  All existing API contracts, response formats, and interfaces must remain unchanged.
+  {{/if}}
+
+  {{#if apply_solid}}
+  ### SOLID Principles Application
+  Applying SOLID principles in Laravel context:
+  - **S**ingle Responsibility: Each class/method has one reason to change
+  - **O**pen/Closed: Open for extension, closed for modification
+  - **L**iskov Substitution: Derived classes must be substitutable
+  - **I**nterface Segregation: Many specific interfaces vs one general
+  - **D**ependency Inversion: Depend on abstractions, not concretions (use Laravel's Service Container)
+  {{/if}}
+
+  ### Issues Identified
+
+  #### 1. Code Structure Issues
+  - [List structural problems]
+  - [Identify violations of Laravel {{#if laravel_version}}{{laravel_version}}{{else}}best practices{{/if}}]
+  - [Identify code organization issues]
+
+  #### 2. SOLID Principle Violations
+  - [Identify SRP violations]
+  - [Identify dependency issues]
+  - [Identify other SOLID violations]
+
+  #### 3. Laravel Best Practices
+  - [Check Laravel {{#if laravel_version}}{{laravel_version}}{{else}}conventions{{/if}}]
+  - [Identify framework misuse]
+  - [Suggest Laravel-specific improvements]
+  - [Identify opportunities to use Laravel features]
+
+  ### Refactoring Plan
+
+  #### Phase 1: Method/Function Extraction
+  - [Identify methods/functions to extract]
+  - [Define new method/function signatures]
+  - [Identify reusable code blocks]
+
+  #### Phase 2: Service Layer Introduction
+  - [Identify business logic to move to services]
+  - [Define service interfaces]
+  - [Use Laravel's Service Container for dependency injection]
+
+  #### Phase 3: Repository Pattern (if applicable)
+  - [Identify data access logic to abstract]
+  - [Define repository interfaces]
+  - [Implement repository classes]
+
+  #### Phase 4: Dependency Injection
+  - [Identify dependencies to inject via constructor]
+  - [Use Laravel's Service Container]
+  - [Update service provider bindings if needed]
+
+  #### Phase 5: Error Handling
+  - [Improve exception handling]
+  - [Use Laravel's exception handling]
+  - [Add proper error responses]
+
+  ### Refactored Code
+
+  ```php
+  [Provide complete refactored Laravel code with all improvements applied]
+  ```
+
+  ### Key Improvements
+
+  1. **Structure**: [Explain structural improvements]
+  2. **Maintainability**: [Explain maintainability gains]
+  3. **Testability**: [Explain testability improvements]
+  4. **Performance**: [Explain performance optimizations if any]
+  5. **Laravel Patterns**: [Explain Laravel pattern applications]
+
+  ### Laravel-Specific Improvements
+
+  - [Laravel feature utilization]
+  - [Service Container usage]
+  - [Event/Listener patterns if applicable]
+  - [Queue/Job patterns if applicable]
+  - [Cache usage if applicable]
+
+  ### Migration Notes
+  - [Any breaking changes or considerations for Laravel {{#if laravel_version}}{{laravel_version}}{{else}}latest{{/if}}]
+  - [Testing recommendations]
+  - [Deployment considerations]
+  - [Service provider updates if needed]
+
+  {{output_lang_rule}}
+

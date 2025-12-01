@@ -1,0 +1,167 @@
+id: "vue-router-config"
+title: "Vue Router Configuration"
+description: >
+  Authority tool for designing Vue Router configurations and routing structures.
+  TRIGGER: When user mentions "vue router", "router config", "vue routing", "route design", "vue router setup", or "vue navigation".
+  RULES:
+  1. MUST use this tool for Vue Router configuration tasks.
+  2. Design router configurations following Vue Router best practices.
+  3. Define proper route structures, guards, and lazy loading.
+  4. Consider route organization and navigation patterns.
+  5. Provide complete router implementation.
+
+args:
+  requirements:
+    type: "string"
+    description: "Router requirements and route specifications (required)"
+  vue_version:
+    type: "string"
+    description: "Vue version (optional, auto-detect if not provided): 3"
+  router_version:
+    type: "string"
+    description: "Vue Router version (optional, auto-detect if not provided): 4"
+  include_guards:
+    type: "boolean"
+    description: "Include route guards (navigation guards)"
+    default: true
+  include_lazy_loading:
+    type: "boolean"
+    description: "Include lazy loading routes"
+    default: true
+  use_typescript:
+    type: "boolean"
+    description: "Use TypeScript"
+    default: true
+
+template: |
+  {{> role-vue-expert}}
+
+  # Context
+  You are designing Vue Router configuration.
+  {{#if vue_version}}
+  **Vue Version**: {{vue_version}}
+  {{/if}}
+  {{#if router_version}}
+  **Vue Router Version**: {{router_version}}
+  {{/if}}
+
+  # Objective
+  Design comprehensive Vue Router configuration that:
+  - Follows Vue Router {{#if router_version}}{{router_version}}{{else}}4{{/if}} best practices
+  - Defines proper route structures
+  - Implements route guards when needed
+  - Uses lazy loading for performance
+  - Is well-organized and maintainable
+
+  # Style
+  Provide complete Vue Router configuration with routes, guards, and navigation patterns.
+
+  # Tone
+  Technical, precise, and focused on Vue Router best practices.
+
+  # Audience
+  Vue developers configuring Vue Router.
+
+  # Response Format
+
+  ## Vue Router Configuration
+
+  ### Requirements
+  {{requirements}}
+
+  ### Router Implementation
+
+  ```{{#if use_typescript}}typescript{{else}}javascript{{/if}}
+  import { createRouter, createWebHistory } from 'vue-router';
+  {{#if include_guards}}
+  import { useAuthStore } from '@/stores/auth';
+  {{/if}}
+
+  const router = createRouter({
+    history: createWebHistory(),
+    routes: [
+      {
+        path: '/',
+        name: 'home',
+        {{#if include_lazy_loading}}
+        component: () => import('@/views/HomeView.vue'),
+        {{else}}
+        component: () => import('@/views/HomeView.vue'),
+        {{/if}}
+      },
+      {
+        path: '/about',
+        name: 'about',
+        {{#if include_lazy_loading}}
+        component: () => import('@/views/AboutView.vue'),
+        {{else}}
+        component: () => import('@/views/AboutView.vue'),
+        {{/if}}
+      },
+      {{#if include_guards}}
+      {
+        path: '/dashboard',
+        name: 'dashboard',
+        component: () => import('@/views/DashboardView.vue'),
+        meta: { requiresAuth: true },
+      },
+      {{/if}}
+    ],
+  });
+
+  {{#if include_guards}}
+  // Navigation guards
+  router.beforeEach((to, from, next) => {
+    const authStore = useAuthStore();
+    
+    if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+      next({ name: 'login' });
+    } else {
+      next();
+    }
+  });
+  {{/if}}
+
+  export default router;
+  ```
+
+  ### Route Structure
+
+  #### Route Definitions
+  - [List all routes with descriptions]
+  - [Explain route organization]
+  - [Explain route naming conventions]
+
+  {{#if include_guards}}
+  ### Route Guards
+
+  #### Navigation Guards
+  - [Explain beforeEach guard]
+  - [Explain beforeResolve guard]
+  - [Explain afterEach guard]
+
+  #### Route Meta Fields
+  - [Explain meta field usage]
+  - [Explain authentication requirements]
+  {{/if}}
+
+  {{#if include_lazy_loading}}
+  ### Lazy Loading Strategy
+
+  #### Code Splitting
+  - [Explain lazy loading benefits]
+  - [Explain route-based code splitting]
+  - [Explain bundle optimization]
+  {{/if}}
+
+  ### Router Best Practices
+
+  - [ ] Routes are well-organized
+  - [ ] Route names are descriptive
+  - [ ] Lazy loading is implemented
+  - [ ] Route guards are properly configured
+  - [ ] Route meta fields are used appropriately
+  - [ ] Router follows Vue Router {{#if router_version}}{{router_version}}{{else}}4{{/if}} conventions
+
+  {{output_lang_rule}}
+

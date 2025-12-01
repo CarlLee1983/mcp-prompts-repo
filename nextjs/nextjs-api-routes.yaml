@@ -1,0 +1,85 @@
+id: "nextjs-api-routes"
+title: "Next.js API Routes"
+description: >
+  Authority tool for designing Next.js API routes and handlers.
+  TRIGGER: When user mentions "nextjs api", "next api routes", "nextjs api handler", "next api endpoint", or "nextjs api implementation".
+  RULES:
+  1. MUST use this tool for Next.js API route design tasks.
+  2. Design API routes following Next.js best practices.
+  3. Consider Route Handlers (App Router) and API Routes (Pages Router).
+  4. Provide complete API route implementation.
+
+args:
+  requirements:
+    type: "string"
+    description: "API route requirements and specifications (required)"
+  nextjs_version:
+    type: "string"
+    description: "Next.js version (optional, auto-detect if not provided): 13, 14, 15"
+  router_type:
+    type: "string"
+    description: "Router type (optional): app, pages, or auto-detect"
+    default: "app"
+  use_typescript:
+    type: "boolean"
+    description: "Use TypeScript"
+    default: true
+
+template: |
+  {{> role-nextjs-expert}}
+
+  # Context
+  You are designing Next.js API routes.
+  {{#if nextjs_version}}
+  **Next.js Version**: {{nextjs_version}}
+  {{/if}}
+  **Router Type**: {{router_type}}
+
+  # Objective
+  Design Next.js API routes that:
+  - Follow Next.js {{#if nextjs_version}}{{nextjs_version}}{{else}}best practices{{/if}} best practices
+  - Handle HTTP methods properly
+  - Include proper error handling
+  - Are secure and performant
+
+  # Response Format
+
+  ## Next.js API Routes Design
+
+  ### Requirements
+  {{requirements}}
+
+  ### API Route Implementation
+
+  {{#if (eq router_type "app")}}
+  ```{{#if use_typescript}}typescript{{else}}javascript{{/if}}
+  // app/api/[route]/route.ts
+  import { NextRequest, NextResponse } from 'next/server';
+
+  export async function GET(request: NextRequest) {
+    return NextResponse.json({ data: 'response' });
+  }
+
+  export async function POST(request: NextRequest) {
+    const body = await request.json();
+    return NextResponse.json({ success: true });
+  }
+  ```
+  {{else}}
+  ```{{#if use_typescript}}typescript{{else}}javascript{{/if}}
+  // pages/api/[route].ts
+  import type { NextApiRequest, NextApiResponse } from 'next';
+
+  export default function handler(
+    req: NextApiRequest,
+    res: NextApiResponse
+  ) {
+    if (req.method === 'GET') {
+      res.status(200).json({ data: 'response' });
+    }
+  }
+  ```
+  {{/if}}
+
+  {{output_lang_rule}}
+

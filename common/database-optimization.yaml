@@ -1,0 +1,294 @@
+id: "database-optimization"
+title: "Database Optimization"
+description: >
+  Authority tool for database optimization and query performance analysis.
+  TRIGGER: When user mentions "optimize database", "slow query", "database performance", "query optimization", "n+1 problem", or "eager loading".
+  RULES:
+  1. MUST use this tool for database and query optimization tasks.
+  2. Analyze database queries and structure for any ORM or query builder.
+  3. Identify N+1 problems, missing indexes, and inefficient queries.
+  4. Provide optimization strategies with code examples.
+
+args:
+  code:
+    type: "string"
+    description: "Code containing database queries (required)"
+  language:
+    type: "string"
+    description: "Programming language (optional, auto-detect if not provided): php, javascript, python, etc."
+  orm:
+    type: "string"
+    description: "ORM or query builder (optional, e.g., eloquent, sequelize, sqlalchemy, typeorm)"
+  database:
+    type: "string"
+    description: "Database type (optional, e.g., mysql, postgresql, sqlite, mongodb)"
+  focus:
+    type: "string"
+    description: "Focus area (optional): queries, indexes, relationships, migrations, or all"
+  include_explain:
+    type: "boolean"
+    description: "Include EXPLAIN query analysis"
+    default: true
+  suggest_indexes:
+    type: "boolean"
+    description: "Suggest database indexes"
+    default: true
+
+template: |
+  {{> role-expert}}
+
+  # Context
+  You are analyzing database queries and structure for optimization opportunities.
+
+  {{#if language}}
+  **Programming Language**: {{language}}
+  {{/if}}
+  {{#if orm}}
+  **ORM/Query Builder**: {{orm}}
+  {{/if}}
+  {{#if database}}
+  **Database**: {{database}}
+  {{/if}}
+
+  # Objective
+  Optimize database performance by:
+  - Identifying N+1 query problems
+  - Analyzing query efficiency
+  - Suggesting proper eager loading/prefetching
+  - Recommending database indexes
+  - Optimizing relationships/joins
+  - Improving query structure
+
+  # Style
+  Provide detailed analysis with before/after code examples and performance metrics.
+
+  # Tone
+  Technical, performance-focused, and solution-oriented.
+
+  # Audience
+  Developers working on database performance optimization.
+
+  # Response Format
+
+  ## Database Optimization Analysis
+
+  ### Code to Analyze
+  ```{{#if language}}{{language}}{{else}}code{{/if}}
+  {{code}}
+  ```
+
+  {{#if focus}}
+  ### Focus Area
+  **Requested focus**: {{focus}}
+  {{else}}
+  ### Comprehensive Analysis
+  Analyzing all aspects: queries, indexes, relationships, and structure.
+  {{/if}}
+
+  ### Issues Identified
+
+  #### 1. Query Performance Issues
+
+  **N+1 Query Problems**:
+  - [Identify N+1 problems]
+  - [List affected relationships/associations]
+  - [Calculate query count impact]
+  - [Explain performance impact]
+
+  **Inefficient Queries**:
+  - [List inefficient queries]
+  - [Explain why they're inefficient]
+  - [Estimate performance impact]
+  - [Identify full table scans]
+
+  **Missing Eager Loading/Prefetching**:
+  - [Identify relationships that need eager loading]
+  - [List affected code sections]
+  - [Suggest eager loading strategies]
+
+  {{#if include_explain}}
+  #### 2. Query Execution Analysis
+  ```
+  [If possible, provide EXPLAIN/EXPLAIN ANALYZE output for key queries]
+  ```
+  
+  Analyze:
+  - Query execution plan
+  - Index usage
+  - Full table scans
+  - Join strategies
+  - Estimated vs actual row counts
+  {{/if}}
+
+  {{#if suggest_indexes}}
+  #### 3. Index Analysis
+
+  **Missing Indexes**:
+  - [List columns that need indexes]
+  - [Explain why indexes are needed]
+  - [Provide index creation statements]
+
+  **Unused Indexes**:
+  - [Identify potentially unused indexes]
+  - [Recommend removal if applicable]
+  - [Consider maintenance overhead]
+
+  **Composite Indexes**:
+  - [Suggest composite indexes for common query patterns]
+  - [Consider column order for optimal performance]
+  - [Balance between read and write performance]
+  {{/if}}
+
+  #### 4. Relationship/Join Optimization
+
+  **Eager Loading Opportunities**:
+  - [Identify relationships to eager load]
+  - [Suggest eager loading strategies]
+  - [Consider nested relationships]
+
+  **Join Optimization**:
+  - [Review join strategies]
+  - [Suggest join optimizations]
+  - [Consider join order]
+
+  ### Optimization Strategies
+
+  #### Strategy 1: Eager Loading/Prefetching
+
+  **Before** (N+1 Problem):
+  ```
+  [Example showing N+1 problem]
+  // Fetching parent records
+  // Then fetching related records in a loop (N+1 queries)
+  ```
+
+  **After** (Optimized):
+  ```
+  [Example showing eager loading solution]
+  // Fetching parent records with related records in a single query
+  ```
+
+  **Performance Impact**: [Explain improvement]
+
+  #### Strategy 2: Query Optimization
+
+  **Before** (Inefficient):
+  ```
+  [Example of inefficient query]
+  // Loading all records then filtering in application code
+  ```
+
+  **After** (Optimized):
+  ```
+  [Example of optimized query]
+  // Filtering at database level
+  // Using proper WHERE clauses
+  // Using subqueries or joins when appropriate
+  ```
+
+  **Performance Impact**: [Explain improvement]
+
+  #### Strategy 3: Database Indexes
+
+  {{#if suggest_indexes}}
+  **Index Creation**:
+  ```
+  [Provide index creation statements for the specific database]
+  ```
+
+  **Recommended Indexes**:
+  - [List recommended indexes with rationale]
+  - [Explain index types (B-tree, Hash, etc.)]
+  - [Consider partial indexes if applicable]
+  {{else}}
+  Index suggestions are disabled. Enable suggest_indexes for detailed index recommendations.
+  {{/if}}
+
+  #### Strategy 4: Query Structure Optimization
+
+  **Select Only Needed Columns**:
+  - [Avoid SELECT *]
+  - [Select only required columns]
+  - [Reduce data transfer]
+
+  **Limit and Pagination**:
+  - [Use LIMIT/OFFSET or cursor-based pagination]
+  - [Avoid loading all records]
+  - [Consider pagination strategies]
+
+  **Subquery vs Join**:
+  - [Choose appropriate query structure]
+  - [Consider performance implications]
+  - [Use EXISTS vs IN appropriately]
+
+  #### Strategy 5: Batch Processing
+
+  **Chunking for Large Datasets**:
+  ```
+  [Example of chunking/batching large datasets]
+  // Process records in batches
+  // Avoid memory issues
+  // Maintain performance
+  ```
+
+  **Bulk Operations**:
+  - [Use bulk insert/update when possible]
+  - [Reduce round trips to database]
+  - [Consider batch size]
+
+  ### Optimized Code
+
+  ```{{#if language}}{{language}}{{else}}code{{/if}}
+  [Provide complete optimized code with all improvements applied]
+  ```
+
+  ### Performance Metrics
+
+  **Before Optimization**:
+  - Query Count: [Number]
+  - Execution Time: [Time]
+  - Memory Usage: [Memory]
+  - Database Load: [Assessment]
+
+  **After Optimization**:
+  - Query Count: [Number] (Reduced by X%)
+  - Execution Time: [Time] (Improved by X%)
+  - Memory Usage: [Memory] (Reduced by X%)
+  - Database Load: [Assessment]
+
+  ### Best Practices Checklist
+
+  - [ ] All relationships use eager loading/prefetching when needed
+  - [ ] No N+1 query problems
+  - [ ] Appropriate indexes on foreign keys and frequently queried columns
+  - [ ] Queries use indexes effectively
+  - [ ] Large datasets processed in chunks/batches
+  - [ ] Query builders/scopes used for reusable query logic
+  - [ ] Database transactions used for data integrity
+  - [ ] Proper use of database-specific features
+  - [ ] Connection pooling configured appropriately
+  - [ ] Query result caching considered where appropriate
+
+  ### Additional Recommendations
+
+  1. **Caching Strategy**: [Suggest caching opportunities]
+     - Query result caching
+     - Application-level caching
+     - Database query cache
+
+  2. **Database Configuration**: [Suggest config optimizations]
+     - Connection pool settings
+     - Query timeout settings
+     - Buffer pool settings
+
+  3. **Monitoring**: [Suggest query monitoring tools]
+     - Query performance monitoring
+     - Slow query logging
+     - Database performance metrics
+
+  4. **Testing**: [Suggest performance testing approaches]
+     - Load testing
+     - Query performance testing
+     - Benchmarking
+
+  {{output_lang_rule}}

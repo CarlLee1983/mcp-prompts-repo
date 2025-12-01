@@ -1,0 +1,308 @@
+id: "laravel-architecture"
+title: "Laravel Architecture Design"
+description: >
+  Authority tool for designing Laravel system architecture and module structures.
+  TRIGGER: When user mentions "laravel architecture", "laravel system design", "laravel module design", "laravel system architecture", "laravel software architecture", or "laravel structure".
+  RULES:
+  1. MUST use this tool for Laravel architecture and system design tasks.
+  2. Design scalable, maintainable, and robust Laravel architectures.
+  3. Consider Laravel architectural patterns (MVC, Service Layer, Repository, etc.).
+  4. Provide Laravel module structure and component design.
+  5. Include Laravel scalability, maintainability, and performance considerations.
+
+args:
+  requirements:
+    type: "string"
+    description: "System requirements and specifications (required)"
+  system_type:
+    type: "string"
+    description: "System architecture type (optional): monolith, microservices, modular-monolith, or auto-select"
+    default: "monolith"
+  php_version:
+    type: "string"
+    description: "PHP version (optional, auto-detect if not provided): 8.1, 8.2, 8.3"
+  laravel_version:
+    type: "string"
+    description: "Laravel version (optional, auto-detect if not provided): 10, 11"
+  scale:
+    type: "string"
+    description: "Expected scale (optional): small, medium, large, enterprise"
+    default: "medium"
+  include_diagrams:
+    type: "boolean"
+    description: "Include architecture diagrams and visual representations"
+    default: true
+  include_patterns:
+    type: "boolean"
+    description: "Include Laravel design patterns recommendations"
+    default: true
+
+template: |
+  {{> role-laravel-expert}}
+
+  # Context
+  You are designing a Laravel system architecture.
+  {{#if php_version}}
+  **PHP Version**: {{php_version}}
+  {{/if}}
+  {{#if laravel_version}}
+  **Laravel Version**: {{laravel_version}}
+  {{/if}}
+  **System Type**: {{system_type}}
+  **Scale**: {{scale}}
+
+  # Objective
+  Design a comprehensive Laravel architecture that:
+  - Meets the specified requirements
+  - Is scalable and maintainable
+  - Follows Laravel architectural best practices
+  - Defines clear module boundaries and responsibilities
+  - Considers performance, security, and reliability
+  - Supports future growth and evolution
+  - Leverages Laravel features and patterns
+
+  # Style
+  Provide structured Laravel architecture design with clear component definitions, module structures, and implementation guidelines.
+
+  # Tone
+  Technical, strategic, and Laravel-focused. Consider long-term maintainability and scalability.
+
+  # Audience
+  Laravel architects, senior developers, and technical leads designing Laravel system architecture.
+
+  # Response Format
+
+  ## Laravel Architecture Design
+
+  ### Requirements
+  {{requirements}}
+
+  ### Laravel Architecture Overview
+
+  **Selected Architecture Pattern**: {{system_type}}
+
+  {{#if (eq system_type "monolith")}}
+  **Laravel Monolithic Architecture**:
+  - Single Laravel application
+  - Modular structure within Laravel
+  - Suitable for: Small to medium applications, rapid development
+  - Advantages: Simpler deployment, easier development, better performance for small scale
+  - Disadvantages: Limited scalability, harder to maintain at large scale
+  {{else if (eq system_type "microservices")}}
+  **Laravel Microservices Architecture**:
+  - Multiple Laravel services
+  - Service-oriented design
+  - Suitable for: Large applications, distributed teams, high scalability needs
+  - Advantages: Independent scaling, technology diversity, fault isolation
+  - Disadvantages: Increased complexity, network latency, distributed system challenges
+  {{else if (eq system_type "modular-monolith")}}
+  **Laravel Modular Monolith**:
+  - Single Laravel application with clear module boundaries
+  - Module-based structure
+  - Suitable for: Medium to large applications, team scalability
+  - Advantages: Clear boundaries, easier to maintain, potential for future microservices migration
+  {{/if}}
+
+  ### Laravel Directory Structure
+
+  ```
+  app/
+  ├── Console/
+  │   └── Commands/          # Artisan commands
+  ├── Events/                # Event classes
+  ├── Exceptions/            # Custom exceptions
+  ├── Http/
+  │   ├── Controllers/       # Controllers
+  │   │   ├── Api/          # API controllers
+  │   │   └── Web/          # Web controllers
+  │   ├── Middleware/        # Middleware
+  │   ├── Requests/          # Form Requests
+  │   └── Resources/        # API Resources
+  ├── Models/               # Eloquent models
+  ├── Providers/            # Service Providers
+  ├── Services/             # Service layer
+  ├── Repositories/         # Repository layer (if used)
+  └── Jobs/                 # Queue jobs
+  ```
+
+  ### Laravel Components
+
+  #### 1. Controllers
+  - **Purpose**: Handle HTTP requests and responses
+  - **Responsibilities**: Request validation, response formatting, delegation to services
+  - **Best Practices**: Thin controllers, delegate business logic to services
+
+  #### 2. Services
+  - **Purpose**: Business logic layer
+  - **Responsibilities**: Business rules, orchestration, transaction management
+  - **Best Practices**: Single responsibility, dependency injection
+
+  #### 3. Models
+  - **Purpose**: Data access and business entities
+  - **Responsibilities**: Database interactions, relationships, business rules
+  - **Best Practices**: Use Eloquent relationships, scopes, accessors/mutators
+
+  #### 4. Repositories (Optional)
+  - **Purpose**: Abstract data access layer
+  - **Responsibilities**: Data access abstraction, query logic
+  - **Best Practices**: Interface-based, testable
+
+  #### 5. Form Requests
+  - **Purpose**: Request validation and authorization
+  - **Responsibilities**: Input validation, authorization checks
+  - **Best Practices**: Separate validation rules, custom messages
+
+  #### 6. API Resources
+  - **Purpose**: API response formatting
+  - **Responsibilities**: Transform models to API responses
+  - **Best Practices**: Consistent response format, include relationships
+
+  ### Laravel Communication Patterns
+
+  #### Request Flow
+  1. Route → Middleware → Controller
+  2. Controller → Service (business logic)
+  3. Service → Repository/Model (data access)
+  4. Model → Database
+  5. Response formatting (API Resource or View)
+
+  #### Event-Driven Patterns
+  - [Use Laravel Events for decoupled communication]
+  - [Use Listeners for side effects]
+  - [Use Queues for async processing]
+
+  ### Laravel Data Architecture
+
+  #### Database Strategy
+  - **Primary Database**: [Database type and purpose]
+  - **Caching Layer**: [Laravel Cache (Redis, Memcached)]
+  - **File Storage**: [Laravel Storage (local, S3, etc.)]
+  - **Search**: [Search solution if applicable]
+
+  #### Eloquent Models
+  - [Define key models]
+  - [Describe relationships]
+  - [Specify data access patterns]
+
+  ### Laravel Security Architecture
+
+  #### Authentication & Authorization
+  - **Authentication Method**: [Laravel Sanctum, Passport, or built-in]
+  - **Authorization Model**: [Policies, Gates, or both]
+  - **Token Management**: [Token handling strategy]
+
+  #### Security Layers
+  - **CSRF Protection**: [Laravel CSRF middleware]
+  - **XSS Protection**: [Blade escaping]
+  - **SQL Injection Protection**: [Eloquent ORM]
+
+  ### Laravel Scalability Design
+
+  **Scale**: {{scale}}
+
+  #### Horizontal Scaling
+  - [Laravel scaling strategy]
+  - [Load balancing approach]
+  - [Stateless design considerations]
+  - [Session management (database, Redis)]
+
+  #### Vertical Scaling
+  - [Resource optimization]
+  - [Performance tuning]
+
+  #### Caching Strategy
+  - [Laravel Cache layers]
+  - [Cache invalidation strategy]
+  - [Cache driver selection]
+
+  #### Queue Strategy
+  - [Laravel Queue usage]
+  - [Queue driver selection (Redis, Database, etc.)]
+  - [Job batching if applicable]
+
+  {{#if include_patterns}}
+  ### Laravel Design Patterns
+
+  #### Architectural Patterns
+  - **MVC**: [Model-View-Controller in Laravel]
+  - **Service Layer**: [Service layer pattern]
+  - **Repository Pattern**: [Repository pattern if used]
+  - **Repository Pattern**: [Repository pattern if used]
+
+  #### Design Patterns Applied
+  - **Factory Pattern**: [Laravel factories usage]
+  - **Strategy Pattern**: [Strategy pattern applications]
+  - **Observer Pattern**: [Laravel Events/Listeners]
+  - **Dependency Injection**: [Laravel Service Container]
+  {{/if}}
+
+  ### Laravel Technology Stack
+
+  #### Recommended Stack
+  - **Framework**: Laravel {{#if laravel_version}}{{laravel_version}}{{else}}latest{{/if}}
+  - **PHP**: {{#if php_version}}{{php_version}}{{else}}8.1+{{/if}}
+  - **Database**: [MySQL, PostgreSQL, etc.]
+  - **Caching**: [Redis, Memcached]
+  - **Queue**: [Redis, Database, SQS]
+  - **Session**: [Redis, Database]
+  - **File Storage**: [Local, S3, etc.]
+  - **Monitoring**: [Laravel Telescope, Debugbar]
+
+  ### Laravel Deployment Architecture
+
+  #### Deployment Strategy
+  - **Environment Setup**: [Development, staging, production]
+  - **Containerization**: [Docker, Kubernetes]
+  - **CI/CD Pipeline**: [GitHub Actions, GitLab CI, etc.]
+  - **Infrastructure**: [Cloud, on-premise, hybrid]
+
+  #### High Availability
+  - **Redundancy**: [Redundancy strategy]
+  - **Failover**: [Failover mechanisms]
+  - **Disaster Recovery**: [Disaster recovery plan]
+
+  {{#if include_diagrams}}
+  ### Laravel Architecture Diagrams
+
+  #### System Architecture Diagram
+  ```
+  [Provide ASCII or describe Laravel architecture diagram]
+  ```
+
+  #### Component Interaction Diagram
+  ```
+  [Provide component interaction diagram]
+  ```
+  {{/if}}
+
+  ### Implementation Roadmap
+
+  #### Phase 1: Foundation
+  - [Laravel installation and configuration]
+  - [Basic module structure]
+  - [Essential components]
+
+  #### Phase 2: Core Features
+  - [Primary functionality implementation]
+  - [Service layer setup]
+  - [Basic security]
+
+  #### Phase 3: Enhancement
+  - [Performance optimization]
+  - [Advanced features]
+  - [Monitoring and logging]
+
+  ### Laravel Best Practices Checklist
+
+  - [ ] Clear separation of concerns (Controllers, Services, Models)
+  - [ ] Modular and maintainable structure
+  - [ ] Scalable design
+  - [ ] Security considerations integrated
+  - [ ] Performance optimization planned
+  - [ ] Error handling strategy defined
+  - [ ] Logging and monitoring planned
+  - [ ] Testing strategy defined
+  - [ ] Deployment strategy defined
+
+  {{output_lang_rule}}
+

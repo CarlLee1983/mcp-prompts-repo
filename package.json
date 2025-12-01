@@ -1,0 +1,28 @@
+{
+    "name": "my-prompts-repo",
+    "version": "1.0.0",
+    "description": "Prompt templates repository for MCP Prompt Manager",
+    "type": "module",
+    "main": "scripts/pm.js",
+    "scripts": {
+        "init": "node scripts/pm.js init",
+        "validate": "node scripts/pm.js validate",
+        "list": "node scripts/pm.js list",
+        "config": "node scripts/pm.js config",
+        "check": "node scripts/pm.js validate",
+        "add": "node scripts/pm.js add",
+        "docs": "node scripts/pm.js docs"
+    },
+    "keywords": [
+        "prompt",
+        "template",
+        "mcp",
+        "handlebars"
+    ],
+    "author": "CarlLee1983",
+    "license": "ISC",
+    "packageManager": "pnpm@10.20.0",
+    "dependencies": {
+        "js-yaml": "^4.1.1"
+    }
+}

@@ -1,0 +1,361 @@
+id: "vue-api-integration"
+title: "Vue API Integration"
+description: >
+  Authority tool for Vue 3 API integration patterns and implementation.
+  TRIGGER: When user mentions "vue api", "vue fetch", "vue axios", "vue composable api", "vue api integration", or "vue http client".
+  RULES:
+  1. MUST use this tool for Vue 3 API integration tasks.
+  2. Implement API integration using Vue 3 Composition API patterns.
+  3. Provide composables for API calls with proper error handling and loading states.
+  4. Follow Vue 3 best practices for API integration.
+
+args:
+  api_endpoint:
+    type: "string"
+    description: "API endpoint or resource name (e.g., /api/users, users)"
+  vue_version:
+    type: "string"
+    description: "Vue version (optional, auto-detect if not provided): 3"
+  http_client:
+    type: "string"
+    description: "HTTP client library (optional, e.g., axios, fetch, ky)"
+  include_typescript:
+    type: "boolean"
+    description: "Include TypeScript types and interfaces"
+    default: false
+
+template: |
+  {{> role-vue-expert}}
+
+  # Context
+  You are implementing API integration in Vue 3.
+
+  {{#if vue_version}}
+  **Vue Version**: {{vue_version}}
+  {{else}}
+  **Vue Version**: Auto-detecting from code...
+  {{/if}}
+
+  {{#if http_client}}
+  **HTTP Client**: {{http_client}}
+  {{else}}
+  **HTTP Client**: Using fetch API (default) or auto-detect from code
+  {{/if}}
+
+  # Objective
+  Implement a complete Vue 3 API integration including:
+  - Composable for API calls
+  - Loading and error states
+  - TypeScript types (if requested)
+  - Error handling
+  - Response caching (optional)
+  - Retry logic (optional)
+
+  # Style
+  Provide complete Vue 3 Composition API implementation code.
+
+  # Tone
+  Technical, comprehensive, and implementation-focused.
+
+  # Audience
+  Vue 3 developers implementing API integrations.
+
+  # Response Format
+
+  ## Vue 3 API Integration
+
+  ### API Endpoint: {{api_endpoint}}
+
+  ### Composable Implementation
+
+  {{#if include_typescript}}
+  #### TypeScript Types
+
+  ```typescript
+  // types/api.ts
+  export interface {{resource}} {
+    id: number
+    // Add resource properties
+  }
+
+  export interface {{resource}}Response {
+    data: {{resource}}[]
+    meta?: {
+      pagination?: {
+        page: number
+        per_page: number
+        total: number
+      }
+    }
+  }
+
+  export interface ApiError {
+    code: string
+    message: string
+    details?: Record<string, any>
+  }
+  ```
+  {{/if}}
+
+  #### Composable: use{{resource}}Api
+
+  {{#if include_typescript}}
+  ```typescript
+  import { ref, computed } from 'vue'
+  import type { {{resource}}, {{resource}}Response, ApiError } from '@/types/api'
+  {{else}}
+  ```javascript
+  import { ref, computed } from 'vue'
+  {{/if}}
+
+  {{#if (eq http_client "axios")}}
+  import axios from 'axios'
+  {{else if (eq http_client "ky")}}
+  import ky from 'ky'
+  {{/if}}
+
+  export function use{{resource}}Api() {
+    const loading = ref(false)
+    const error = ref(null)
+    const data = ref(null)
+
+    const fetch{{resource}} = async (params = {}) => {
+      loading.value = true
+      error.value = null
+      
+      try {
+        {{#if (eq http_client "axios")}}
+        const response = await axios.get('{{api_endpoint}}', { params })
+        data.value = response.data
+        return response.data
+        {{else if (eq http_client "ky")}}
+        const response = await ky.get('{{api_endpoint}}', { searchParams: params }).json()
+        data.value = response
+        return response
+        {{else}}
+        const queryString = new URLSearchParams(params).toString()
+        const url = `{{api_endpoint}}${queryString ? '?' + queryString : ''}`
+        const response = await fetch(url)
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        
+        const json = await response.json()
+        data.value = json
+        return json
+        {{/if}}
+      } catch (err) {
+        error.value = err
+        throw err
+      } finally {
+        loading.value = false
+      }
+    }
+
+    const create{{resource}} = async (payload) => {
+      loading.value = true
+      error.value = null
+      
+      try {
+        {{#if (eq http_client "axios")}}
+        const response = await axios.post('{{api_endpoint}}', payload)
+        return response.data
+        {{else if (eq http_client "ky")}}
+        const response = await ky.post('{{api_endpoint}}', { json: payload }).json()
+        return response
+        {{else}}
+        const response = await fetch('{{api_endpoint}}', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        })
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        
+        return await response.json()
+        {{/if}}
+      } catch (err) {
+        error.value = err
+        throw err
+      } finally {
+        loading.value = false
+      }
+    }
+
+    const update{{resource}} = async (id, payload) => {
+      loading.value = true
+      error.value = null
+      
+      try {
+        {{#if (eq http_client "axios")}}
+        const response = await axios.put(`{{api_endpoint}}/${id}`, payload)
+        return response.data
+        {{else if (eq http_client "ky")}}
+        const response = await ky.put(`{{api_endpoint}}/${id}`, { json: payload }).json()
+        return response
+        {{else}}
+        const response = await fetch(`{{api_endpoint}}/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        })
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        
+        return await response.json()
+        {{/if}}
+      } catch (err) {
+        error.value = err
+        throw err
+      } finally {
+        loading.value = false
+      }
+    }
+
+    const delete{{resource}} = async (id) => {
+      loading.value = true
+      error.value = null
+      
+      try {
+        {{#if (eq http_client "axios")}}
+        await axios.delete(`{{api_endpoint}}/${id}`)
+        {{else if (eq http_client "ky")}}
+        await ky.delete(`{{api_endpoint}}/${id}`)
+        {{else}}
+        const response = await fetch(`{{api_endpoint}}/${id}`, {
+          method: 'DELETE',
+        })
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        {{/if}}
+      } catch (err) {
+        error.value = err
+        throw err
+      } finally {
+        loading.value = false
+      }
+    }
+
+    return {
+      loading: computed(() => loading.value),
+      error: computed(() => error.value),
+      data: computed(() => data.value),
+      fetch{{resource}},
+      create{{resource}},
+      update{{resource}},
+      delete{{resource}},
+    }
+  }
+  ```
+
+  ### Component Usage
+
+  ```vue
+  <script setup>
+  import { use{{resource}}Api } from '@/composables/use{{resource}}Api'
+  import { onMounted } from 'vue'
+
+  const { loading, error, data, fetch{{resource}}, create{{resource}} } = use{{resource}}Api()
+
+  onMounted(async () => {
+    try {
+      await fetch{{resource}}()
+    } catch (err) {
+      console.error('Failed to fetch:', err)
+    }
+  })
+
+  const handleCreate = async (formData) => {
+    try {
+      await create{{resource}}(formData)
+      // Refresh list
+      await fetch{{resource}}()
+    } catch (err) {
+      console.error('Failed to create:', err)
+    }
+  }
+  </script>
+
+  <template>
+    <div>
+      <div v-if="loading">Loading...</div>
+      <div v-else-if="error">Error: {{ error.message }}</div>
+      <div v-else>
+        <!-- Display data -->
+      </div>
+    </div>
+  </template>
+  ```
+
+  ### Error Handling
+
+  #### Standard Error Response Format
+  ```json
+  {
+    "error": {
+      "code": "ERROR_CODE",
+      "message": "Human-readable message",
+      "details": {}
+    }
+  }
+  ```
+
+  #### Error Handling in Composable
+  ```javascript
+  // Enhanced error handling
+  const handleApiError = (error) => {
+    if (error.response) {
+      // Server responded with error
+      const { status, data } = error.response
+      switch (status) {
+        case 400:
+          // Bad request
+          break
+        case 401:
+          // Unauthorized - redirect to login
+          break
+        case 403:
+          // Forbidden
+          break
+        case 404:
+          // Not found
+          break
+        case 422:
+          // Validation error
+          break
+        case 500:
+          // Server error
+          break
+      }
+    } else if (error.request) {
+      // Request made but no response
+    } else {
+      // Error setting up request
+    }
+  }
+  ```
+
+  ### Best Practices
+
+  1. **Composables**: Use composables for reusable API logic
+  2. **Loading States**: Always provide loading indicators
+  3. **Error Handling**: Handle errors gracefully with user-friendly messages
+  4. **TypeScript**: Use TypeScript for type safety (if applicable)
+  5. **Caching**: Consider response caching for better performance
+  6. **Retry Logic**: Implement retry logic for failed requests
+  7. **Request Cancellation**: Cancel requests when component unmounts
+  8. **Response Transformation**: Transform API responses to match component needs
+
+  {{output_lang_rule}}
+

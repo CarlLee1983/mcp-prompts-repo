@@ -1,0 +1,276 @@
+id: "laravel-security"
+title: "Laravel Security Audit"
+description: >
+  Authority tool for comprehensive Laravel security vulnerability assessment and security audit.
+  TRIGGER: When user mentions "laravel security audit", "laravel security review", "laravel vulnerability", "laravel security check", "laravel security scan", "laravel owasp", or "laravel security assessment".
+  RULES:
+  1. MUST use this tool for Laravel security audit and vulnerability assessment tasks.
+  2. Focus on identifying Laravel-specific security vulnerabilities and risks.
+  3. Check against OWASP Top 10, Laravel security features, and best practices.
+  4. Provide actionable Laravel security recommendations.
+  5. Prioritize vulnerabilities by severity and impact.
+
+args:
+  code:
+    type: "string"
+    description: "Laravel code to audit for security vulnerabilities (required)"
+  php_version:
+    type: "string"
+    description: "PHP version (optional, auto-detect if not provided): 8.1, 8.2, 8.3"
+  laravel_version:
+    type: "string"
+    description: "Laravel version (optional, auto-detect if not provided): 10, 11"
+  focus:
+    type: "string"
+    description: "Security focus area (optional): injection, xss, csrf, auth, encryption, input_validation, or all"
+  compliance:
+    type: "string"
+    description: "Compliance standards (optional): owasp, cwe, pci_dss, gdpr"
+  severity_level:
+    type: "string"
+    description: "Severity level filter (optional): critical, high, medium, low, or all"
+    default: "all"
+
+template: |
+  {{> role-laravel-expert}}
+
+  # Context
+  You are performing a comprehensive security audit on Laravel code.
+  {{#if php_version}}
+  **PHP Version**: {{php_version}}
+  {{/if}}
+  {{#if laravel_version}}
+  **Laravel Version**: {{laravel_version}}
+  {{/if}}
+  {{#if compliance}}
+  **Compliance Standards**: {{compliance}}
+  {{/if}}
+
+  # Objective
+  Conduct a thorough Laravel security audit to identify:
+  - SQL injection vulnerabilities (check Eloquent usage)
+  - Cross-Site Scripting (XSS) vulnerabilities
+  - Cross-Site Request Forgery (CSRF) vulnerabilities
+  - Authentication and authorization weaknesses
+  - Encryption and sensitive data handling issues
+  - Input validation and sanitization problems
+  - Laravel security misconfigurations
+  - Insecure dependencies
+  - Laravel-specific security vulnerabilities
+
+  # Style
+  Provide structured Laravel security audit report with vulnerability classifications, severity ratings, and remediation recommendations.
+
+  # Tone
+  Technical, security-focused, and urgent. Prioritize critical vulnerabilities that pose immediate risks.
+
+  # Audience
+  Security engineers, Laravel developers, and security-conscious development teams.
+
+  # Response Format
+
+  ## Laravel Security Audit Report
+
+  ### Code to Audit
+  ```php
+  {{code}}
+  ```
+
+  {{#if focus}}
+  ### Security Focus Area
+  **Requested focus**: {{focus}}
+  {{else}}
+  ### Comprehensive Security Audit
+  Analyzing all security aspects: injection, XSS, CSRF, authentication, encryption, and input validation.
+  {{/if}}
+
+  ### Vulnerabilities Identified
+
+  {{#if (or (eq focus "injection") (eq focus "all"))}}
+  #### 1. SQL Injection Vulnerabilities
+
+  **Raw Query Vulnerabilities**:
+  - [Identify DB::raw() or DB::select() with user input]
+  - [List affected code sections]
+  - **Severity**: [Critical/High]
+  - **Impact**: [Potential data breach, data loss]
+  - **Remediation**: [Use Eloquent or parameterized queries]
+
+  **Example Vulnerable Code**:
+  ```php
+  // VULNERABLE: SQL Injection
+  DB::select("SELECT * FROM users WHERE email = '" . $email . "'");
+  ```
+
+  **Example Secure Code**:
+  ```php
+  // SECURE: Eloquent
+  User::where('email', $email)->first();
+  
+  // SECURE: Parameterized Query
+  DB::select('SELECT * FROM users WHERE email = ?', [$email]);
+  ```
+  {{/if}}
+
+  {{#if (or (eq focus "xss") (eq focus "all"))}}
+  #### 2. Cross-Site Scripting (XSS) Vulnerabilities
+
+  **Blade Template XSS**:
+  - [Identify unescaped user input in Blade templates]
+  - [List affected templates]
+  - **Severity**: [Critical/High]
+  - **Impact**: [Session hijacking, data theft]
+  - **Remediation**: [Use {{ }} instead of {!! !!} for user input]
+
+  **Example Vulnerable Code**:
+  ```blade
+  <!-- VULNERABLE: XSS -->
+  {!! $userInput !!}
+  ```
+
+  **Example Secure Code**:
+  ```blade
+  <!-- SECURE: Escaped -->
+  {{ $userInput }}
+  ```
+  {{/if}}
+
+  {{#if (or (eq focus "csrf") (eq focus "all"))}}
+  #### 3. CSRF Protection Issues
+
+  **Missing CSRF Protection**:
+  - [Identify routes without CSRF protection]
+  - [List affected endpoints]
+  - **Severity**: [High/Medium]
+  - **Impact**: [Unauthorized actions]
+  - **Remediation**: [Ensure @csrf in forms, verify CSRF token in API]
+
+  **Example Secure Implementation**:
+  ```blade
+  <form method="POST">
+      @csrf
+      <!-- Form fields -->
+  </form>
+  ```
+  {{/if}}
+
+  {{#if (or (eq focus "auth") (eq focus "all"))}}
+  #### 4. Authentication and Authorization Vulnerabilities
+
+  **Weak Authentication**:
+  - [Identify weak password policies]
+  - [Identify insecure session management]
+  - **Severity**: [Critical/High]
+  - **Impact**: [Unauthorized access]
+  - **Remediation**: [Use Laravel's built-in authentication, implement strong password policies]
+
+  **Insufficient Authorization**:
+  - [Identify missing authorization checks]
+  - [Identify missing Policy/Gate usage]
+  - **Severity**: [Critical/High]
+  - **Impact**: [Unauthorized access to resources]
+  - **Remediation**: [Use Laravel Policies and Gates]
+
+  **Example Secure Implementation**:
+  ```php
+  // Using Policies
+  $this->authorize('update', $post);
+  
+  // Using Gates
+  Gate::authorize('update-post', $post);
+  ```
+  {{/if}}
+
+  {{#if (or (eq focus "input_validation") (eq focus "all"))}}
+  #### 5. Input Validation Issues
+
+  **Missing Form Request Validation**:
+  - [Identify unvalidated user input]
+  - [List affected code sections]
+  - **Severity**: [High/Medium]
+  - **Impact**: [Injection attacks, data corruption]
+  - **Remediation**: [Use Laravel Form Requests]
+
+  **Example Secure Implementation**:
+  ```php
+  // Form Request
+  class StoreUserRequest extends FormRequest
+  {
+      public function rules()
+      {
+          return [
+              'email' => 'required|email|unique:users',
+              'password' => 'required|min:8',
+          ];
+      }
+  }
+  ```
+  {{/if}}
+
+  ### Laravel Security Features Check
+
+  #### CSRF Protection
+  - [ ] CSRF middleware is enabled
+  - [ ] @csrf tokens are used in forms
+  - [ ] API CSRF protection is configured (if needed)
+
+  #### XSS Protection
+  - [ ] Blade templates escape user input by default
+  - [ ] {!! !!} is only used for trusted content
+  - [ ] Output is properly sanitized
+
+  #### SQL Injection Protection
+  - [ ] Eloquent ORM is used (not raw queries with user input)
+  - [ ] Parameterized queries are used when needed
+  - [ ] Mass assignment protection is enabled
+
+  #### Authentication
+  - [ ] Laravel's authentication system is used
+  - [ ] Password hashing is handled by Laravel
+  - [ ] Session security is configured
+
+  #### Authorization
+  - [ ] Policies or Gates are implemented
+  - [ ] Authorization checks are in place
+  - [ ] Role-based access control is properly configured
+
+  ### OWASP Top 10 Compliance
+
+  - [ ] **A01: Broken Access Control** - [Assessment]
+  - [ ] **A02: Cryptographic Failures** - [Assessment]
+  - [ ] **A03: Injection** - [Assessment]
+  - [ ] **A04: Insecure Design** - [Assessment]
+  - [ ] **A05: Security Misconfiguration** - [Assessment]
+  - [ ] **A06: Vulnerable and Outdated Components** - [Assessment]
+  - [ ] **A07: Identification and Authentication Failures** - [Assessment]
+  - [ ] **A08: Software and Data Integrity Failures** - [Assessment]
+  - [ ] **A09: Security Logging and Monitoring Failures** - [Assessment]
+  - [ ] **A10: Server-Side Request Forgery (SSRF)** - [Assessment]
+
+  ### Remediation Priority
+
+  #### Immediate Action Required (Critical)
+  1. [Critical vulnerability 1] - [Remediation steps]
+  2. [Critical vulnerability 2] - [Remediation steps]
+
+  #### High Priority (Address Soon)
+  1. [High severity vulnerability 1] - [Remediation steps]
+  2. [High severity vulnerability 2] - [Remediation steps]
+
+  ### Laravel Security Best Practices
+
+  - [ ] All user input is validated using Form Requests
+  - [ ] Eloquent ORM is used (avoid raw queries with user input)
+  - [ ] Blade templates escape output by default
+  - [ ] CSRF protection is enabled
+  - [ ] Strong authentication mechanisms are in place
+  - [ ] Proper authorization checks are implemented (Policies/Gates)
+  - [ ] Sensitive data is encrypted
+  - [ ] Secure session management is configured
+  - [ ] Error messages don't expose sensitive information
+  - [ ] Dependencies are kept up-to-date
+  - [ ] Security headers are properly configured
+  - [ ] Logging and monitoring are implemented
+
+  {{output_lang_rule}}
+

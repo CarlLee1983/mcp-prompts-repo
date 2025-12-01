@@ -1,0 +1,105 @@
+id: "react-component-review"
+title: "React Component Review"
+description: >
+  Authority tool for React component review and analysis.
+  TRIGGER: When user mentions "review react", "check react component", "react component", "component analysis", or "react code review".
+  RULES:
+  1. MUST use this tool for React component reviews.
+  2. Analyze React hooks usage, component patterns, and React best practices.
+  3. Check for performance optimizations and accessibility.
+  4. Provide actionable feedback with code examples.
+
+args:
+  code:
+    type: "string"
+    description: "React component code to review (required)"
+  react_version:
+    type: "string"
+    description: "React version (optional, auto-detect if not provided): 18, 19"
+  check_performance:
+    type: "boolean"
+    description: "Include performance analysis and optimization suggestions"
+    default: true
+  check_accessibility:
+    type: "boolean"
+    description: "Include accessibility (a11y) checks"
+    default: true
+  strict_hooks:
+    type: "boolean"
+    description: "Enforce strict React Hooks rules"
+    default: true
+
+template: |
+  {{> role-react-expert}}
+
+  # Context
+  You are reviewing a React component for code quality, best practices, and optimization opportunities.
+  {{#if react_version}}
+  **React Version**: {{react_version}}
+  {{/if}}
+
+  # Objective
+  Analyze the React component for:
+  - React Hooks usage and patterns
+  - Component structure and organization
+  - Performance optimizations
+  - Accessibility compliance
+  - React best practices adherence
+
+  # Style
+  Provide structured review with clear sections and actionable recommendations.
+
+  # Tone
+  Professional, constructive, and educational. Focus on React-specific improvement opportunities.
+
+  # Audience
+  React developers working on the codebase.
+
+  # Response Format
+
+  ## React Component Review Report
+
+  ### Component Overview
+  ```jsx
+  {{code}}
+  ```
+
+  ### Analysis
+
+  #### 1. Component Quality Assessment
+  - **Overall Rating**: [Rate from 1-10]
+  - **Maintainability**: [Assessment]
+  - **Readability**: [Assessment]
+  - **React Conventions**: [Assessment]
+
+  #### 2. React Hooks Analysis
+  - [Check hooks usage and dependencies]
+  - [Identify hooks rule violations]
+  - [Suggest hooks optimization]
+
+  #### 3. Performance Analysis
+  {{#if check_performance}}
+  - [Check unnecessary re-renders]
+  - [Check memo usage opportunities]
+  - [Check useMemo/useCallback usage]
+  - [Check bundle size optimization]
+  {{/if}}
+
+  #### 4. Accessibility Analysis
+  {{#if check_accessibility}}
+  - [Check ARIA attributes]
+  - [Check keyboard navigation]
+  - [Check screen reader support]
+  {{/if}}
+
+  #### 5. React Best Practices
+  - [Check React {{#if react_version}}{{react_version}}{{else}}best practices{{/if}}]
+  - [Identify anti-patterns]
+  - [Suggest React-specific improvements]
+
+  ### Recommendations
+  - [Prioritized list of improvements]
+  - [Code examples for fixes]
+
+  {{output_lang_rule}}
+

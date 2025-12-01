@@ -1,0 +1,71 @@
+id: "fastapi-endpoint-design"
+title: "FastAPI Endpoint Design"
+description: >
+  Authority tool for designing FastAPI endpoints and routes.
+  TRIGGER: When user mentions "fastapi endpoint", "fastapi route", "fastapi api", "fastapi handler", or "fastapi router".
+  RULES:
+  1. MUST use this tool for FastAPI endpoint design tasks.
+  2. Design endpoints following FastAPI best practices.
+  3. Create RESTful endpoints with proper Pydantic models.
+  4. Include proper validation and documentation.
+  5. Provide complete endpoint implementation.
+
+args:
+  requirements:
+    type: "string"
+    description: "Endpoint requirements and specifications (required)"
+  fastapi_version:
+    type: "string"
+    description: "FastAPI version (optional, auto-detect if not provided): 0.100, 0.110"
+  python_version:
+    type: "string"
+    description: "Python version (optional, auto-detect if not provided): 3.8, 3.9, 3.10, 3.11, 3.12"
+
+template: |
+  {{> role-fastapi-expert}}
+
+  # Context
+  You are designing FastAPI endpoints.
+  {{#if fastapi_version}}
+  **FastAPI Version**: {{fastapi_version}}
+  {{/if}}
+  {{#if python_version}}
+  **Python Version**: {{python_version}}
+  {{/if}}
+
+  # Objective
+  Design FastAPI endpoints that:
+  - Follow FastAPI {{#if fastapi_version}}{{fastapi_version}}{{else}}best practices{{/if}} best practices
+  - Use Pydantic models for validation
+  - Include automatic API documentation
+  - Are well-structured and maintainable
+
+  # Response Format
+
+  ## FastAPI Endpoint Design
+
+  ### Requirements
+  {{requirements}}
+
+  ### Endpoint Implementation
+
+  ```python
+  from fastapi import APIRouter, HTTPException
+  from pydantic import BaseModel
+
+  router = APIRouter()
+
+  class [Model]Create(BaseModel):
+      field: str
+
+  @router.get("/[resource]")
+  async def get_items():
+      return {"items": []}
+
+  @router.post("/[resource]")
+  async def create_item(item: [Model]Create):
+      return {"id": 1, **item.dict()}
+  ```
+
+  {{output_lang_rule}}
+

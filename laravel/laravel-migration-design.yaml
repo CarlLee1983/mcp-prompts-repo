@@ -1,0 +1,145 @@
+id: "laravel-migration-design"
+title: "Laravel Migration Design"
+description: >
+  Authority tool for designing Laravel database migrations and schema structures.
+  TRIGGER: When user mentions "laravel migration", "database migration", "laravel schema", "create table", "alter table", "laravel migration design", or "database structure".
+  RULES:
+  1. MUST use this tool for Laravel migration design tasks.
+  2. Design migrations following Laravel best practices.
+  3. Define proper table structures, indexes, and foreign keys.
+  4. Consider migration rollback strategies.
+  5. Provide complete migration implementation.
+
+args:
+  requirements:
+    type: "string"
+    description: "Migration requirements and table specifications (required)"
+  php_version:
+    type: "string"
+    description: "PHP version (optional, auto-detect if not provided): 8.1, 8.2, 8.3"
+  laravel_version:
+    type: "string"
+    description: "Laravel version (optional, auto-detect if not provided): 10, 11"
+  database:
+    type: "string"
+    description: "Database type (optional): mysql, postgresql, sqlite"
+  include_indexes:
+    type: "boolean"
+    description: "Include index definitions"
+    default: true
+  include_foreign_keys:
+    type: "boolean"
+    description: "Include foreign key constraints"
+    default: true
+
+template: |
+  {{> role-laravel-expert}}
+
+  # Context
+  You are designing Laravel database migrations.
+  {{#if php_version}}
+  **PHP Version**: {{php_version}}
+  {{/if}}
+  {{#if laravel_version}}
+  **Laravel Version**: {{laravel_version}}
+  {{/if}}
+  {{#if database}}
+  **Database**: {{database}}
+  {{/if}}
+
+  # Objective
+  Design comprehensive Laravel migrations that:
+  - Follow Laravel {{#if laravel_version}}{{laravel_version}}{{else}}best practices{{/if}} best practices
+  - Define proper table structures
+  - Include appropriate indexes
+  - Define foreign key constraints
+  - Support rollback operations
+  - Are well-structured and maintainable
+
+  # Style
+  Provide complete Laravel migration implementation with up and down methods.
+
+  # Tone
+  Technical, precise, and focused on Laravel migration best practices.
+
+  # Audience
+  Laravel developers designing database migrations.
+
+  # Response Format
+
+  ## Laravel Migration Design
+
+  ### Requirements
+  {{requirements}}
+
+  ### Migration Implementation
+
+  ```php
+  <?php
+
+  use Illuminate\Database\Migrations\Migration;
+  use Illuminate\Database\Schema\Blueprint;
+  use Illuminate\Support\Facades\Schema;
+
+  /**
+   * [Migration description]
+   */
+  return new class extends Migration
+  {
+      /**
+       * Run the migrations.
+       */
+      public function up(): void
+      {
+          Schema::create('[table_name]', function (Blueprint $table) {
+              $table->id();
+              // Column definitions
+              {{#if include_indexes}}
+              // Indexes
+              {{/if}}
+              {{#if include_foreign_keys}}
+              // Foreign keys
+              {{/if}}
+              $table->timestamps();
+          });
+      }
+
+      /**
+       * Reverse the migrations.
+       */
+      public function down(): void
+      {
+          Schema::dropIfExists('[table_name]');
+      }
+  };
+  ```
+
+  ### Column Definitions
+  - [List all columns with types and constraints]
+  - [Explain column choices]
+  - [Explain data types]
+
+  {{#if include_indexes}}
+  ### Index Definitions
+  - [List all indexes]
+  - [Explain index rationale]
+  - [Explain composite indexes if applicable]
+  {{/if}}
+
+  {{#if include_foreign_keys}}
+  ### Foreign Key Definitions
+  - [List all foreign keys]
+  - [Explain foreign key relationships]
+  - [Explain cascade behaviors]
+  {{/if}}
+
+  ### Migration Best Practices
+
+  - [ ] Migration is reversible (down method implemented)
+  - [ ] Appropriate indexes are defined
+  - [ ] Foreign keys are properly defined
+  - [ ] Column types are appropriate
+  - [ ] Migration follows Laravel {{#if laravel_version}}{{laravel_version}}{{else}}conventions{{/if}}
+
+  {{output_lang_rule}}
+

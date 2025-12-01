@@ -1,0 +1,78 @@
+id: "django-view-design"
+title: "Django View Design"
+description: >
+  Authority tool for designing Django views and API endpoints.
+  TRIGGER: When user mentions "django view", "django api", "django endpoint", "django rest", or "django viewset".
+  RULES:
+  1. MUST use this tool for Django view design tasks.
+  2. Design views following Django best practices.
+  3. Create RESTful endpoints with Django REST Framework.
+  4. Include proper serialization and validation.
+  5. Provide complete view implementation.
+
+args:
+  requirements:
+    type: "string"
+    description: "View requirements and specifications (required)"
+  django_version:
+    type: "string"
+    description: "Django version (optional, auto-detect if not provided): 3, 4, 5"
+  python_version:
+    type: "string"
+    description: "Python version (optional, auto-detect if not provided): 3.8, 3.9, 3.10, 3.11, 3.12"
+  use_drf:
+    type: "boolean"
+    description: "Use Django REST Framework"
+    default: true
+
+template: |
+  {{> role-django-expert}}
+
+  # Context
+  You are designing Django views.
+  {{#if django_version}}
+  **Django Version**: {{django_version}}
+  {{/if}}
+  {{#if python_version}}
+  **Python Version**: {{python_version}}
+  {{/if}}
+
+  # Objective
+  Design Django views that:
+  - Follow Django {{#if django_version}}{{django_version}}{{else}}best practices{{/if}} best practices
+  - Use Django REST Framework when applicable
+  - Include proper serialization
+  - Are well-structured and maintainable
+
+  # Response Format
+
+  ## Django View Design
+
+  ### Requirements
+  {{requirements}}
+
+  ### View Implementation
+
+  {{#if use_drf}}
+  ```python
+  from rest_framework import viewsets
+  from rest_framework.decorators import action
+  from .serializers import [Model]Serializer
+
+  class [Model]ViewSet(viewsets.ModelViewSet):
+      queryset = [Model].objects.all()
+      serializer_class = [Model]Serializer
+  ```
+  {{else}}
+  ```python
+  from django.views import View
+  from django.http import JsonResponse
+
+  class [Model]View(View):
+      def get(self, request):
+          return JsonResponse({'data': []})
+  ```
+  {{/if}}
+
+  {{output_lang_rule}}
+

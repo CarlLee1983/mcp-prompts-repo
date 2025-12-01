@@ -1,0 +1,377 @@
+id: "laravel-generate-tests"
+title: "Laravel Test Generation"
+description: >
+  Authority tool for generating Laravel unit tests and feature tests using PHPUnit.
+  TRIGGER: When user mentions "generate laravel tests", "create laravel tests", "write laravel tests", "phpunit tests", "laravel test cases", or "laravel testing".
+  RULES:
+  1. MUST use this tool when Laravel test generation is requested.
+  2. Generate PHPUnit tests following Laravel testing best practices.
+  3. Include both unit tests and feature tests as appropriate.
+  4. Use Laravel testing helpers and assertions.
+  5. Include database testing patterns when applicable.
+
+args:
+  code:
+    type: "string"
+    description: "Laravel code to generate tests for (required)"
+  php_version:
+    type: "string"
+    description: "PHP version (optional, auto-detect if not provided): 8.1, 8.2, 8.3"
+  laravel_version:
+    type: "string"
+    description: "Laravel version (optional, auto-detect if not provided): 10, 11"
+  test_type:
+    type: "string"
+    description: "Test type (optional): unit, feature, or both"
+    default: "both"
+  include_edge_cases:
+    type: "boolean"
+    description: "Include edge case tests (boundary conditions, null values, empty inputs)"
+    default: true
+  include_error_handling:
+    type: "boolean"
+    description: "Include error handling tests (exceptions, invalid inputs)"
+    default: true
+  use_database:
+    type: "boolean"
+    description: "Include database testing (migrations, factories, seeders)"
+    default: true
+
+template: |
+  {{> role-laravel-expert}}
+
+  # Context
+  You are generating comprehensive Laravel tests using PHPUnit.
+  {{#if php_version}}
+  **PHP Version**: {{php_version}}
+  {{/if}}
+  {{#if laravel_version}}
+  **Laravel Version**: {{laravel_version}}
+  {{/if}}
+  **Test Type**: {{test_type}}
+
+  # Objective
+  Generate comprehensive Laravel tests that:
+  - Test all functions, methods, and classes
+  - Cover normal cases, edge cases, and error scenarios
+  - Follow Laravel testing conventions and PHPUnit best practices
+  - Use Laravel testing helpers (RefreshDatabase, DatabaseTransactions, etc.)
+  - Include both unit tests and feature tests as appropriate
+  - Are maintainable and readable
+
+  # Style
+  Provide complete, production-ready PHPUnit test code following Laravel testing best practices.
+
+  # Tone
+  Technical, thorough, and focused on Laravel test quality.
+
+  # Audience
+  Laravel developers writing tests for their code.
+
+  # Response Format
+
+  ## Laravel Test Generation
+
+  ### Code to Test
+  ```php
+  {{code}}
+  ```
+
+  ### Analysis
+
+  #### 1. Code Structure Analysis
+  - **Classes Identified**: [List all testable classes]
+  - **Methods Identified**: [List all testable methods]
+  - **Dependencies**: [Identify dependencies that need mocking]
+  - **Database Interactions**: [Identify database operations]
+  - **Complexity**: [Assess code complexity and testing requirements]
+
+  #### 2. Test Type Selection
+  {{#if (eq test_type "unit")}}
+  **Unit Tests**: Testing individual components in isolation
+  {{else if (eq test_type "feature")}}
+  **Feature Tests**: Testing complete features end-to-end
+  {{else}}
+  **Both Unit and Feature Tests**: Comprehensive test coverage
+  {{/if}}
+
+  #### 3. Test Coverage Plan
+  - **Normal Cases**: [List normal operation scenarios]
+  {{#if include_edge_cases}}
+  - **Edge Cases**: [List boundary conditions, null values, empty inputs]
+  {{/if}}
+  {{#if include_error_handling}}
+  - **Error Cases**: [List exception scenarios, invalid inputs]
+  {{/if}}
+  {{#if use_database}}
+  - **Database Tests**: [List database interaction scenarios]
+  {{/if}}
+
+  ### Generated Tests
+
+  {{#if (or (eq test_type "unit") (eq test_type "both"))}}
+  #### Unit Tests
+
+  ```php
+  <?php
+
+  namespace Tests\Unit;
+
+  use Tests\TestCase;
+  use Illuminate\Foundation\Testing\RefreshDatabase;
+  {{#if use_database}}
+  use Illuminate\Foundation\Testing\DatabaseMigrations;
+  {{/if}}
+  use Mockery;
+
+  class [ClassName]Test extends TestCase
+  {
+      {{#if use_database}}
+      use RefreshDatabase;
+      {{/if}}
+
+      {{#if include_edge_cases}}
+      /**
+       * Test normal case
+       */
+      public function test_[method_name]_with_valid_input(): void
+      {
+          // Arrange
+          [Setup test data]
+
+          // Act
+          [Execute method]
+
+          // Assert
+          $this->assert[Expected]([Actual], [Expected]);
+      }
+
+      /**
+       * Test edge case
+       */
+      public function test_[method_name]_with_edge_case(): void
+      {
+          // Arrange
+          [Setup edge case data]
+
+          // Act
+          [Execute method]
+
+          // Assert
+          $this->assert[Expected]([Actual], [Expected]);
+      }
+      {{else}}
+      /**
+       * Test normal case
+       */
+      public function test_[method_name]_with_valid_input(): void
+      {
+          // Arrange
+          [Setup test data]
+
+          // Act
+          [Execute method]
+
+          // Assert
+          $this->assert[Expected]([Actual], [Expected]);
+      }
+      {{/if}}
+
+      {{#if include_error_handling}}
+      /**
+       * Test error handling
+       */
+      public function test_[method_name]_throws_exception_on_invalid_input(): void
+      {
+          // Arrange
+          [Setup invalid data]
+
+          // Act & Assert
+          $this->expectException([ExceptionClass]::class);
+          [Execute method]
+      }
+      {{/if}}
+
+      {{#if use_database}}
+      /**
+       * Test database interaction
+       */
+      public function test_[method_name]_persists_to_database(): void
+      {
+          // Arrange
+          [Setup test data]
+
+          // Act
+          [Execute method with database]
+
+          // Assert
+          $this->assertDatabaseHas('[table]', [
+              [Assertions]
+          ]);
+      }
+      {{/if}}
+  }
+  ```
+  {{/if}}
+
+  {{#if (or (eq test_type "feature") (eq test_type "both"))}}
+  #### Feature Tests
+
+  ```php
+  <?php
+
+  namespace Tests\Feature;
+
+  use Tests\TestCase;
+  use Illuminate\Foundation\Testing\RefreshDatabase;
+  use Illuminate\Foundation\Testing\WithFaker;
+  {{#if use_database}}
+  use App\Models\[ModelName];
+  {{/if}}
+
+  class [FeatureName]Test extends TestCase
+  {
+      use RefreshDatabase, WithFaker;
+
+      /**
+       * Test feature endpoint
+       */
+      public function test_[endpoint]_returns_success(): void
+      {
+          {{#if use_database}}
+          // Arrange
+          $user = [ModelName]::factory()->create();
+          {{/if}}
+
+          // Act
+          $response = $this->{{#if use_database}}actingAs($user)->{{/if}}get('/api/endpoint');
+
+          // Assert
+          $response->assertStatus(200);
+          $response->assertJsonStructure([
+              [Expected JSON structure]
+          ]);
+      }
+
+      {{#if include_error_handling}}
+      /**
+       * Test validation errors
+       */
+      public function test_[endpoint]_validates_input(): void
+      {
+          // Act
+          $response = $this->post('/api/endpoint', []);
+
+          // Assert
+          $response->assertStatus(422);
+          $response->assertJsonValidationErrors(['field']);
+      }
+      {{/if}}
+  }
+  ```
+  {{/if}}
+
+  ### Test Cases Breakdown
+
+  #### Test Suite 1: [Class/Method Name]
+
+  **Test 1: Normal Case**
+  - **Description**: [What this test verifies]
+  - **Input**: [Test input]
+  - **Expected Output**: [Expected result]
+  - **Assertions**: [What is being asserted]
+
+  {{#if include_edge_cases}}
+  **Test 2: Edge Case - [Specific Edge Case]**
+  - **Description**: [What edge case is being tested]
+  - **Input**: [Edge case input]
+  - **Expected Output**: [Expected result]
+  - **Assertions**: [What is being asserted]
+  {{/if}}
+
+  {{#if include_error_handling}}
+  **Test 3: Error Case - [Error Scenario]**
+  - **Description**: [What error is being tested]
+  - **Input**: [Invalid input]
+  - **Expected Behavior**: [Exception or error handling]
+  - **Assertions**: [What is being asserted]
+  {{/if}}
+
+  ### Laravel Testing Best Practices Applied
+
+  1. **Test Organization**:
+     - [ ] Tests are organized in Tests\Unit and Tests\Feature directories
+     - [ ] Test class names follow [ClassName]Test convention
+     - [ ] Test methods follow test_[method_name]_[scenario] naming
+     - [ ] Tests follow AAA pattern (Arrange, Act, Assert)
+
+  2. **Laravel Testing Helpers**:
+     - [ ] Uses RefreshDatabase trait for database tests
+     - [ ] Uses DatabaseMigrations when needed
+     - [ ] Uses WithFaker for test data generation
+     - [ ] Uses actingAs() for authentication in feature tests
+
+  3. **Test Coverage**:
+     - [ ] All public methods are tested
+     - [ ] Normal operation paths are covered
+     {{#if include_edge_cases}}
+     - [ ] Edge cases are covered
+     {{/if}}
+     {{#if include_error_handling}}
+     - [ ] Error handling is tested
+     {{/if}}
+     {{#if use_database}}
+     - [ ] Database interactions are tested
+     {{/if}}
+
+  4. **Mocking and Factories**:
+     - [ ] Uses Laravel factories for model creation
+     - [ ] Uses Mockery for dependency mocking
+     - [ ] Uses Laravel's service container for dependency injection in tests
+
+  5. **Assertions**:
+     - [ ] Uses Laravel-specific assertions (assertDatabaseHas, assertJson, etc.)
+     - [ ] Uses PHPUnit assertions appropriately
+     - [ ] Assertions are clear and specific
+
+  ### Laravel-Specific Testing Patterns
+
+  #### Database Testing
+  ```php
+  // Using RefreshDatabase
+  use Illuminate\Foundation\Testing\RefreshDatabase;
+
+  // Using factories
+  $user = User::factory()->create();
+  $post = Post::factory()->count(10)->create();
+
+  // Database assertions
+  $this->assertDatabaseHas('users', ['email' => 'test@example.com']);
+  $this->assertDatabaseMissing('users', ['email' => 'deleted@example.com']);
+  ```
+
+  #### Authentication Testing
+  ```php
+  // Acting as authenticated user
+  $user = User::factory()->create();
+  $response = $this->actingAs($user)->get('/dashboard');
+  ```
+
+  #### API Testing
+  ```php
+  // JSON API testing
+  $response = $this->json('POST', '/api/users', $data);
+  $response->assertStatus(201)
+           ->assertJson(['id' => 1]);
+  ```
+
+  ### Additional Recommendations
+
+  1. **Test Data**: Use Laravel factories for consistent test data
+  2. **Mocking**: Mock external services and dependencies
+  3. **Test Organization**: Follow Laravel's test directory structure
+  4. **Running Tests**: Use `php artisan test` or `vendor/bin/phpunit`
+  5. **Coverage**: Use PHPUnit code coverage with `--coverage` flag
+
+  {{output_lang_rule}}
+

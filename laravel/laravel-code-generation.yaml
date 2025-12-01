@@ -1,0 +1,309 @@
+id: "laravel-code-generation"
+title: "Laravel Code Generation"
+description: >
+  Authority tool for generating Laravel code skeletons and implementations from specifications.
+  TRIGGER: When user mentions "generate laravel code", "create laravel code", "laravel code skeleton", "scaffold laravel code", "laravel artisan", "implement laravel from spec", or "generate laravel implementation".
+  RULES:
+  1. MUST use this tool for Laravel code generation tasks.
+  2. Generate Laravel code from specifications following Laravel best practices.
+  3. Create complete, production-ready Laravel code structures.
+  4. Include proper error handling, validation, and documentation.
+  5. Follow SOLID principles and Laravel design patterns.
+
+args:
+  specification:
+    type: "string"
+    description: "Code specification and requirements (required)"
+  php_version:
+    type: "string"
+    description: "PHP version (optional, auto-detect if not provided): 8.1, 8.2, 8.3"
+  laravel_version:
+    type: "string"
+    description: "Laravel version (optional, auto-detect if not provided): 10, 11"
+  code_type:
+    type: "string"
+    description: "Code type (optional): controller, model, service, request, resource, command, job, or auto-detect"
+    default: "controller"
+  include_tests:
+    type: "boolean"
+    description: "Include PHPUnit test code generation"
+    default: false
+  include_docs:
+    type: "boolean"
+    description: "Include PHPDoc documentation and comments"
+    default: true
+  coding_style:
+    type: "string"
+    description: "Coding style (optional): follow Laravel conventions, or specify style guide"
+    default: "auto"
+
+template: |
+  {{> role-laravel-expert}}
+
+  # Context
+  You are generating Laravel code from specifications.
+  **PHP Version**: {{#if php_version}}{{php_version}}{{else}}8.1+{{/if}}
+  **Laravel Version**: {{#if laravel_version}}{{laravel_version}}{{else}}latest{{/if}}
+  **Code Type**: {{code_type}}
+  **Coding Style**: {{coding_style}}
+
+  # Objective
+  Generate complete, production-ready Laravel code that:
+  - Implements the specified requirements
+  - Follows Laravel {{#if laravel_version}}{{laravel_version}}{{else}}best practices{{/if}} best practices
+  - Includes proper error handling and validation
+  - Is well-structured and maintainable
+  - Follows SOLID principles and Laravel design patterns
+  - Includes PHPDoc documentation when requested
+  - Includes PHPUnit tests when requested
+
+  # Style
+  Provide complete, executable Laravel code following Laravel conventions and best practices.
+
+  # Tone
+  Technical, precise, and implementation-focused. Generate production-quality Laravel code.
+
+  # Audience
+  Laravel developers implementing features from specifications.
+
+  # Response Format
+
+  ## Laravel Code Generation Report
+
+  ### Specification
+  {{specification}}
+
+  ### Analysis
+
+  #### Requirements Breakdown
+  - [Break down requirements into Laravel components]
+  - [Identify key functionality]
+  - [Identify dependencies]
+  - [Identify error handling needs]
+  - [Identify validation requirements]
+
+  #### Design Decisions
+  - [Explain Laravel architectural decisions]
+  - [Explain design pattern choices]
+  - [Explain data structure choices]
+  - [Explain error handling strategy]
+
+  ### Generated Laravel Code
+
+  {{#if (eq code_type "controller")}}
+  #### Controller Implementation
+
+  ```php
+  <?php
+
+  namespace App\Http\Controllers\Api;
+
+  use App\Http\Controllers\Controller;
+  use App\Http\Requests\[RequestName];
+  use App\Http\Resources\[ResourceName];
+  use App\Services\[ServiceName];
+  use Illuminate\Http\JsonResponse;
+
+  /**
+   * [Controller description]
+   * 
+   * @package App\Http\Controllers\Api
+   */
+  class [ControllerName] extends Controller
+  {
+      public function __construct(
+          private [ServiceName] $service
+      ) {
+      }
+
+      /**
+       * [Method description]
+       * 
+       * @param [RequestName] $request
+       * @return JsonResponse
+       */
+      public function index([RequestName] $request): JsonResponse
+      {
+          $data = $this->service->getAll($request->validated());
+          return [ResourceName]::collection($data)->response();
+      }
+  }
+  ```
+  {{else if (eq code_type "model")}}
+  #### Model Implementation
+
+  ```php
+  <?php
+
+  namespace App\Models;
+
+  use Illuminate\Database\Eloquent\Model;
+  use Illuminate\Database\Eloquent\Relations\[RelationType];
+
+  /**
+   * [Model description]
+   * 
+   * @package App\Models
+   */
+  class [ModelName] extends Model
+  {
+      protected $fillable = [
+          // Fillable attributes
+      ];
+
+      protected $casts = [
+          // Attribute casts
+      ];
+
+      /**
+       * [Relationship description]
+       * 
+       * @return [RelationType]
+       */
+      public function [relationshipName](): [RelationType]
+      {
+          return $this->[relationMethod]([RelatedModel]::class);
+      }
+  }
+  ```
+  {{else if (eq code_type "service")}}
+  #### Service Implementation
+
+  ```php
+  <?php
+
+  namespace App\Services;
+
+  use App\Models\[ModelName];
+  use App\Repositories\[RepositoryName];
+
+  /**
+   * [Service description]
+   * 
+   * @package App\Services
+   */
+  class [ServiceName]
+  {
+      public function __construct(
+          private [RepositoryName] $repository
+      ) {
+      }
+
+      /**
+       * [Method description]
+       * 
+       * @param array $data
+       * @return [ModelName]
+       */
+      public function create(array $data): [ModelName]
+      {
+          return $this->repository->create($data);
+      }
+  }
+  ```
+  {{else if (eq code_type "request")}}
+  #### Form Request Implementation
+
+  ```php
+  <?php
+
+  namespace App\Http\Requests;
+
+  use Illuminate\Foundation\Http\FormRequest;
+
+  /**
+   * [Request description]
+   * 
+   * @package App\Http\Requests
+   */
+  class [RequestName] extends FormRequest
+  {
+      /**
+       * Determine if the user is authorized to make this request.
+       */
+      public function authorize(): bool
+      {
+          return true; // Or implement authorization logic
+      }
+
+      /**
+       * Get the validation rules that apply to the request.
+       * 
+       * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+       */
+      public function rules(): array
+      {
+          return [
+              // Validation rules
+          ];
+      }
+  }
+  ```
+  {{else}}
+  #### Laravel Code Implementation
+
+  ```php
+  <?php
+
+  namespace App\[Namespace];
+
+  /**
+   * [Class description]
+   * 
+   * @package App\[Namespace]
+   */
+  class [ClassName]
+  {
+      // Implementation
+  }
+  ```
+  {{/if}}
+
+  ### Laravel-Specific Features
+
+  #### Error Handling
+  ```php
+  // Laravel exception handling
+  [Error handling code]
+  ```
+
+  #### Validation
+  ```php
+  // Laravel validation
+  [Validation code]
+  ```
+
+  {{#if include_tests}}
+  ### Generated PHPUnit Tests
+
+  ```php
+  <?php
+
+  namespace Tests\Unit;
+
+  use Tests\TestCase;
+  use Illuminate\Foundation\Testing\RefreshDatabase;
+
+  class [ClassName]Test extends TestCase
+  {
+      use RefreshDatabase;
+
+      public function test_[method_name](): void
+      {
+          // Test implementation
+      }
+  }
+  ```
+  {{/if}}
+
+  ### Laravel Best Practices Applied
+
+  - [ ] Follows Laravel naming conventions
+  - [ ] Uses dependency injection
+  - [ ] Implements proper error handling
+  - [ ] Includes validation where needed
+  - [ ] Uses Laravel features appropriately
+  - [ ] Follows PSR standards
+
+  {{output_lang_rule}}
+

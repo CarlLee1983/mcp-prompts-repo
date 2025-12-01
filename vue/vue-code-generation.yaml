@@ -1,0 +1,242 @@
+id: "vue-code-generation"
+title: "Vue Code Generation"
+description: >
+  Authority tool for generating Vue code skeletons and implementations from specifications.
+  TRIGGER: When user mentions "generate vue code", "create vue code", "vue code skeleton", "scaffold vue code", "vue component", "implement vue from spec", or "generate vue implementation".
+  RULES:
+  1. MUST use this tool for Vue code generation tasks.
+  2. Generate Vue code from specifications following Vue best practices.
+  3. Create complete, production-ready Vue code structures.
+  4. Include proper error handling, validation, and documentation.
+  5. Follow Vue Composition API patterns and best practices.
+
+args:
+  specification:
+    type: "string"
+    description: "Code specification and requirements (required)"
+  vue_version:
+    type: "string"
+    description: "Vue version (optional, auto-detect if not provided): 3"
+  code_type:
+    type: "string"
+    description: "Code type (optional): component, composable, store, or auto-detect"
+    default: "component"
+  include_tests:
+    type: "boolean"
+    description: "Include Vitest/Jest test code generation"
+    default: false
+  include_docs:
+    type: "boolean"
+    description: "Include JSDoc documentation and comments"
+    default: true
+  use_typescript:
+    type: "boolean"
+    description: "Use TypeScript"
+    default: false
+
+template: |
+  {{> role-vue-expert}}
+
+  # Context
+  You are generating Vue code from specifications.
+  **Vue Version**: {{#if vue_version}}{{vue_version}}{{else}}3{{/if}}
+  **Code Type**: {{code_type}}
+  **TypeScript**: {{use_typescript}}
+
+  # Objective
+  Generate complete, production-ready Vue code that:
+  - Implements the specified requirements
+  - Follows Vue {{#if vue_version}}{{vue_version}}{{else}}3{{/if}} best practices
+  - Includes proper error handling and validation
+  - Is well-structured and maintainable
+  - Follows Composition API patterns
+  - Includes JSDoc documentation when requested
+  - Includes tests when requested
+
+  # Style
+  Provide complete, executable Vue code following Vue conventions and best practices.
+
+  # Tone
+  Technical, precise, and implementation-focused. Generate production-quality Vue code.
+
+  # Audience
+  Vue developers implementing features from specifications.
+
+  # Response Format
+
+  ## Vue Code Generation Report
+
+  ### Specification
+  {{specification}}
+
+  ### Analysis
+
+  #### Requirements Breakdown
+  - [Break down requirements into Vue components]
+  - [Identify key functionality]
+  - [Identify dependencies]
+  - [Identify error handling needs]
+  - [Identify validation requirements]
+
+  #### Design Decisions
+  - [Explain Vue architectural decisions]
+  - [Explain Composition API choices]
+  - [Explain component structure choices]
+  - [Explain error handling strategy]
+
+  ### Generated Vue Code
+
+  {{#if (eq code_type "component")}}
+  #### Component Implementation
+
+  ```vue
+  <template>
+    <div class="[component-name]">
+      <!-- Component template -->
+    </div>
+  </template>
+
+  <script setup{{#if use_typescript}} lang="ts"{{/if}}>
+  {{#if include_docs}}
+  /**
+   * [Component description]
+   * 
+   * @component
+   */
+  {{/if}}
+  import { ref, computed } from 'vue';
+
+  // Props
+  interface Props {
+    // [Props definition]
+  }
+
+  const props = defineProps<Props>();
+
+  // Emits
+  interface Emits {
+    // [Emits definition]
+  }
+
+  const emit = defineEmits<Emits>();
+
+  // Component logic
+  const state = ref();
+  const computedValue = computed(() => {
+    // Computation
+  });
+  </script>
+
+  <style scoped>
+  .[component-name] {
+    /* Component styles */
+  }
+  </style>
+  ```
+  {{else if (eq code_type "composable")}}
+  #### Composable Implementation
+
+  ```{{#if use_typescript}}typescript{{else}}javascript{{/if}}
+  {{#if include_docs}}
+  /**
+   * [Composable description]
+   * 
+   * @returns {Object} Composable return value
+   */
+  {{/if}}
+  import { ref, computed } from 'vue';
+
+  export function use[ComposableName]() {
+    const state = ref();
+
+    const computedValue = computed(() => {
+      // Computation
+    });
+
+    const method = () => {
+      // Method implementation
+    };
+
+    return {
+      state,
+      computedValue,
+      method,
+    };
+  }
+  ```
+  {{else if (eq code_type "store")}}
+  #### Pinia Store Implementation
+
+  ```{{#if use_typescript}}typescript{{else}}javascript{{/if}}
+  import { defineStore } from 'pinia';
+
+  {{#if include_docs}}
+  /**
+   * [Store description]
+   */
+  {{/if}}
+  export const use[StoreName]Store = defineStore('[storeName]', () => {
+    // State
+    const state = ref();
+
+    // Getters
+    const getter = computed(() => {
+      // Getter logic
+    });
+
+    // Actions
+    function action() {
+      // Action logic
+    }
+
+    return {
+      state,
+      getter,
+      action,
+    };
+  });
+  ```
+  {{/if}}
+
+  ### Vue-Specific Features
+
+  #### Error Handling
+  ```vue
+  // Vue error handling
+  [Error handling code]
+  ```
+
+  #### Validation
+  ```vue
+  // Vue validation
+  [Validation code]
+  ```
+
+  {{#if include_tests}}
+  ### Generated Tests
+
+  ```{{#if use_typescript}}typescript{{else}}javascript{{/if}}
+  import { describe, it, expect } from 'vitest';
+  import { mount } from '@vue/test-utils';
+  import [ComponentName] from '@/components/[ComponentName].vue';
+
+  describe('[ComponentName]', () => {
+    it('renders correctly', () => {
+      const wrapper = mount([ComponentName]);
+      expect(wrapper.exists()).toBe(true);
+    });
+  });
+  ```
+  {{/if}}
+
+  ### Vue Best Practices Applied
+
+  - [ ] Follows Vue naming conventions
+  - [ ] Uses Composition API
+  - [ ] Implements proper error handling
+  - [ ] Includes validation where needed
+  - [ ] Uses Vue features appropriately
+  - [ ] Follows TypeScript conventions (if applicable)
+
+  {{output_lang_rule}}
+

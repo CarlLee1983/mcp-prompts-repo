@@ -1,0 +1,131 @@
+id: "react-hooks-design"
+title: "React Hooks Design"
+description: >
+  Authority tool for designing React custom hooks and hooks patterns.
+  TRIGGER: When user mentions "react hooks", "custom hooks", "react hooks design", "hooks pattern", "react hooks implementation", or "react hooks best practices".
+  RULES:
+  1. MUST use this tool for React hooks design tasks.
+  2. Design hooks following React Hooks best practices.
+  3. Create reusable, testable, and maintainable hooks.
+  4. Consider hooks patterns and conventions.
+  5. Provide complete hooks implementation.
+
+args:
+  requirements:
+    type: "string"
+    description: "Hooks requirements and specifications (required)"
+  react_version:
+    type: "string"
+    description: "React version (optional, auto-detect if not provided): 18, 19"
+  hook_type:
+    type: "string"
+    description: "Hook type (optional): state, effect, callback, or auto-detect"
+  use_typescript:
+    type: "boolean"
+    description: "Use TypeScript"
+    default: true
+  include_tests:
+    type: "boolean"
+    description: "Include test examples"
+    default: false
+
+template: |
+  {{> role-react-expert}}
+
+  # Context
+  You are designing React custom hooks.
+  {{#if react_version}}
+  **React Version**: {{react_version}}
+  {{/if}}
+  **Hook Type**: {{hook_type}}
+
+  # Objective
+  Design comprehensive React hooks that:
+  - Follow React {{#if react_version}}{{react_version}}{{else}}18+{{/if}} Hooks best practices
+  - Are reusable and testable
+  - Follow hooks naming conventions
+  - Are well-structured and maintainable
+  - Provide clear return interfaces
+
+  # Style
+  Provide complete React hooks implementation with TypeScript types and usage examples.
+
+  # Tone
+  Technical, precise, and focused on React hooks best practices.
+
+  # Audience
+  React developers designing custom hooks.
+
+  # Response Format
+
+  ## React Hooks Design
+
+  ### Requirements
+  {{requirements}}
+
+  ### Hook Implementation
+
+  ```{{#if use_typescript}}typescript{{else}}javascript{{/if}}
+  import { useState, useEffect, useCallback } from 'react';
+
+  /**
+   * [Hook description]
+   * 
+   * @param {Type} param - Parameter description
+   * @returns {Object} Hook return value
+   * @example
+   * const { state, method } = use[HookName](param);
+   */
+  export function use[HookName](param{{#if use_typescript}}: Type{{/if}}) {
+    const [state, setState] = useState{{#if use_typescript}}<Type>{{/if}}(initialValue);
+    const [isLoading, setIsLoading] = useState{{#if use_typescript}}<boolean>{{/if}}(false);
+    const [error, setError] = useState{{#if use_typescript}}<Error | null>{{/if}}(null);
+
+    useEffect(() => {
+      // Effect logic
+      return () => {
+        // Cleanup logic
+      };
+    }, [dependencies]);
+
+    const method = useCallback(() => {
+      // Method implementation
+    }, [dependencies]);
+
+    return {
+      state,
+      isLoading,
+      error,
+      method,
+    };
+  }
+  ```
+
+  ### Hooks Best Practices
+
+  - [ ] Hook follows naming convention (use*)
+  - [ ] Hook is reusable and testable
+  - [ ] Hooks rules are followed
+  - [ ] Dependencies are properly specified
+  - [ ] Cleanup is implemented when needed
+  - [ ] TypeScript types are defined (if using TypeScript)
+  - [ ] Hook follows React {{#if react_version}}{{react_version}}{{else}}conventions{{/if}}
+
+  {{#if include_tests}}
+  ### Test Examples
+
+  ```{{#if use_typescript}}typescript{{else}}javascript{{/if}}
+  import { renderHook } from '@testing-library/react';
+  import { use[HookName] } from './use[HookName]';
+
+  describe('use[HookName]', () => {
+    it('should work correctly', () => {
+      const { result } = renderHook(() => use[HookName](param));
+      expect(result.current.state).toBeDefined();
+    });
+  });
+  ```
+  {{/if}}
+
+  {{output_lang_rule}}
+

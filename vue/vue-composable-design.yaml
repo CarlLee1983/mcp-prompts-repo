@@ -1,0 +1,162 @@
+id: "vue-composable-design"
+title: "Vue Composable Design"
+description: >
+  Authority tool for designing Vue composables and reusable Composition API functions.
+  TRIGGER: When user mentions "vue composable", "composable design", "vue composition api", "reusable vue logic", "vue composable pattern", or "vue composable function".
+  RULES:
+  1. MUST use this tool for Vue composable design tasks.
+  2. Design composables following Vue Composition API best practices.
+  3. Create reusable, testable, and maintainable composables.
+  4. Consider composable patterns and conventions.
+  5. Provide complete composable implementation.
+
+args:
+  requirements:
+    type: "string"
+    description: "Composable requirements and specifications (required)"
+  vue_version:
+    type: "string"
+    description: "Vue version (optional, auto-detect if not provided): 3"
+  composable_type:
+    type: "string"
+    description: "Composable type (optional): utility, state, lifecycle, or auto-detect"
+  use_typescript:
+    type: "boolean"
+    description: "Use TypeScript"
+    default: true
+  include_tests:
+    type: "boolean"
+    description: "Include test examples"
+    default: false
+
+template: |
+  {{> role-vue-expert}}
+
+  # Context
+  You are designing Vue composables.
+  {{#if vue_version}}
+  **Vue Version**: {{vue_version}}
+  {{/if}}
+  **Composable Type**: {{composable_type}}
+
+  # Objective
+  Design comprehensive Vue composables that:
+  - Follow Vue {{#if vue_version}}{{vue_version}}{{else}}3{{/if}} Composition API best practices
+  - Are reusable and testable
+  - Follow composable naming conventions
+  - Are well-structured and maintainable
+  - Provide clear return interfaces
+
+  # Style
+  Provide complete Vue composable implementation with TypeScript types and usage examples.
+
+  # Tone
+  Technical, precise, and focused on Vue composable best practices.
+
+  # Audience
+  Vue developers designing composables.
+
+  # Response Format
+
+  ## Vue Composable Design
+
+  ### Requirements
+  {{requirements}}
+
+  ### Composable Implementation
+
+  ```{{#if use_typescript}}typescript{{else}}javascript{{/if}}
+  import { ref, computed, watch, onMounted, onUnmounted } from 'vue';
+
+  /**
+   * [Composable description]
+   * 
+   * @param {Type} param - Parameter description
+   * @returns {Object} Composable return value
+   * @example
+   * const { state, method } = use[ComposableName](param);
+   */
+  export function use[ComposableName](param{{#if use_typescript}}: Type{{/if}}) {
+    // State
+    const state = ref{{#if use_typescript}}<Type>{{/if}}(initialValue);
+    const isLoading = ref{{#if use_typescript}}<boolean>{{/if}}(false);
+    const error = ref{{#if use_typescript}}<Error | null>{{/if}}(null);
+
+    // Computed
+    const computedValue = computed{{#if use_typescript}}<Type>{{/if}}(() => {
+      // Computation logic
+      return state.value;
+    });
+
+    // Methods
+    const method = () => {
+      // Method implementation
+    };
+
+    // Lifecycle hooks
+    onMounted(() => {
+      // Setup logic
+    });
+
+    onUnmounted(() => {
+      // Cleanup logic
+    });
+
+    // Watchers
+    watch(() => param, (newValue) => {
+      // Watch logic
+    });
+
+    return {
+      state,
+      isLoading,
+      error,
+      computedValue,
+      method,
+    };
+  }
+  ```
+
+  ### Composable Patterns
+
+  #### State Management Pattern
+  - [Explain state management in composables]
+  - [Explain reactive state usage]
+
+  #### Lifecycle Pattern
+  - [Explain lifecycle hook usage]
+  - [Explain cleanup patterns]
+
+  #### Error Handling Pattern
+  - [Explain error handling in composables]
+  - [Explain error state management]
+
+  ### Composable Best Practices
+
+  - [ ] Composable follows naming convention (use*)
+  - [ ] Composable is reusable and testable
+  - [ ] State is properly managed
+  - [ ] Lifecycle hooks are used appropriately
+  - [ ] Error handling is implemented
+  - [ ] TypeScript types are defined (if using TypeScript)
+  - [ ] Composable follows Vue {{#if vue_version}}{{vue_version}}{{else}}conventions{{/if}}
+
+  {{#if include_tests}}
+  ### Test Examples
+
+  ```{{#if use_typescript}}typescript{{else}}javascript{{/if}}
+  import { describe, it, expect } from 'vitest';
+  import { renderHook } from '@testing-library/vue';
+  import { use[ComposableName] } from '@/composables/use[ComposableName]';
+
+  describe('use[ComposableName]', () => {
+    it('should work correctly', () => {
+      const { result } = renderHook(() => use[ComposableName]());
+      expect(result.current.state.value).toBeDefined();
+    });
+  });
+  ```
+  {{/if}}
+
+  {{output_lang_rule}}
+

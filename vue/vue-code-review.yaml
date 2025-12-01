@@ -1,0 +1,207 @@
+id: "vue-code-review"
+title: "Vue Code Review"
+description: >
+  Authority tool for comprehensive Vue code review.
+  TRIGGER: When user mentions "review vue", "check vue code", "vue code quality", "analyze vue code", "vue code audit", or "review vue component".
+  RULES: 
+  1. MUST use this tool when Vue code review is requested.
+  2. Analyze Vue code quality, potential bugs, security issues, and Vue best practices.
+  3. Check Vue 3 Composition API usage, reactivity, and component patterns.
+  4. Provide structured feedback with severity levels.
+  5. Follow strict_mode rules when enabled.
+
+args:
+  code:
+    type: "string"
+    description: "Vue code to review (required)"
+  vue_version:
+    type: "string"
+    description: "Vue version (optional, auto-detect if not provided): 3"
+  check_performance:
+    type: "boolean"
+    description: "Include performance analysis and optimization suggestions"
+    default: true
+  check_accessibility:
+    type: "boolean"
+    description: "Include accessibility (a11y) checks"
+    default: true
+  strict_mode:
+    type: "boolean"
+    description: "Enable strict validation mode with zero-tolerance for issues"
+    default: false
+  focus:
+    type: "string"
+    description: "Focus areas (optional): security, performance, maintainability, reactivity, or all"
+
+template: |
+  {{> role-vue-expert}}
+
+  # Context
+  You are performing a comprehensive code review on Vue code.
+  {{#if vue_version}}
+  **Vue Version**: {{vue_version}}
+  {{/if}}
+
+  # Objective
+  Analyze the provided Vue code for:
+  - Code quality and maintainability
+  - Potential bugs and security vulnerabilities
+  - Performance issues
+  - Vue best practices adherence
+  - Composition API usage
+  - Reactivity system correctness
+  - Component structure and organization
+
+  # Style
+  Provide structured output in Markdown format with clear sections and severity indicators.
+
+  # Tone
+  Professional, constructive, and educational. Focus on Vue-specific improvement opportunities.
+
+  # Audience
+  Vue developers working on the codebase.
+
+  # Response Format
+
+  ## Vue Code Review Report
+
+  ### Code Overview
+  ```vue
+  {{code}}
+  ```
+
+  {{#if focus}}
+  ### Focus Areas
+  **Requested focus**: {{focus}}
+  {{/if}}
+
+  {{#if strict_mode}}
+  ### ⚠️ Strict Mode Enabled
+  Applying zero-tolerance validation rules. All issues must be addressed.
+  {{/if}}
+
+  ### Analysis
+
+  #### 1. Code Quality Assessment
+  - **Overall Rating**: [Rate from 1-10]
+  - **Maintainability**: [Assessment]
+  - **Readability**: [Assessment]
+  - **Complexity**: [Assessment]
+  - **Vue Conventions**: [Assessment]
+
+  #### 2. Issues Found
+
+  {{#if strict_mode}}
+  **Critical Issues** (Must Fix):
+  - [List all critical issues]
+
+  **High Priority Issues**:
+  - [List high priority issues]
+
+  **Medium Priority Issues**:
+  - [List medium priority issues]
+
+  **Low Priority / Suggestions**:
+  - [List suggestions]
+  {{else}}
+  **Issues by Severity**:
+  - 🔴 **Critical**: [List critical issues]
+  - 🟠 **High**: [List high priority issues]
+  - 🟡 **Medium**: [List medium priority issues]
+  - 🟢 **Low**: [List suggestions]
+  {{/if}}
+
+  #### 3. Vue-Specific Issues
+
+  **Composition API Issues**:
+  - [Check Composition API usage]
+  - [Check script setup usage]
+  - [Check reactivity usage]
+
+  **Reactivity Issues**:
+  - [Check reactive/ref usage]
+  - [Check computed properties]
+  - [Check watch/watchEffect usage]
+  - [Identify reactivity anti-patterns]
+
+  **Component Structure Issues**:
+  - [Check component organization]
+  - [Check props definition]
+  - [Check emits definition]
+  - [Check component lifecycle usage]
+
+  **Template Issues**:
+  - [Check template syntax]
+  - [Check directive usage]
+  - [Check event handling]
+  - [Check conditional rendering]
+
+  #### 4. Security Concerns
+
+  **Vue Security Issues**:
+  - [Check XSS vulnerabilities]
+  - [Check v-html usage]
+  - [Check input sanitization]
+  - [Check authentication/authorization]
+
+  **Security Vulnerabilities**:
+  - [Identify Vue-specific security issues]
+  - [Suggest Vue security improvements]
+
+  {{#if check_performance}}
+  #### 5. Performance Analysis
+
+  **Vue Performance Issues**:
+  - [Check unnecessary re-renders]
+  - [Check v-memo usage opportunities]
+  - [Check lazy loading opportunities]
+  - [Check bundle size optimization]
+  - [Check computed vs methods usage]
+
+  **Performance Optimizations**:
+  - [Suggest Vue-specific optimizations]
+  - [Suggest performance patterns]
+  {{/if}}
+
+  {{#if check_accessibility}}
+  #### 6. Accessibility (a11y) Analysis
+
+  **Accessibility Issues**:
+  - [Check ARIA attributes]
+  - [Check keyboard navigation]
+  - [Check screen reader support]
+  - [Check color contrast]
+  - [Check focus management]
+
+  **Accessibility Improvements**:
+  - [Suggest accessibility enhancements]
+  {{/if}}
+
+  #### 7. Vue Best Practices Compliance
+
+  **Vue {{#if vue_version}}{{vue_version}}{{else}}Best Practices{{/if}}**:
+  - [Check Vue conventions]
+  - [Check Composition API patterns]
+  - [Identify anti-patterns]
+  - [Suggest Vue-specific improvements]
+
+  #### 8. Recommendations
+
+  **Immediate Actions**:
+  - [Prioritized list of must-fix issues]
+
+  **Vue-Specific Improvements**:
+  - [Vue pattern suggestions]
+  - [Framework feature utilization]
+  - [Code examples for fixes]
+
+  **Refactoring Opportunities**:
+  - [Suggest refactoring to Vue patterns]
+  - [Suggest Composition API improvements]
+  - [Suggest component extraction]
+
+  ### Summary
+  [Overall assessment and next steps for Vue codebase]
+
+  {{output_lang_rule}}
+

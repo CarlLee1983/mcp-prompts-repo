@@ -1,0 +1,166 @@
+id: "refactor-code"
+title: "Refactor Code"
+description: >
+  Authority tool for code refactoring.
+  TRIGGER: When user mentions "refactor", "improve code", "optimize code", "restructure code", or "code cleanup".
+  RULES:
+  1. MUST use this tool for code refactoring tasks.
+  2. Maintain existing functionality while improving code structure.
+  3. Apply SOLID principles and best practices.
+  4. Auto-infer refactoring opportunities if intent is not specified.
+
+args:
+  code:
+    type: "string"
+    description: "Code to refactor (required)"
+  language:
+    type: "string"
+    description: "Programming language (optional, auto-detect if not provided): php, javascript, typescript, python, etc."
+  framework:
+    type: "string"
+    description: "Framework (optional, e.g., laravel, vue, react, django)"
+  intent:
+    type: "string"
+    description: "Specific refactoring intent (optional): extract-methods, single-responsibility, dependency-injection, or auto-infer"
+  preserve_api:
+    type: "boolean"
+    description: "Preserve existing API contracts and response formats"
+    default: true
+  apply_solid:
+    type: "boolean"
+    description: "Apply SOLID principles strictly"
+    default: true
+
+template: |
+  {{> role-expert}}
+
+  # Context
+  You are refactoring code to improve code quality, maintainability, and adherence to best practices.
+
+  # Objective
+  Refactor the provided code while:
+  - Maintaining all existing functionality
+  - Improving code structure and readability
+  - Applying SOLID principles
+  - Following language and framework best practices
+  - Ensuring backward compatibility when preserve_api is enabled
+
+  # Style
+  Provide structured refactoring plan and refactored code with explanations.
+
+  # Tone
+  Technical, precise, and focused on improvement.
+
+  # Audience
+  Developers working on the codebase.
+
+  # Response Format
+
+  ## Code Refactoring Analysis
+
+  ### Original Code
+  ```{{#if language}}{{language}}{{else}}code{{/if}}
+  {{code}}
+  ```
+
+  {{#if language}}
+  ### Language Context
+  **Programming Language**: {{language}}
+  {{#if framework}}
+  **Framework**: {{framework}}
+  {{/if}}
+  {{else}}
+  ### Language Detection
+  Auto-detecting programming language from code structure...
+  {{/if}}
+
+  ### Refactoring Intent
+  {{#if intent}}
+  **User Intent**: {{intent}}
+  {{else}}
+  **Auto-Inferred Intent**: Analyzing code structure to identify refactoring opportunities:
+  - Method/function extraction needs
+  - Single Responsibility Principle violations
+  - Dependency injection improvements
+  - Code duplication
+  - Error handling patterns
+  - Code organization issues
+  {{/if}}
+
+  {{#if preserve_api}}
+  ### ⚠️ API Preservation Mode
+  All existing API contracts, response formats, and interfaces must remain unchanged.
+  {{/if}}
+
+  {{#if apply_solid}}
+  ### SOLID Principles Application
+  Applying SOLID principles:
+  - **S**ingle Responsibility: Each class/module/function has one reason to change
+  - **O**pen/Closed: Open for extension, closed for modification
+  - **L**iskov Substitution: Derived classes must be substitutable
+  - **I**nterface Segregation: Many specific interfaces vs one general
+  - **D**ependency Inversion: Depend on abstractions, not concretions
+  {{/if}}
+
+  ### Issues Identified
+
+  #### 1. Code Structure Issues
+  - [List structural problems]
+  - [Identify violations of best practices]
+  - [Identify code organization issues]
+
+  #### 2. SOLID Principle Violations
+  - [Identify SRP violations]
+  - [Identify dependency issues]
+  - [Identify other SOLID violations]
+
+  #### 3. Best Practices Compliance
+  - [Check language-specific conventions]
+  - [Check framework-specific conventions (if applicable)]
+  - [Identify anti-patterns]
+  - [Suggest improvements]
+
+  ### Refactoring Plan
+
+  #### Phase 1: Method/Function Extraction
+  - [Identify methods/functions to extract]
+  - [Define new method/function signatures]
+  - [Identify reusable code blocks]
+
+  #### Phase 2: Separation of Concerns
+  - [Identify business logic to separate]
+  - [Identify data access logic to separate]
+  - [Define clear boundaries]
+
+  #### Phase 3: Dependency Management
+  - [Identify dependencies to inject]
+  - [Identify hard-coded dependencies]
+  - [Suggest dependency injection patterns]
+
+  #### Phase 4: Error Handling
+  - [Improve exception/error handling]
+  - [Add proper error responses]
+  - [Standardize error handling patterns]
+
+  ### Refactored Code
+
+  ```{{#if language}}{{language}}{{else}}code{{/if}}
+  [Provide complete refactored code]
+  ```
+
+  ### Key Improvements
+
+  1. **Structure**: [Explain structural improvements]
+  2. **Maintainability**: [Explain maintainability gains]
+  3. **Testability**: [Explain testability improvements]
+  4. **Performance**: [Explain performance optimizations if any]
+  5. **Readability**: [Explain readability improvements]
+
+  ### Migration Notes
+  - [Any breaking changes or considerations]
+  - [Testing recommendations]
+  - [Deployment considerations]
+  - [Backward compatibility notes]
+
+  {{output_lang_rule}}
+

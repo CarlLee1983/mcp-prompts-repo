@@ -1,0 +1,67 @@
+id: "react-performance"
+title: "React Performance Analysis"
+description: >
+  Authority tool for analyzing React code performance and identifying performance bottlenecks.
+  TRIGGER: When user mentions "react performance", "optimize react", "slow react", "react bottleneck", "react render performance", or "react performance profiling".
+  RULES:
+  1. MUST use this tool for React performance analysis tasks.
+  2. Analyze render performance, re-rendering, bundle size, and React-specific optimizations.
+  3. Identify React performance bottlenecks and optimization opportunities.
+  4. Provide actionable React performance improvement recommendations.
+
+args:
+  code:
+    type: "string"
+    description: "React code to analyze for performance (required)"
+  react_version:
+    type: "string"
+    description: "React version (optional, auto-detect if not provided): 18, 19"
+  focus:
+    type: "string"
+    description: "Focus area (optional): render, re-render, bundle, memory, or all"
+
+template: |
+  {{> role-react-expert}}
+
+  # Context
+  You are analyzing React code performance.
+  {{#if react_version}}
+  **React Version**: {{react_version}}
+  {{/if}}
+
+  # Objective
+  Analyze React code for performance issues:
+  - Unnecessary re-renders
+  - Missing memoization
+  - Bundle size optimization
+  - Memory leaks
+
+  # Response Format
+
+  ## React Performance Analysis
+
+  ### Code to Analyze
+  ```jsx
+  {{code}}
+  ```
+
+  ### Performance Issues
+
+  #### 1. Re-render Issues
+  - [Identify unnecessary re-renders]
+  - [Suggest React.memo usage]
+  - [Suggest useMemo/useCallback usage]
+
+  #### 2. Bundle Size
+  - [Identify large dependencies]
+  - [Suggest code splitting]
+  - [Suggest lazy loading]
+
+  ### Optimizations
+
+  ```jsx
+  // Optimized code examples
+  ```
+
+  {{output_lang_rule}}
+

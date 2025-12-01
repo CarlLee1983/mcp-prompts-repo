@@ -1,0 +1,208 @@
+id: "vue-pinia-setup"
+title: "Vue Pinia Store Setup"
+description: >
+  Authority tool for designing Pinia stores and state management structures.
+  TRIGGER: When user mentions "vue pinia", "pinia store", "vue state management", "pinia setup", "vue store design", or "pinia configuration".
+  RULES:
+  1. MUST use this tool for Pinia store design tasks.
+  2. Design Pinia stores following Pinia best practices.
+  3. Define proper state, getters, and actions.
+  4. Consider store organization and modularity.
+  5. Provide complete Pinia store implementation.
+
+args:
+  requirements:
+    type: "string"
+    description: "Store requirements and state specifications (required)"
+  vue_version:
+    type: "string"
+    description: "Vue version (optional, auto-detect if not provided): 3"
+  store_type:
+    type: "string"
+    description: "Store type (optional): setup, options, or auto-select"
+    default: "setup"
+  use_typescript:
+    type: "boolean"
+    description: "Use TypeScript"
+    default: true
+  include_persistence:
+    type: "boolean"
+    description: "Include state persistence"
+    default: false
+
+template: |
+  {{> role-vue-expert}}
+
+  # Context
+  You are designing Pinia stores.
+  {{#if vue_version}}
+  **Vue Version**: {{vue_version}}
+  {{/if}}
+  **Store Type**: {{store_type}}
+
+  # Objective
+  Design comprehensive Pinia stores that:
+  - Follow Pinia best practices
+  - Define proper state, getters, and actions
+  - Are well-organized and maintainable
+  - Support TypeScript when applicable
+  - Provide clear state management patterns
+
+  # Style
+  Provide complete Pinia store implementation with state, getters, and actions.
+
+  # Tone
+  Technical, precise, and focused on Pinia best practices.
+
+  # Audience
+  Vue developers designing Pinia stores.
+
+  # Response Format
+
+  ## Pinia Store Design
+
+  ### Requirements
+  {{requirements}}
+
+  ### Store Implementation
+
+  {{#if (eq store_type "setup")}}
+  #### Setup Store (Composition API Style)
+
+  ```{{#if use_typescript}}typescript{{else}}javascript{{/if}}
+  import { defineStore } from 'pinia';
+  import { ref, computed } from 'vue';
+
+  /**
+   * [Store description]
+   */
+  export const use[StoreName]Store = defineStore('[storeName]', () => {
+    // State
+    const state = ref{{#if use_typescript}}<Type>{{/if}}(initialValue);
+    const items = ref{{#if use_typescript}}<Item[]>{{/if}}([]);
+    const isLoading = ref{{#if use_typescript}}<boolean>{{/if}}(false);
+
+    // Getters
+    const getter = computed{{#if use_typescript}}<Type>{{/if}}(() => {
+      return state.value;
+    });
+
+    const filteredItems = computed{{#if use_typescript}}<Item[]>{{/if}}(() => {
+      return items.value.filter(/* filter logic */);
+    });
+
+    // Actions
+    function action() {
+      // Action implementation
+    }
+
+    async function asyncAction() {
+      isLoading.value = true;
+      try {
+        // Async operation
+      } finally {
+        isLoading.value = false;
+      }
+    }
+
+    return {
+      // State
+      state,
+      items,
+      isLoading,
+      // Getters
+      getter,
+      filteredItems,
+      // Actions
+      action,
+      asyncAction,
+    };
+  });
+  ```
+  {{else}}
+  #### Options Store (Options API Style)
+
+  ```{{#if use_typescript}}typescript{{else}}javascript{{/if}}
+  import { defineStore } from 'pinia';
+
+  /**
+   * [Store description]
+   */
+  export const use[StoreName]Store = defineStore('[storeName]', {
+    state: () => ({
+      state: initialValue,
+      items: [],
+      isLoading: false,
+    }),
+
+    getters: {
+      getter: (state) => {
+        return state.state;
+      },
+      filteredItems: (state) => {
+        return state.items.filter(/* filter logic */);
+      },
+    },
+
+    actions: {
+      action() {
+        // Action implementation
+      },
+      async asyncAction() {
+        this.isLoading = true;
+        try {
+          // Async operation
+        } finally {
+          this.isLoading = false;
+        }
+      },
+    },
+  });
+  ```
+  {{/if}}
+
+  {{#if include_persistence}}
+  ### State Persistence
+
+  ```{{#if use_typescript}}typescript{{else}}javascript{{/if}}
+  import { defineStore } from 'pinia';
+  import { persistedState } from 'pinia-plugin-persistedstate';
+
+  export const use[StoreName]Store = defineStore('[storeName]', {
+    // ... store definition
+    persist: {
+      key: '[storeName]',
+      storage: localStorage,
+    },
+  });
+  ```
+  {{/if}}
+
+  ### Store Structure
+
+  #### State
+  - [List all state properties]
+  - [Explain state organization]
+  - [Explain state types]
+
+  #### Getters
+  - [List all getters]
+  - [Explain getter logic]
+  - [Explain computed properties]
+
+  #### Actions
+  - [List all actions]
+  - [Explain action logic]
+  - [Explain async operations]
+
+  ### Store Best Practices
+
+  - [ ] Store follows naming conventions
+  - [ ] State is properly typed (if using TypeScript)
+  - [ ] Getters are used for computed values
+  - [ ] Actions handle async operations
+  - [ ] Store is modular and maintainable
+  - [ ] Store follows Pinia conventions
+
+  {{output_lang_rule}}
+

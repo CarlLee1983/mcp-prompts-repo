@@ -1,0 +1,392 @@
+id: "documentation-generator"
+title: "Documentation Generator"
+description: >
+  Authority tool for generating comprehensive documentation including API docs, code comments, and README files.
+  TRIGGER: When user mentions "generate docs", "create documentation", "api docs", "code comments", "readme", "document code", or "write docs".
+  RULES:
+  1. MUST use this tool for documentation generation tasks.
+  2. Generate documentation following industry standards and best practices.
+  3. Support multiple documentation formats (Markdown, OpenAPI, JSDoc, PHPDoc, etc.).
+  4. Include examples and usage patterns when requested.
+  5. Ensure documentation is clear, comprehensive, and maintainable.
+
+args:
+  code:
+    type: "string"
+    description: "Code to generate documentation for (optional)"
+  doc_type:
+    type: "string"
+    description: "Documentation type (required): api, code, readme"
+  language:
+    type: "string"
+    description: "Programming language (optional, auto-detect if not provided): php, javascript, typescript, python, go, java, csharp, ruby, etc."
+  framework:
+    type: "string"
+    description: "Framework (optional, e.g., laravel, express, django, spring, react, vue)"
+  format:
+    type: "string"
+    description: "Documentation format (optional): markdown, openapi, jsdoc, phpdoc, sphinx, asciidoc"
+    default: "markdown"
+  include_examples:
+    type: "boolean"
+    description: "Include code examples and usage patterns"
+    default: true
+  include_diagrams:
+    type: "boolean"
+    description: "Include diagrams and visual representations"
+    default: false
+
+template: |
+  {{> role-expert}}
+
+  # Context
+  You are generating {{doc_type}} documentation.
+  {{#if language}}
+  **Programming Language**: {{language}}
+  {{/if}}
+  {{#if framework}}
+  **Framework**: {{framework}}
+  {{/if}}
+  **Format**: {{format}}
+
+  # Objective
+  Generate comprehensive, production-ready documentation that:
+  - Follows industry standards and best practices
+  - Is clear, concise, and easy to understand
+  - Includes necessary examples and usage patterns
+  - Is maintainable and up-to-date
+  - Covers all relevant aspects of the {{doc_type}} documentation
+
+  # Style
+  Provide well-structured documentation in {{format}} format with clear sections, examples, and explanations.
+
+  # Tone
+  Professional, clear, and instructional. Focus on helping developers understand and use the code/API effectively.
+
+  # Audience
+  Developers who will use, maintain, or integrate with the documented code/API.
+
+  # Response Format
+
+  {{#if (eq doc_type "api")}}
+  ## API Documentation
+
+  {{#if code}}
+  ### API Code Analysis
+  ```{{#if language}}{{language}}{{else}}code{{/if}}
+  {{code}}
+  ```
+
+  ### API Overview
+  [Analyze the API code and provide overview]
+  {{else}}
+  ### API Overview
+  [Provide general API documentation structure]
+  {{/if}}
+
+  {{#if (eq format "openapi")}}
+  ### OpenAPI Specification
+
+  ```yaml
+  openapi: 3.0.0
+  info:
+    title: API Documentation
+    version: 1.0.0
+    description: |
+      [API description]
+  
+  servers:
+    - url: https://api.example.com/v1
+      description: Production server
+  
+  paths:
+    # [Define API endpoints]
+  
+  components:
+    schemas:
+      # [Define data models]
+    securitySchemes:
+      # [Define authentication schemes]
+  ```
+  {{else}}
+  ### API Endpoints
+
+  #### Endpoint 1: [Endpoint Name]
+  - **Method**: [HTTP Method]
+  - **URL**: `/api/endpoint`
+  - **Description**: [Endpoint description]
+  
+  **Request Parameters**:
+  - [List request parameters]
+  
+  **Request Body**:
+  ```json
+  {
+    // Request body structure
+  }
+  ```
+  
+  **Response**:
+  ```json
+  {
+    // Response structure
+  }
+  ```
+  
+  **Status Codes**:
+  - `200 OK`: [Description]
+  - `400 Bad Request`: [Description]
+  - `401 Unauthorized`: [Description]
+  - `500 Internal Server Error`: [Description]
+
+  {{#if include_examples}}
+  **Example Request**:
+  ```bash
+  curl -X POST https://api.example.com/endpoint \
+    -H "Content-Type: application/json" \
+    -d '{"key": "value"}'
+  ```
+
+  **Example Response**:
+  ```json
+  {
+    "status": "success",
+    "data": {}
+  }
+  ```
+  {{/if}}
+  {{/if}}
+
+  ### Authentication
+  [Document authentication methods and requirements]
+
+  ### Error Handling
+  [Document error response formats and codes]
+
+  ### Rate Limiting
+  [Document rate limiting policies if applicable]
+
+  {{#if include_diagrams}}
+  ### API Flow Diagrams
+  [Include sequence diagrams or flow charts]
+  {{/if}}
+
+  {{else if (eq doc_type "code")}}
+  ## Code Documentation
+
+  {{#if code}}
+  ### Code to Document
+  ```{{#if language}}{{language}}{{else}}code{{/if}}
+  {{code}}
+  ```
+
+  ### Generated Documentation
+
+  {{#if (eq format "jsdoc")}}
+  ```javascript
+  /**
+   * [Function/Class description]
+   * 
+   * @param {Type} paramName - Parameter description
+   * @returns {Type} Return value description
+   * @throws {ErrorType} Error description
+   * @example
+   * // Example usage
+   * functionName(param);
+   */
+  ```
+  {{else if (eq format "phpdoc")}}
+  ```php
+  /**
+   * [Function/Class description]
+   * 
+   * @param Type $paramName Parameter description
+   * @return Type Return value description
+   * @throws ExceptionType Error description
+   * 
+   * @example
+   * // Example usage
+   * functionName($param);
+   */
+  ```
+  {{else if (eq format "sphinx")}}
+  ```python
+  def function_name(param: Type) -> Type:
+      """
+      [Function description]
+      
+      :param param: Parameter description
+      :type param: Type
+      :returns: Return value description
+      :rtype: Type
+      :raises ExceptionType: Error description
+      
+      .. code-block:: python
+      
+         # Example usage
+         function_name(param)
+      """
+  ```
+  {{else}}
+  ### Function/Class Documentation
+
+  #### [Function/Class Name]
+
+  **Description**: [Clear description of what the function/class does]
+
+  **Parameters**:
+  - `paramName` (Type): [Parameter description]
+
+  **Returns**: [Return value description]
+
+  **Throws**: [Exception types and conditions]
+
+  {{#if include_examples}}
+  **Example Usage**:
+  ```{{#if language}}{{language}}{{else}}code{{/if}}
+  // Example code demonstrating usage
+  ```
+  {{/if}}
+
+  **Notes**: [Additional notes or considerations]
+  {{/if}}
+
+  ### Documentation Standards Applied
+
+  - [ ] All public functions/classes are documented
+  - [ ] Parameters and return types are clearly specified
+  - [ ] Examples are provided for complex functions
+  - [ ] Edge cases and error conditions are documented
+  - [ ] Documentation follows language-specific conventions
+
+  {{else if (eq doc_type "readme")}}
+  ## README Documentation
+
+  {{#if code}}
+  ### Project Code Analysis
+  ```{{#if language}}{{language}}{{else}}code{{/if}}
+  {{code}}
+  ```
+
+  [Analyze project structure and generate appropriate README]
+  {{/if}}
+
+  ### README Structure
+
+  ```markdown
+  # Project Name
+
+  [Brief project description]
+
+  ## Features
+
+  - [Feature 1]
+  - [Feature 2]
+  - [Feature 3]
+
+  ## Installation
+
+  ### Prerequisites
+  - [Prerequisite 1]
+  - [Prerequisite 2]
+
+  ### Setup
+  ```bash
+  # Installation commands
+  ```
+
+  ## Usage
+
+  {{#if include_examples}}
+  ### Basic Usage
+  ```{{#if language}}{{language}}{{else}}code{{/if}}
+  // Example code
+  ```
+
+  ### Advanced Usage
+  ```{{#if language}}{{language}}{{else}}code{{/if}}
+  // Advanced example
+  ```
+  {{/if}}
+
+  ## Configuration
+
+  [Configuration options and environment variables]
+
+  ## API Reference
+
+  [Link to API documentation or inline API reference]
+
+  ## Testing
+
+  ```bash
+  # Test commands
+  ```
+
+  ## Contributing
+
+  [Contributing guidelines]
+
+  ## License
+
+  [License information]
+
+  ## Support
+
+  [Support and contact information]
+  ```
+
+  {{#if include_diagrams}}
+  ### Project Architecture
+
+  [Include architecture diagrams or flow charts]
+  {{/if}}
+
+  {{/if}}
+
+  ### Documentation Best Practices
+
+  1. **Clarity**: Use clear, concise language
+  2. **Completeness**: Cover all important aspects
+  3. **Examples**: Provide practical examples
+  4. **Structure**: Organize content logically
+  5. **Maintenance**: Keep documentation up-to-date
+  6. **Accessibility**: Make documentation easy to find and navigate
+
+  ### Format-Specific Guidelines
+
+  {{#if (eq format "markdown")}}
+  **Markdown Guidelines**:
+  - Use proper heading hierarchy
+  - Include code blocks with syntax highlighting
+  - Use tables for structured data
+  - Include links to related resources
+  {{else if (eq format "openapi")}}
+  **OpenAPI Guidelines**:
+  - Follow OpenAPI 3.0 specification
+  - Include all required fields
+  - Provide example requests and responses
+  - Document all error responses
+  {{else if (eq format "jsdoc")}}
+  **JSDoc Guidelines**:
+  - Use standard JSDoc tags
+  - Include type information
+  - Provide examples for complex functions
+  - Document all parameters and return values
+  {{else if (eq format "phpdoc")}}
+  **PHPDoc Guidelines**:
+  - Follow PSR-5 PHPDoc standard
+  - Include type hints
+  - Document all parameters and return types
+  - Use proper annotations
+  {{/if}}
+
+  ### Maintenance Notes
+
+  - [ ] Documentation should be updated with code changes
+  - [ ] Examples should be tested and verified
+  - [ ] Links should be checked regularly
+  - [ ] Version information should be kept current
+
+  {{output_lang_rule}}
+

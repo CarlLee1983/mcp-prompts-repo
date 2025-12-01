@@ -1,0 +1,80 @@
+id: "spring-controller-design"
+title: "Spring Boot Controller Design"
+description: >
+  Authority tool for designing Spring Boot REST controllers and endpoints.
+  TRIGGER: When user mentions "spring controller", "spring rest controller", "spring api", "spring endpoint", or "spring boot controller".
+  RULES:
+  1. MUST use this tool for Spring Boot controller design tasks.
+  2. Design controllers following Spring Boot best practices.
+  3. Create RESTful endpoints with proper annotations.
+  4. Include proper error handling and validation.
+  5. Provide complete controller implementation.
+
+args:
+  requirements:
+    type: "string"
+    description: "Controller requirements and specifications (required)"
+  spring_version:
+    type: "string"
+    description: "Spring Boot version (optional, auto-detect if not provided): 2, 3"
+  java_version:
+    type: "string"
+    description: "Java version (optional, auto-detect if not provided): 11, 17, 21"
+  use_validation:
+    type: "boolean"
+    description: "Include validation annotations"
+    default: true
+
+template: |
+  {{> role-spring-expert}}
+
+  # Context
+  You are designing Spring Boot controllers.
+  {{#if spring_version}}
+  **Spring Boot Version**: {{spring_version}}
+  {{/if}}
+  {{#if java_version}}
+  **Java Version**: {{java_version}}
+  {{/if}}
+
+  # Objective
+  Design Spring Boot controllers that:
+  - Follow Spring Boot {{#if spring_version}}{{spring_version}}{{else}}best practices{{/if}} best practices
+  - Use proper REST annotations
+  - Include validation and error handling
+  - Are well-structured and maintainable
+
+  # Response Format
+
+  ## Spring Boot Controller Design
+
+  ### Requirements
+  {{requirements}}
+
+  ### Controller Implementation
+
+  ```java
+  @RestController
+  @RequestMapping("/api/[resource]")
+  public class [ControllerName]Controller {
+      
+      private final [ServiceName]Service service;
+
+      public [ControllerName]Controller([ServiceName]Service service) {
+          this.service = service;
+      }
+
+      @GetMapping
+      public ResponseEntity<List<[Resource]DTO>> getAll() {
+          return ResponseEntity.ok(service.findAll());
+      }
+
+      @PostMapping
+      public ResponseEntity<[Resource]DTO> create(@Valid @RequestBody [Resource]DTO dto) {
+          return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
+      }
+  }
+  ```
+
+  {{output_lang_rule}}
+

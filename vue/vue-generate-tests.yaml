@@ -1,0 +1,182 @@
+id: "vue-generate-tests"
+title: "Vue Test Generation"
+description: >
+  Authority tool for generating Vue unit tests and component tests using Vitest or Jest.
+  TRIGGER: When user mentions "generate vue tests", "create vue tests", "write vue tests", "vitest tests", "vue test cases", or "vue testing".
+  RULES:
+  1. MUST use this tool when Vue test generation is requested.
+  2. Generate Vitest/Jest tests following Vue testing best practices.
+  3. Include both unit tests and component tests as appropriate.
+  4. Use Vue Test Utils and testing helpers.
+  5. Include component interaction testing when applicable.
+
+args:
+  code:
+    type: "string"
+    description: "Vue code to generate tests for (required)"
+  vue_version:
+    type: "string"
+    description: "Vue version (optional, auto-detect if not provided): 3"
+  test_framework:
+    type: "string"
+    description: "Test framework (optional): vitest, jest"
+    default: "vitest"
+  include_edge_cases:
+    type: "boolean"
+    description: "Include edge case tests"
+    default: true
+  include_error_handling:
+    type: "boolean"
+    description: "Include error handling tests"
+    default: true
+  include_interactions:
+    type: "boolean"
+    description: "Include component interaction tests"
+    default: true
+
+template: |
+  {{> role-vue-expert}}
+
+  # Context
+  You are generating comprehensive Vue tests using {{test_framework}}.
+  {{#if vue_version}}
+  **Vue Version**: {{vue_version}}
+  {{/if}}
+  **Test Framework**: {{test_framework}}
+
+  # Objective
+  Generate comprehensive Vue tests that:
+  - Test all components, composables, and functions
+  - Cover normal cases, edge cases, and error scenarios
+  - Follow Vue testing conventions and {{test_framework}} best practices
+  - Use Vue Test Utils for component testing
+  - Include component interaction testing
+  - Are maintainable and readable
+
+  # Style
+  Provide complete, production-ready {{test_framework}} test code following Vue testing best practices.
+
+  # Tone
+  Technical, thorough, and focused on Vue test quality.
+
+  # Audience
+  Vue developers writing tests for their code.
+
+  # Response Format
+
+  ## Vue Test Generation
+
+  ### Code to Test
+  ```vue
+  {{code}}
+  ```
+
+  ### Analysis
+
+  #### 1. Code Structure Analysis
+  - **Components Identified**: [List all testable components]
+  - **Composables Identified**: [List all testable composables]
+  - **Functions Identified**: [List all testable functions]
+  - **Dependencies**: [Identify dependencies that need mocking]
+  - **Complexity**: [Assess code complexity and testing requirements]
+
+  #### 2. Test Coverage Plan
+  - **Normal Cases**: [List normal operation scenarios]
+  {{#if include_edge_cases}}
+  - **Edge Cases**: [List boundary conditions, null values, empty inputs]
+  {{/if}}
+  {{#if include_error_handling}}
+  - **Error Cases**: [List exception scenarios, invalid inputs]
+  {{/if}}
+  {{#if include_interactions}}
+  - **Component Interactions**: [List user interaction scenarios]
+  {{/if}}
+
+  ### Generated Tests
+
+  {{#if (eq test_framework "vitest")}}
+  ```typescript
+  import { describe, it, expect, beforeEach } from 'vitest';
+  import { mount } from '@vue/test-utils';
+  import [ComponentName] from '@/components/[ComponentName].vue';
+
+  describe('[ComponentName]', () => {
+      let wrapper;
+
+      beforeEach(() => {
+          wrapper = mount([ComponentName], {
+              props: {
+                  // Props
+              }
+          });
+      });
+
+      it('renders correctly', () => {
+          expect(wrapper.exists()).toBe(true);
+      });
+
+      {{#if include_interactions}}
+      it('handles user interaction', async () => {
+          await wrapper.find('button').trigger('click');
+          expect(wrapper.emitted('event')).toBeTruthy();
+      });
+      {{/if}}
+  });
+  ```
+  {{else}}
+  ```javascript
+  import { describe, it, expect, beforeEach } from '@jest/globals';
+  import { mount } from '@vue/test-utils';
+  import [ComponentName] from '@/components/[ComponentName].vue';
+
+  describe('[ComponentName]', () => {
+      let wrapper;
+
+      beforeEach(() => {
+          wrapper = mount([ComponentName], {
+              props: {
+                  // Props
+              }
+          });
+      });
+
+      it('renders correctly', () => {
+          expect(wrapper.exists()).toBe(true);
+      });
+  });
+  ```
+  {{/if}}
+
+  ### Vue Testing Best Practices Applied
+
+  1. **Test Organization**:
+     - [ ] Tests are organized in appropriate directories
+     - [ ] Test files follow naming conventions
+     - [ ] Tests follow AAA pattern (Arrange, Act, Assert)
+
+  2. **Vue Testing Helpers**:
+     - [ ] Uses Vue Test Utils appropriately
+     - [ ] Uses mount/shallowMount appropriately
+     - [ ] Uses proper component mounting options
+
+  3. **Test Coverage**:
+     - [ ] All components are tested
+     - [ ] All composables are tested
+     - [ ] Normal operation paths are covered
+     {{#if include_edge_cases}}
+     - [ ] Edge cases are covered
+     {{/if}}
+     {{#if include_error_handling}}
+     - [ ] Error handling is tested
+     {{/if}}
+     {{#if include_interactions}}
+     - [ ] Component interactions are tested
+     {{/if}}
+
+  4. **Mocking**:
+     - [ ] External dependencies are mocked
+     - [ ] Vue Router is mocked if needed
+     - [ ] Composables are mocked if needed
+
+  {{output_lang_rule}}
+

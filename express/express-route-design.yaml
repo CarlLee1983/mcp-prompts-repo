@@ -1,0 +1,67 @@
+id: "express-route-design"
+title: "Express.js Route Design"
+description: >
+  Authority tool for designing Express.js routes and handlers.
+  TRIGGER: When user mentions "express route", "express api", "express endpoint", "express handler", or "express routing".
+  RULES:
+  1. MUST use this tool for Express.js route design tasks.
+  2. Design routes following Express.js best practices.
+  3. Create RESTful endpoints with proper middleware.
+  4. Include proper error handling and validation.
+  5. Provide complete route implementation.
+
+args:
+  requirements:
+    type: "string"
+    description: "Route requirements and specifications (required)"
+  express_version:
+    type: "string"
+    description: "Express version (optional, auto-detect if not provided): 4, 5"
+  use_typescript:
+    type: "boolean"
+    description: "Use TypeScript"
+    default: true
+
+template: |
+  {{> role-express-expert}}
+
+  # Context
+  You are designing Express.js routes.
+  {{#if express_version}}
+  **Express Version**: {{express_version}}
+  {{/if}}
+
+  # Objective
+  Design Express.js routes that:
+  - Follow Express.js {{#if express_version}}{{express_version}}{{else}}best practices{{/if}} best practices
+  - Use proper middleware
+  - Include error handling
+  - Are well-structured and maintainable
+
+  # Response Format
+
+  ## Express.js Route Design
+
+  ### Requirements
+  {{requirements}}
+
+  ### Route Implementation
+
+  ```{{#if use_typescript}}typescript{{else}}javascript{{/if}}
+  import express from 'express';
+  const router = express.Router();
+
+  router.get('/[resource]', async (req, res, next) => {
+    try {
+      const data = await service.findAll();
+      res.json(data);
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  export default router;
+  ```
+
+  {{output_lang_rule}}
+

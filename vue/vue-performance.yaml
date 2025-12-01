@@ -1,0 +1,224 @@
+id: "vue-performance"
+title: "Vue Performance Analysis"
+description: >
+  Authority tool for analyzing Vue code performance and identifying performance bottlenecks.
+  TRIGGER: When user mentions "vue performance", "optimize vue performance", "slow vue code", "vue bottleneck", "vue render performance", "vue bundle size", or "vue performance profiling".
+  RULES:
+  1. MUST use this tool for Vue performance analysis tasks.
+  2. Analyze render performance, reactivity, bundle size, and Vue-specific optimizations.
+  3. Identify Vue performance bottlenecks and optimization opportunities.
+  4. Provide actionable Vue performance improvement recommendations.
+  5. Consider Vue 3 Composition API optimizations.
+
+args:
+  code:
+    type: "string"
+    description: "Vue code to analyze for performance (required)"
+  vue_version:
+    type: "string"
+    description: "Vue version (optional, auto-detect if not provided): 3"
+  focus:
+    type: "string"
+    description: "Focus area (optional): render, reactivity, bundle, memory, network, or all"
+  include_profiling:
+    type: "boolean"
+    description: "Include performance profiling recommendations"
+    default: true
+  include_benchmarks:
+    type: "boolean"
+    description: "Include benchmark testing recommendations"
+    default: false
+
+template: |
+  {{> role-vue-expert}}
+
+  # Context
+  You are analyzing Vue code performance for optimization opportunities.
+  {{#if vue_version}}
+  **Vue Version**: {{vue_version}}
+  {{/if}}
+
+  # Objective
+  Analyze the provided Vue code for performance issues and optimization opportunities in:
+  - Render performance and re-rendering
+  - Reactivity system efficiency
+  - Bundle size and code splitting
+  - Memory usage and memory leaks
+  - Network performance and API calls
+  - Vue-specific performance features
+
+  # Style
+  Provide detailed Vue performance analysis with before/after comparisons, optimization strategies, and measurable improvements.
+
+  # Tone
+  Technical, analytical, and focused on Vue-specific performance gains.
+
+  # Audience
+  Vue developers optimizing application performance.
+
+  # Response Format
+
+  ## Vue Performance Analysis Report
+
+  ### Code to Analyze
+  ```vue
+  {{code}}
+  ```
+
+  {{#if focus}}
+  ### Focus Area
+  **Requested focus**: {{focus}}
+  {{else}}
+  ### Comprehensive Analysis
+  Analyzing all performance aspects: render, reactivity, bundle, memory, and network.
+  {{/if}}
+
+  ### Performance Issues Identified
+
+  {{#if (or (eq focus "render") (eq focus "all"))}}
+  #### 1. Render Performance Issues
+
+  **Unnecessary Re-renders**:
+  - [Identify components that re-render unnecessarily]
+  - [Suggest v-memo usage]
+  - [Suggest computed property optimization]
+  - [Estimate performance improvements]
+
+  **Heavy Template Computations**:
+  - [Identify complex template expressions]
+  - [Suggest moving to computed properties]
+  - [Estimate performance improvements]
+
+  **Example Optimization**:
+  ```vue
+  <!-- Before: Computed in template -->
+  <div>{{ expensiveComputation() }}</div>
+
+  <!-- After: Computed property -->
+  <div>{{ computedValue }}</div>
+  <script setup>
+  const computedValue = computed(() => expensiveComputation());
+  </script>
+  ```
+  {{/if}}
+
+  {{#if (or (eq focus "reactivity") (eq focus "all"))}}
+  #### 2. Reactivity Performance Issues
+
+  **Inefficient Reactivity**:
+  - [Identify unnecessary reactive conversions]
+  - [Suggest shallowRef/shallowReactive usage]
+  - [Estimate performance improvements]
+
+  **Deep Reactivity Overhead**:
+  - [Identify deep reactivity that could be shallow]
+  - [Suggest optimization strategies]
+  {{/if}}
+
+  {{#if (or (eq focus "bundle") (eq focus "all"))}}
+  #### 3. Bundle Size Issues
+
+  **Large Bundle Size**:
+  - [Identify large dependencies]
+  - [Suggest code splitting]
+  - [Suggest lazy loading components]
+  - [Estimate bundle size reductions]
+
+  **Missing Code Splitting**:
+  - [Identify opportunities for route-based code splitting]
+  - [Suggest dynamic imports]
+  - [Estimate performance improvements]
+
+  **Example Optimization**:
+  ```typescript
+  // Before: Static import
+  import HeavyComponent from './HeavyComponent.vue';
+
+  // After: Lazy loading
+  const HeavyComponent = defineAsyncComponent(() => 
+    import('./HeavyComponent.vue')
+  );
+  ```
+  {{/if}}
+
+  {{#if (or (eq focus "memory") (eq focus "all"))}}
+  #### 4. Memory Performance Issues
+
+  **Memory Leaks**:
+  - [Identify potential memory leaks]
+  - [Suggest proper cleanup in onUnmounted]
+  - [Estimate memory improvements]
+
+  **Large Data Structures**:
+  - [Identify large data structures in memory]
+  - [Suggest pagination or virtualization]
+  {{/if}}
+
+  ### Vue-Specific Optimizations
+
+  #### Strategy 1: v-memo Optimization
+  - [Identify list items that could use v-memo]
+  - [Suggest v-memo implementation]
+  - [Estimate performance improvements]
+
+  #### Strategy 2: Computed Properties
+  - [Review computed vs methods usage]
+  - [Suggest computed property optimization]
+  - [Estimate performance improvements]
+
+  #### Strategy 3: Component Lazy Loading
+  - [Identify components for lazy loading]
+  - [Suggest defineAsyncComponent usage]
+  - [Estimate performance improvements]
+
+  #### Strategy 4: Virtual Scrolling
+  - [Identify long lists for virtualization]
+  - [Suggest virtual scrolling implementation]
+  - [Estimate performance improvements]
+
+  ### Optimized Code
+
+  ```vue
+  [Provide complete optimized Vue code with all improvements applied]
+  ```
+
+  ### Performance Metrics
+
+  **Before Optimization**:
+  - Initial Load Time: [Time]
+  - Bundle Size: [Size]
+  - Render Time: [Time]
+  - Memory Usage: [Memory]
+
+  **After Optimization**:
+  - Initial Load Time: [Time] (Improved by X%)
+  - Bundle Size: [Size] (Reduced by X%)
+  - Render Time: [Time] (Improved by X%)
+  - Memory Usage: [Memory] (Reduced by X%)
+
+  {{#if include_profiling}}
+  ### Vue Performance Profiling Recommendations
+
+  #### Profiling Tools
+  - **Vue DevTools**: [Usage for component profiling]
+  - **Chrome DevTools Performance**: [Usage for render profiling]
+  - **Webpack Bundle Analyzer**: [Usage for bundle analysis]
+
+  #### Profiling Strategy
+  1. **Baseline Measurement**: [Establish performance baseline]
+  2. **Identify Hotspots**: [Use profiling to find bottlenecks]
+  3. **Optimize Hotspots**: [Focus optimization efforts]
+  4. **Measure Improvements**: [Verify performance gains]
+  {{/if}}
+
+  ### Vue Best Practices Checklist
+
+  - [ ] v-memo is used for expensive list items
+  - [ ] Computed properties are used instead of methods in templates
+  - [ ] Components are lazy loaded when appropriate
+  - [ ] Code splitting is implemented
+  - [ ] Memory leaks are prevented with proper cleanup
+  - [ ] Vue {{#if vue_version}}{{vue_version}}{{else}}latest{{/if}} performance features are utilized
+
+  {{output_lang_rule}}
+

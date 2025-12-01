@@ -1,0 +1,385 @@
+id: "performance-analysis"
+title: "Performance Analysis"
+description: >
+  Authority tool for analyzing code performance and identifying non-database performance bottlenecks.
+  TRIGGER: When user mentions "performance", "optimize performance", "slow code", "bottleneck", "cpu usage", "memory usage", "algorithm optimization", or "performance profiling".
+  RULES:
+  1. MUST use this tool for performance analysis tasks (excluding database-specific optimizations).
+  2. Analyze CPU, memory, network, I/O, and algorithm performance.
+  3. Identify performance bottlenecks and optimization opportunities.
+  4. Provide actionable performance improvement recommendations.
+  5. Consider concurrency and parallel processing when applicable.
+
+args:
+  code:
+    type: "string"
+    description: "Code to analyze for performance (required)"
+  language:
+    type: "string"
+    description: "Programming language (optional, auto-detect if not provided): php, javascript, typescript, python, go, java, csharp, ruby, etc."
+  framework:
+    type: "string"
+    description: "Framework (optional, e.g., laravel, express, django, spring, react, vue)"
+  focus:
+    type: "string"
+    description: "Focus area (optional): cpu, memory, network, io, algorithm, concurrency, or all"
+  include_profiling:
+    type: "boolean"
+    description: "Include performance profiling recommendations"
+    default: true
+  include_benchmarks:
+    type: "boolean"
+    description: "Include benchmark testing recommendations"
+    default: false
+
+template: |
+  {{> role-expert}}
+
+  # Context
+  You are analyzing code performance for optimization opportunities.
+  {{#if language}}
+  **Programming Language**: {{language}}
+  {{/if}}
+  {{#if framework}}
+  **Framework**: {{framework}}
+  {{/if}}
+
+  # Objective
+  Analyze the provided code for performance issues and optimization opportunities in:
+  - CPU usage and computational efficiency
+  - Memory usage and memory management
+  - Network I/O and API calls
+  - File I/O and disk operations
+  - Algorithm complexity and efficiency
+  - Concurrency and parallel processing
+  - Framework-specific performance considerations
+
+  # Style
+  Provide detailed performance analysis with before/after comparisons, optimization strategies, and measurable improvements.
+
+  # Tone
+  Technical, analytical, and focused on measurable performance gains.
+
+  # Audience
+  Developers optimizing application performance.
+
+  # Response Format
+
+  ## Performance Analysis Report
+
+  ### Code to Analyze
+  ```{{#if language}}{{language}}{{else}}code{{/if}}
+  {{code}}
+  ```
+
+  {{#if focus}}
+  ### Focus Area
+  **Requested focus**: {{focus}}
+  {{else}}
+  ### Comprehensive Analysis
+  Analyzing all performance aspects: CPU, memory, network, I/O, algorithms, and concurrency.
+  {{/if}}
+
+  ### Performance Issues Identified
+
+  {{#if (or (eq focus "cpu") (eq focus "all"))}}
+  #### 1. CPU Performance Issues
+
+  **Inefficient Algorithms**:
+  - [Identify algorithms with high time complexity]
+  - [Suggest more efficient algorithms]
+  - [Estimate complexity improvements (e.g., O(n²) → O(n log n))]
+
+  **Redundant Computations**:
+  - [Identify repeated calculations]
+  - [Suggest caching or memoization]
+  - [Identify loop optimizations]
+
+  **Synchronous Blocking Operations**:
+  - [Identify blocking I/O operations]
+  - [Suggest asynchronous alternatives]
+  - [Identify CPU-intensive operations that could be optimized]
+
+  **Example Optimization**:
+  ```{{#if language}}{{language}}{{else}}code{{/if}}
+  // Before: O(n²) complexity
+  [Inefficient code]
+
+  // After: O(n log n) complexity
+  [Optimized code]
+  ```
+  {{/if}}
+
+  {{#if (or (eq focus "memory") (eq focus "all"))}}
+  #### 2. Memory Performance Issues
+
+  **Memory Leaks**:
+  - [Identify potential memory leaks]
+  - [Suggest proper cleanup and resource management]
+  - [Identify circular references]
+
+  **Excessive Memory Allocation**:
+  - [Identify unnecessary object creation]
+  - [Suggest object pooling or reuse]
+  - [Identify large data structures that could be optimized]
+
+  **Memory Fragmentation**:
+  - [Identify patterns causing fragmentation]
+  - [Suggest memory allocation strategies]
+
+  **Example Optimization**:
+  ```{{#if language}}{{language}}{{else}}code{{/if}}
+  // Before: Creating new objects in loop
+  [Memory-intensive code]
+
+  // After: Reusing objects or using object pools
+  [Memory-optimized code]
+  ```
+  {{/if}}
+
+  {{#if (or (eq focus "network") (eq focus "all"))}}
+  #### 3. Network I/O Performance Issues
+
+  **Sequential API Calls**:
+  - [Identify sequential network requests]
+  - [Suggest parallel or batch requests]
+  - [Estimate time savings]
+
+  **Unnecessary Network Requests**:
+  - [Identify redundant API calls]
+  - [Suggest request caching]
+  - [Identify opportunities for request batching]
+
+  **Large Payloads**:
+  - [Identify large request/response payloads]
+  - [Suggest payload optimization (compression, pagination)]
+  - [Identify unnecessary data transfer]
+
+  **Example Optimization**:
+  ```{{#if language}}{{language}}{{else}}code{{/if}}
+  // Before: Sequential API calls
+  [Sequential network code]
+
+  // After: Parallel API calls
+  [Parallel network code]
+  ```
+  {{/if}}
+
+  {{#if (or (eq focus "io") (eq focus "all"))}}
+  #### 4. File I/O Performance Issues
+
+  **Synchronous File Operations**:
+  - [Identify blocking file I/O]
+  - [Suggest asynchronous file operations]
+  - [Estimate performance impact]
+
+  **Frequent File Access**:
+  - [Identify repeated file reads/writes]
+  - [Suggest file caching strategies]
+  - [Identify opportunities for batch operations]
+
+  **Large File Processing**:
+  - [Identify full file loading into memory]
+  - [Suggest streaming or chunked processing]
+  - [Identify memory-efficient file handling]
+
+  **Example Optimization**:
+  ```{{#if language}}{{language}}{{else}}code{{/if}}
+  // Before: Loading entire file into memory
+  [Inefficient file I/O]
+
+  // After: Streaming file processing
+  [Optimized file I/O]
+  ```
+  {{/if}}
+
+  {{#if (or (eq focus "algorithm") (eq focus "all"))}}
+  #### 5. Algorithm Complexity Issues
+
+  **Time Complexity Analysis**:
+  - [Analyze current algorithm complexity]
+  - [Identify bottlenecks]
+  - [Suggest algorithmic improvements]
+
+  **Space Complexity Analysis**:
+  - [Analyze memory usage patterns]
+  - [Suggest space-optimized algorithms]
+  - [Identify trade-offs between time and space]
+
+  **Data Structure Selection**:
+  - [Review data structure choices]
+  - [Suggest more efficient data structures]
+  - [Explain performance implications]
+
+  **Example Optimization**:
+  ```{{#if language}}{{language}}{{else}}code{{/if}}
+  // Before: O(n²) algorithm
+  [Inefficient algorithm]
+
+  // After: O(n log n) or O(n) algorithm
+  [Optimized algorithm]
+  ```
+  {{/if}}
+
+  {{#if (or (eq focus "concurrency") (eq focus "all"))}}
+  #### 6. Concurrency and Parallelism Issues
+
+  **Sequential Processing**:
+  - [Identify operations that could run in parallel]
+  - [Suggest parallel processing patterns]
+  - [Estimate performance gains]
+
+  **Thread/Process Management**:
+  - [Review thread/process usage]
+  - [Suggest optimal concurrency patterns]
+  - [Identify race conditions or deadlocks]
+
+  **Async/Await Patterns**:
+  - [Review asynchronous code patterns]
+  - [Suggest improvements for async operations]
+  - [Identify blocking async operations]
+
+  **Example Optimization**:
+  ```{{#if language}}{{language}}{{else}}code{{/if}}
+  // Before: Sequential processing
+  [Sequential code]
+
+  // After: Parallel processing
+  [Parallel code]
+  ```
+  {{/if}}
+
+  ### Optimization Strategies
+
+  #### Strategy 1: Caching
+  - [Identify cacheable computations]
+  - [Suggest caching strategies]
+  - [Estimate performance improvements]
+
+  #### Strategy 2: Lazy Loading
+  - [Identify opportunities for lazy loading]
+  - [Suggest lazy loading patterns]
+  - [Estimate memory and performance benefits]
+
+  #### Strategy 3: Batch Processing
+  - [Identify operations suitable for batching]
+  - [Suggest batch processing patterns]
+  - [Estimate performance improvements]
+
+  #### Strategy 4: Memoization
+  - [Identify functions suitable for memoization]
+  - [Suggest memoization implementation]
+  - [Estimate performance gains]
+
+  #### Strategy 5: Code Splitting (Frontend)
+  {{#if framework}}
+  {{#if (or (eq framework "react") (eq framework "vue") (eq framework "angular"))}}
+  - [Identify opportunities for code splitting]
+  - [Suggest lazy loading of components]
+  - [Estimate bundle size and load time improvements]
+  {{/if}}
+  {{/if}}
+
+  ### Optimized Code
+
+  ```{{#if language}}{{language}}{{else}}code{{/if}}
+  [Provide complete optimized code with all improvements applied]
+  ```
+
+  ### Performance Metrics
+
+  **Before Optimization**:
+  - Execution Time: [Time]
+  - Memory Usage: [Memory]
+  - CPU Usage: [CPU %]
+  - Network Requests: [Count]
+  - Algorithm Complexity: [Big O notation]
+
+  **After Optimization**:
+  - Execution Time: [Time] (Improved by X%)
+  - Memory Usage: [Memory] (Reduced by X%)
+  - CPU Usage: [CPU %] (Reduced by X%)
+  - Network Requests: [Count] (Reduced by X%)
+  - Algorithm Complexity: [Big O notation] (Improved from O(n²) to O(n log n))
+
+  {{#if include_profiling}}
+  ### Performance Profiling Recommendations
+
+  #### Profiling Tools
+  {{#if language}}
+  **{{language}} Profiling Tools**:
+  - [List language-specific profiling tools]
+  - [Provide usage examples]
+  - [Explain how to interpret results]
+  {{else}}
+  - [Suggest general profiling tools]
+  - [Provide profiling strategies]
+  {{/if}}
+
+  #### Profiling Strategy
+  1. **Baseline Measurement**: [Establish performance baseline]
+  2. **Identify Hotspots**: [Use profiling to find bottlenecks]
+  3. **Optimize Hotspots**: [Focus optimization efforts]
+  4. **Measure Improvements**: [Verify performance gains]
+  5. **Iterate**: [Continue optimization cycle]
+
+  #### Key Metrics to Monitor
+  - Execution time per function
+  - Memory allocation patterns
+  - CPU usage per operation
+  - Network request timing
+  - I/O operation timing
+  {{/if}}
+
+  {{#if include_benchmarks}}
+  ### Benchmark Testing Recommendations
+
+  #### Benchmark Setup
+  ```{{#if language}}{{language}}{{else}}code{{/if}}
+  // Benchmark test structure
+  [Provide benchmark test code]
+  ```
+
+  #### Benchmark Scenarios
+  - [List key scenarios to benchmark]
+  - [Define performance targets]
+  - [Specify test data sizes]
+
+  #### Benchmark Tools
+  - [Suggest benchmark testing frameworks]
+  - [Provide benchmark implementation examples]
+  {{/if}}
+
+  ### Best Practices Checklist
+
+  - [ ] Algorithms are optimized for time complexity
+  - [ ] Memory usage is optimized
+  - [ ] Network requests are minimized and parallelized
+  - [ ] I/O operations are asynchronous where possible
+  - [ ] Caching is implemented for expensive operations
+  - [ ] Code is profiled to identify bottlenecks
+  - [ ] Performance improvements are measured and verified
+  - [ ] Concurrency is used appropriately
+  - [ ] Framework-specific optimizations are applied
+
+  ### Framework-Specific Optimizations
+
+  {{#if framework}}
+  **Framework**: {{framework}}
+  - [Provide framework-specific performance optimizations]
+  - [Reference framework best practices]
+  - [Include framework-specific code examples]
+  {{else}}
+  - Apply language-specific performance best practices
+  - Consider framework-agnostic optimizations
+  {{/if}}
+
+  ### Additional Recommendations
+
+  1. **Monitoring**: [Suggest performance monitoring tools]
+  2. **Testing**: [Suggest performance testing strategies]
+  3. **Documentation**: [Document performance characteristics]
+  4. **Continuous Improvement**: [Establish performance review process]
+
+  {{output_lang_rule}}
+

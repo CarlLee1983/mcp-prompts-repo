@@ -1,0 +1,242 @@
+id: "vue-architecture"
+title: "Vue Architecture Design"
+description: >
+  Authority tool for designing Vue application architecture and component structures.
+  TRIGGER: When user mentions "vue architecture", "vue system design", "vue module design", "vue application structure", "vue component architecture", or "vue project structure".
+  RULES:
+  1. MUST use this tool for Vue architecture and system design tasks.
+  2. Design scalable, maintainable, and robust Vue architectures.
+  3. Consider Vue architectural patterns (Component-based, Composition API, etc.).
+  4. Provide Vue module structure and component design.
+  5. Include Vue scalability, maintainability, and performance considerations.
+
+args:
+  requirements:
+    type: "string"
+    description: "System requirements and specifications (required)"
+  vue_version:
+    type: "string"
+    description: "Vue version (optional, auto-detect if not provided): 3"
+  architecture_pattern:
+    type: "string"
+    description: "Architecture pattern (optional): component-based, feature-based, or auto-select"
+    default: "component-based"
+  scale:
+    type: "string"
+    description: "Expected scale (optional): small, medium, large, enterprise"
+    default: "medium"
+  include_diagrams:
+    type: "boolean"
+    description: "Include architecture diagrams and visual representations"
+    default: true
+  include_patterns:
+    type: "boolean"
+    description: "Include Vue design patterns recommendations"
+    default: true
+
+template: |
+  {{> role-vue-expert}}
+
+  # Context
+  You are designing a Vue application architecture.
+  {{#if vue_version}}
+  **Vue Version**: {{vue_version}}
+  {{/if}}
+  **Architecture Pattern**: {{architecture_pattern}}
+  **Scale**: {{scale}}
+
+  # Objective
+  Design a comprehensive Vue architecture that:
+  - Meets the specified requirements
+  - Is scalable and maintainable
+  - Follows Vue architectural best practices
+  - Defines clear component boundaries and responsibilities
+  - Considers performance, security, and reliability
+  - Supports future growth and evolution
+  - Leverages Vue {{#if vue_version}}{{vue_version}}{{else}}3{{/if}} features
+
+  # Style
+  Provide structured Vue architecture design with clear component definitions, module structures, and implementation guidelines.
+
+  # Tone
+  Technical, strategic, and Vue-focused. Consider long-term maintainability and scalability.
+
+  # Audience
+  Vue architects, senior developers, and technical leads designing Vue application architecture.
+
+  # Response Format
+
+  ## Vue Architecture Design
+
+  ### Requirements
+  {{requirements}}
+
+  ### Vue Architecture Overview
+
+  **Selected Architecture Pattern**: {{architecture_pattern}}
+
+  {{#if (eq architecture_pattern "component-based")}}
+  **Component-Based Architecture**:
+  - Component-centric design
+  - Reusable component library
+  - Suitable for: Most Vue applications
+  - Advantages: Reusability, maintainability, testability
+  {{else if (eq architecture_pattern "feature-based")}}
+  **Feature-Based Architecture**:
+  - Feature modules with components
+  - Domain-driven organization
+  - Suitable for: Large applications, team scalability
+  - Advantages: Clear boundaries, team autonomy, scalability
+  {{/if}}
+
+  ### Vue Directory Structure
+
+  ```
+  src/
+  ├── components/          # Shared components
+  │   ├── base/           # Base UI components
+  │   └── common/        # Common components
+  ├── views/              # Page components
+  ├── composables/        # Composition API functions
+  ├── stores/            # State management (Pinia)
+  ├── router/            # Vue Router configuration
+  ├── utils/             # Utility functions
+  ├── types/             # TypeScript types
+  ├── assets/            # Static assets
+  └── main.ts            # Application entry point
+  ```
+
+  ### Vue Components
+
+  #### 1. Base Components
+  - **Purpose**: Reusable UI building blocks
+  - **Examples**: Button, Input, Card, Modal
+  - **Best Practices**: Props-based configuration, slot support
+
+  #### 2. Feature Components
+  - **Purpose**: Feature-specific components
+  - **Examples**: UserProfile, ProductList, OrderForm
+  - **Best Practices**: Composition API, composables for logic
+
+  #### 3. Layout Components
+  - **Purpose**: Application layout structure
+  - **Examples**: AppLayout, DashboardLayout, AuthLayout
+  - **Best Practices**: Slot-based composition
+
+  ### Vue Composables
+
+  #### Composable Organization
+  - [Define composable structure]
+  - [Explain composable patterns]
+  - [Explain reusability strategy]
+
+  ### State Management
+
+  #### Pinia Store Design
+  - [Define store structure]
+  - [Explain state organization]
+  - [Explain actions and getters]
+
+  ### Routing Architecture
+
+  #### Vue Router Configuration
+  - [Define route structure]
+  - [Explain route guards]
+  - [Explain lazy loading strategy]
+
+  ### Vue Communication Patterns
+
+  #### Component Communication
+  - Props down, events up
+  - Provide/Inject for deep nesting
+  - Pinia for global state
+  - Composables for shared logic
+
+  ### Vue Performance Architecture
+
+  #### Code Splitting Strategy
+  - [Route-based code splitting]
+  - [Component lazy loading]
+  - [Bundle optimization]
+
+  #### Caching Strategy
+  - [Component caching]
+  - [Data caching]
+  - [API response caching]
+
+  {{#if include_patterns}}
+  ### Vue Design Patterns
+
+  #### Architectural Patterns
+  - **Component Pattern**: [Component-based design]
+  - **Composition Pattern**: [Composition API usage]
+  - **Provider Pattern**: [Provide/Inject usage]
+
+  #### Design Patterns Applied
+  - **Observer Pattern**: [Vue reactivity system]
+  - **Factory Pattern**: [Component factories]
+  - **Strategy Pattern**: [Composable strategies]
+  {{/if}}
+
+  ### Vue Technology Stack
+
+  #### Recommended Stack
+  - **Framework**: Vue {{#if vue_version}}{{vue_version}}{{else}}3{{/if}}
+  - **Build Tool**: [Vite, Webpack]
+  - **State Management**: [Pinia]
+  - **Router**: [Vue Router]
+  - **TypeScript**: [If using TypeScript]
+  - **Testing**: [Vitest, Vue Test Utils]
+
+  ### Vue Deployment Architecture
+
+  #### Deployment Strategy
+  - **Environment Setup**: [Development, staging, production]
+  - **Build Process**: [Vite build, optimization]
+  - **CDN Strategy**: [Static asset CDN]
+  - **Infrastructure**: [Cloud, on-premise]
+
+  {{#if include_diagrams}}
+  ### Vue Architecture Diagrams
+
+  #### Component Hierarchy Diagram
+  ```
+  [Provide component hierarchy diagram]
+  ```
+
+  #### Data Flow Diagram
+  ```
+  [Provide data flow diagram]
+  ```
+  {{/if}}
+
+  ### Implementation Roadmap
+
+  #### Phase 1: Foundation
+  - [Vue project setup]
+  - [Basic component structure]
+  - [Essential composables]
+
+  #### Phase 2: Core Features
+  - [Primary functionality implementation]
+  - [State management setup]
+  - [Routing configuration]
+
+  #### Phase 3: Enhancement
+  - [Performance optimization]
+  - [Advanced features]
+  - [Testing implementation]
+
+  ### Vue Best Practices Checklist
+
+  - [ ] Clear component organization
+  - [ ] Modular and maintainable structure
+  - [ ] Scalable design
+  - [ ] Performance optimization planned
+  - [ ] State management strategy defined
+  - [ ] Routing strategy defined
+  - [ ] Testing strategy defined
+  - [ ] Deployment strategy defined
+
+  {{output_lang_rule}}
+
