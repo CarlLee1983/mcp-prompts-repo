@@ -1,5 +1,5 @@
 {
-    "name": "my-prompts-repo",
+    "name": "mcp-prompts-repo",
     "version": "1.0.0",
     "description": "Prompt templates repository for MCP Prompt Manager",
     "type": "module",
