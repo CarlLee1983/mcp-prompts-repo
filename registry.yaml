@@ -1,0 +1,298 @@
+prompts:
+  # ==============================
+  # Common
+  # ==============================
+  - id: "api-design"
+    group: "common"
+    visibility: "public"
+    deprecated: false
+
+  - id: "architecture-design"
+    group: "common"
+    visibility: "public"
+    deprecated: false
+
+  - id: "code-generation"
+    group: "common"
+    visibility: "public"
+    deprecated: false
+
+  - id: "code-review"
+    group: "common"
+    visibility: "public"
+    deprecated: false
+
+  - id: "database-optimization"
+    group: "common"
+    visibility: "internal"
+    deprecated: false
+
+  - id: "documentation-generator"
+    group: "common"
+    visibility: "public"
+    deprecated: false
+
+  - id: "error-handling-design"
+    group: "common"
+    visibility: "public"
+    deprecated: false
+
+  - id: "generate-unit-tests"
+    group: "common"
+    visibility: "public"
+    deprecated: false
+
+  - id: "performance-analysis"
+    group: "common"
+    visibility: "internal"
+    deprecated: false
+
+  - id: "refactor-code"
+    group: "common"
+    visibility: "public"
+    deprecated: false
+
+  - id: "security-audit"
+    group: "common"
+    visibility: "internal"
+    deprecated: false
+
+  # ==============================
+  # Laravel
+  # ==============================
+  - id: "eloquent-optimization"
+    group: "laravel"
+    visibility: "internal"
+    deprecated: false
+
+  - id: "laravel-api-implementation"
+    group: "laravel"
+    visibility: "public"
+    deprecated: false
+
+  - id: "laravel-architecture"
+    group: "laravel"
+    visibility: "public"
+    deprecated: false
+
+  - id: "laravel-code-generation"
+    group: "laravel"
+    visibility: "public"
+    deprecated: false
+
+  - id: "laravel-code-review"
+    group: "laravel"
+    visibility: "public"
+    deprecated: false
+
+  - id: "laravel-documentation"
+    group: "laravel"
+    visibility: "public"
+    deprecated: false
+
+  - id: "laravel-error-handling"
+    group: "laravel"
+    visibility: "internal"
+    deprecated: false
+
+  - id: "laravel-generate-tests"
+    group: "laravel"
+    visibility: "public"
+    deprecated: false
+
+  - id: "laravel-migration-design"
+    group: "laravel"
+    visibility: "public"
+    deprecated: false
+
+  - id: "laravel-model-design"
+    group: "laravel"
+    visibility: "public"
+    deprecated: false
+
+  - id: "laravel-performance"
+    group: "laravel"
+    visibility: "internal"
+    deprecated: false
+
+  - id: "laravel-refactor-code"
+    group: "laravel"
+    visibility: "public"
+    deprecated: false
+
+  - id: "laravel-security"
+    group: "laravel"
+    visibility: "internal"
+    deprecated: false
+
+  - id: "laravel-service-provider"
+    group: "laravel"
+    visibility: "internal"
+    deprecated: false
+
+  - id: "refactor-controller"
+    group: "laravel"
+    visibility: "public"
+    deprecated: false
+
+  # ==============================
+  # Vue
+  # ==============================
+  - id: "vue-component-review"
+    group: "vue"
+    visibility: "public"
+    deprecated: false
+
+  - id: "vue-api-integration"
+    group: "vue"
+    visibility: "public"
+    deprecated: false
+
+  - id: "vue-architecture"
+    group: "vue"
+    visibility: "public"
+    deprecated: false
+
+  - id: "vue-code-generation"
+    group: "vue"
+    visibility: "public"
+    deprecated: false
+
+  - id: "vue-code-review"
+    group: "vue"
+    visibility: "public"
+    deprecated: false
+
+  - id: "vue-composable-design"
+    group: "vue"
+    visibility: "public"
+    deprecated: false
+
+  - id: "vue-documentation"
+    group: "vue"
+    visibility: "public"
+    deprecated: false
+
+  - id: "vue-error-handling"
+    group: "vue"
+    visibility: "internal"
+    deprecated: false
+
+  - id: "vue-generate-tests"
+    group: "vue"
+    visibility: "public"
+    deprecated: false
+
+  - id: "vue-performance"
+    group: "vue"
+    visibility: "internal"
+    deprecated: false
+
+  - id: "vue-pinia-setup"
+    group: "vue"
+    visibility: "public"
+    deprecated: false
+
+  - id: "vue-refactor-code"
+    group: "vue"
+    visibility: "public"
+    deprecated: false
+
+  - id: "vue-router-config"
+    group: "vue"
+    visibility: "public"
+    deprecated: false
+
+  - id: "vue-security"
+    group: "vue"
+    visibility: "internal"
+    deprecated: false
+
+  # ==============================
+  # React
+  # ==============================
+  - id: "react-api-integration"
+    group: "react"
+    visibility: "public"
+    deprecated: false
+
+  - id: "react-component-review"
+    group: "react"
+    visibility: "public"
+    deprecated: false
+
+  - id: "react-hooks-design"
+    group: "react"
+    visibility: "public"
+    deprecated: false
+
+  - id: "react-performance"
+    group: "react"
+    visibility: "internal"
+    deprecated: false
+
+  - id: "react-testing"
+    group: "react"
+    visibility: "public"
+    deprecated: false
+
+  # ==============================
+  # NestJS
+  # ==============================
+  - id: "nestjs-controller-design"
+    group: "nestjs"
+    visibility: "public"
+    deprecated: false
+
+  # ==============================
+  # Next.js
+  # ==============================
+  - id: "nextjs-api-routes"
+    group: "nextjs"
+    visibility: "public"
+    deprecated: false
+
+  - id: "nextjs-page-design"
+    group: "nextjs"
+    visibility: "public"
+    deprecated: false
+
+  # ==============================
+  # Express
+  # ==============================
+  - id: "express-route-design"
+    group: "express"
+    visibility: "public"
+    deprecated: false
+
+  # ==============================
+  # FastAPI
+  # ==============================
+  - id: "fastapi-endpoint-design"
+    group: "fastapi"
+    visibility: "public"
+    deprecated: false
+
+  # ==============================
+  # Spring
+  # ==============================
+  - id: "spring-controller-design"
+    group: "spring"
+    visibility: "public"
+    deprecated: false
+
+  # ==============================
+  # Django
+  # ==============================
+  - id: "django-view-design"
+    group: "django"
+    visibility: "public"
+    deprecated: false
+
+  # ==============================
+  # TypeScript
+  # ==============================
+  - id: "typescript-type-design"
+    group: "typescript"
+    visibility: "public"
+    deprecated: false
