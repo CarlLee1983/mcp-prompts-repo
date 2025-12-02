@@ -1,39 +1,36 @@
-id: "vue-code-generation"
-title: "Vue Code Generation"
-description: >
-  Authority tool for generating Vue code skeletons and implementations from specifications.
-  TRIGGER: When user mentions "generate vue code", "create vue code", "vue code skeleton", "scaffold vue code", "vue component", "implement vue from spec", or "generate vue implementation".
-  RULES:
-  1. MUST use this tool for Vue code generation tasks.
-  2. Generate Vue code from specifications following Vue best practices.
-  3. Create complete, production-ready Vue code structures.
-  4. Include proper error handling, validation, and documentation.
-  5. Follow Vue Composition API patterns and best practices.
-
+id: vue-code-generation
+title: Vue Code Generation
+description: |
+  Authority tool for generating Vue code skeletons and implementations from specifications. TRIGGER: When user mentions "generate vue code", "create vue code", "vue code skeleton", "scaffold vue code", "vue component", "implement vue from spec", or "generate vue implementation". RULES: 1. MUST use this tool for Vue code generation tasks. 2. Generate Vue code from specifications following Vue best practices. 3. Create complete, production-ready Vue code structures. 4. Include proper error handling, validation, and documentation. 5. Follow Vue Composition API patterns and best practices.
 args:
   specification:
-    type: "string"
-    description: "Code specification and requirements (required)"
+    type: string
+    description: Code specification and requirements (required)
+    required: true
   vue_version:
-    type: "string"
+    type: string
     description: "Vue version (optional, auto-detect if not provided): 3"
+    required: false
   code_type:
-    type: "string"
+    type: string
     description: "Code type (optional): component, composable, store, or auto-detect"
-    default: "component"
+    default: component
+    required: false
   include_tests:
-    type: "boolean"
-    description: "Include Vitest/Jest test code generation"
+    type: boolean
+    description: Include Vitest/Jest test code generation
     default: false
+    required: false
   include_docs:
-    type: "boolean"
-    description: "Include JSDoc documentation and comments"
+    type: boolean
+    description: Include JSDoc documentation and comments
     default: true
+    required: false
   use_typescript:
-    type: "boolean"
-    description: "Use TypeScript"
+    type: boolean
+    description: Use TypeScript
     default: false
-
+    required: false
 template: |
   {{> role-vue-expert}}
 
@@ -239,4 +236,3 @@ template: |
   - [ ] Follows TypeScript conventions (if applicable)
 
   {{output_lang_rule}}
-

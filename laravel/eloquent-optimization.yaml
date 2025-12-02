@@ -1,36 +1,34 @@
-id: "eloquent-optimization"
-title: "Eloquent Optimization"
-description: >
-  Authority tool for Laravel Eloquent ORM optimization and query performance analysis.
-  TRIGGER: When user mentions "optimize eloquent", "eloquent performance", "eloquent query", "n+1 eloquent", or "eager loading eloquent".
-  RULES:
-  1. MUST use this tool for Eloquent ORM optimization tasks.
-  2. Analyze Eloquent queries and relationships.
-  3. Identify N+1 problems, missing indexes, and inefficient Eloquent queries.
-  4. Provide Eloquent-specific optimization strategies.
-
+id: eloquent-optimization
+title: Eloquent Optimization
+description: |
+  Authority tool for Laravel Eloquent ORM optimization and query performance analysis. TRIGGER: When user mentions "optimize eloquent", "eloquent performance", "eloquent query", "n+1 eloquent", or "eager loading eloquent". RULES: 1. MUST use this tool for Eloquent ORM optimization tasks. 2. Analyze Eloquent queries and relationships. 3. Identify N+1 problems, missing indexes, and inefficient Eloquent queries. 4. Provide Eloquent-specific optimization strategies.
 args:
   code:
-    type: "string"
-    description: "Laravel code containing Eloquent queries (required)"
+    type: string
+    description: Laravel code containing Eloquent queries (required)
+    required: true
   php_version:
-    type: "string"
+    type: string
     description: "PHP version (optional, auto-detect if not provided): 8.1, 8.2, 8.3"
+    required: false
   laravel_version:
-    type: "string"
+    type: string
     description: "Laravel version (optional, auto-detect if not provided): 10, 11"
+    required: false
   focus:
-    type: "string"
+    type: string
     description: "Focus area (optional): queries, indexes, relationships, scopes, or all"
+    required: false
   include_explain:
-    type: "boolean"
-    description: "Include EXPLAIN query analysis"
+    type: boolean
+    description: Include EXPLAIN query analysis
     default: true
+    required: false
   suggest_indexes:
-    type: "boolean"
-    description: "Suggest database indexes"
+    type: boolean
+    description: Suggest database indexes
     default: true
-
+    required: false
 template: |
   {{> role-laravel-expert}}
 
@@ -110,7 +108,7 @@ template: |
   ```
   [If possible, provide EXPLAIN output for key Eloquent queries]
   ```
-  
+
   Analyze Eloquent query execution:
   - Generated SQL queries
   - Query execution plan
@@ -332,4 +330,3 @@ template: |
      - Query performance testing
 
   {{output_lang_rule}}
-

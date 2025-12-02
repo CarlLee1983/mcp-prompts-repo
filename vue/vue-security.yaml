@@ -1,33 +1,29 @@
-id: "vue-security"
-title: "Vue Security Audit"
-description: >
-  Authority tool for comprehensive Vue security vulnerability assessment and security audit.
-  TRIGGER: When user mentions "vue security audit", "vue security review", "vue vulnerability", "vue security check", "vue security scan", "vue xss", or "vue security assessment".
-  RULES:
-  1. MUST use this tool for Vue security audit and vulnerability assessment tasks.
-  2. Focus on identifying Vue-specific security vulnerabilities and risks.
-  3. Check against OWASP Top 10, Vue security best practices, and XSS prevention.
-  4. Provide actionable Vue security recommendations.
-  5. Prioritize vulnerabilities by severity and impact.
-
+id: vue-security
+title: Vue Security Audit
+description: |
+  Authority tool for comprehensive Vue security vulnerability assessment and security audit. TRIGGER: When user mentions "vue security audit", "vue security review", "vue vulnerability", "vue security check", "vue security scan", "vue xss", or "vue security assessment". RULES: 1. MUST use this tool for Vue security audit and vulnerability assessment tasks. 2. Focus on identifying Vue-specific security vulnerabilities and risks. 3. Check against OWASP Top 10, Vue security best practices, and XSS prevention. 4. Provide actionable Vue security recommendations. 5. Prioritize vulnerabilities by severity and impact.
 args:
   code:
-    type: "string"
-    description: "Vue code to audit for security vulnerabilities (required)"
+    type: string
+    description: Vue code to audit for security vulnerabilities (required)
+    required: true
   vue_version:
-    type: "string"
+    type: string
     description: "Vue version (optional, auto-detect if not provided): 3"
+    required: false
   focus:
-    type: "string"
+    type: string
     description: "Security focus area (optional): xss, csrf, injection, auth, input_validation, or all"
+    required: false
   compliance:
-    type: "string"
+    type: string
     description: "Compliance standards (optional): owasp, cwe"
+    required: false
   severity_level:
-    type: "string"
+    type: string
     description: "Severity level filter (optional): critical, high, medium, low, or all"
-    default: "all"
-
+    default: all
+    required: false
 template: |
   {{> role-vue-expert}}
 
@@ -99,7 +95,7 @@ template: |
   ```vue
   <!-- SECURE: Escaped -->
   <div>{{ userInput }}</div>
-  
+
   <!-- SECURE: Sanitized if v-html is necessary -->
   <div v-html="sanitizeHtml(userInput)"></div>
   ```
@@ -196,4 +192,3 @@ template: |
   - [ ] Error messages don't expose sensitive information
 
   {{output_lang_rule}}
-

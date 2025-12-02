@@ -1,34 +1,30 @@
-id: "react-hooks-design"
-title: "React Hooks Design"
-description: >
-  Authority tool for designing React custom hooks and hooks patterns.
-  TRIGGER: When user mentions "react hooks", "custom hooks", "react hooks design", "hooks pattern", "react hooks implementation", or "react hooks best practices".
-  RULES:
-  1. MUST use this tool for React hooks design tasks.
-  2. Design hooks following React Hooks best practices.
-  3. Create reusable, testable, and maintainable hooks.
-  4. Consider hooks patterns and conventions.
-  5. Provide complete hooks implementation.
-
+id: react-hooks-design
+title: React Hooks Design
+description: |
+  Authority tool for designing React custom hooks and hooks patterns. TRIGGER: When user mentions "react hooks", "custom hooks", "react hooks design", "hooks pattern", "react hooks implementation", or "react hooks best practices". RULES: 1. MUST use this tool for React hooks design tasks. 2. Design hooks following React Hooks best practices. 3. Create reusable, testable, and maintainable hooks. 4. Consider hooks patterns and conventions. 5. Provide complete hooks implementation.
 args:
   requirements:
-    type: "string"
-    description: "Hooks requirements and specifications (required)"
+    type: string
+    description: Hooks requirements and specifications (required)
+    required: true
   react_version:
-    type: "string"
+    type: string
     description: "React version (optional, auto-detect if not provided): 18, 19"
+    required: false
   hook_type:
-    type: "string"
+    type: string
     description: "Hook type (optional): state, effect, callback, or auto-detect"
+    required: false
   use_typescript:
-    type: "boolean"
-    description: "Use TypeScript"
+    type: boolean
+    description: Use TypeScript
     default: true
+    required: false
   include_tests:
-    type: "boolean"
-    description: "Include test examples"
+    type: boolean
+    description: Include test examples
     default: false
-
+    required: false
 template: |
   {{> role-react-expert}}
 
@@ -128,4 +124,3 @@ template: |
   {{/if}}
 
   {{output_lang_rule}}
-

@@ -1,34 +1,31 @@
-id: "vue-component-review"
-title: "Vue Component Review"
-description: >
-  Authority tool for Vue 3 component review and analysis.
-  TRIGGER: When user mentions "review vue", "check component", "vue component", "component analysis", or "vue code review".
-  RULES:
-  1. MUST use this tool for Vue 3 component reviews.
-  2. Analyze Composition API usage, reactivity, and Vue 3 best practices.
-  3. Check for performance optimizations and accessibility.
-  4. Provide actionable feedback with code examples.
-
+id: vue-component-review
+title: Vue Component Review
+description: |
+  Authority tool for Vue 3 component review and analysis. TRIGGER: When user mentions "review vue", "check component", "vue component", "component analysis", or "vue code review". RULES: 1. MUST use this tool for Vue 3 component reviews. 2. Analyze Composition API usage, reactivity, and Vue 3 best practices. 3. Check for performance optimizations and accessibility. 4. Provide actionable feedback with code examples.
 args:
   code:
-    type: "string"
-    description: "Vue component code to review (required)"
+    type: string
+    description: Vue component code to review (required)
+    required: true
   vue_version:
-    type: "string"
+    type: string
     description: "Vue version (optional, auto-detect if not provided): 3"
+    required: false
   check_performance:
-    type: "boolean"
-    description: "Include performance analysis and optimization suggestions"
+    type: boolean
+    description: Include performance analysis and optimization suggestions
     default: true
+    required: false
   check_accessibility:
-    type: "boolean"
-    description: "Include accessibility (a11y) checks"
+    type: boolean
+    description: Include accessibility (a11y) checks
     default: true
+    required: false
   strict_composition:
-    type: "boolean"
-    description: "Enforce strict Composition API patterns (no Options API patterns)"
+    type: boolean
+    description: Enforce strict Composition API patterns (no Options API patterns)
     default: false
-
+    required: false
 template: |
   {{> role-vue-expert}}
 
@@ -174,4 +171,3 @@ template: |
   - [ ] Performance optimized
 
   {{output_lang_rule}}
-

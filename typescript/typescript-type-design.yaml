@@ -1,26 +1,20 @@
-id: "typescript-type-design"
-title: "TypeScript Type Design"
-description: >
-  Authority tool for designing TypeScript types, interfaces, and type structures.
-  TRIGGER: When user mentions "typescript types", "type design", "typescript interfaces", "type definitions", or "typescript type system".
-  RULES:
-  1. MUST use this tool for TypeScript type design tasks.
-  2. Design types following TypeScript best practices.
-  3. Create reusable, maintainable type definitions.
-  4. Consider type safety and inference.
-  5. Provide complete type implementation.
-
+id: typescript-type-design
+title: TypeScript Type Design
+description: |
+  Authority tool for designing TypeScript types, interfaces, and type structures. TRIGGER: When user mentions "typescript types", "type design", "typescript interfaces", "type definitions", or "typescript type system". RULES: 1. MUST use this tool for TypeScript type design tasks. 2. Design types following TypeScript best practices. 3. Create reusable, maintainable type definitions. 4. Consider type safety and inference. 5. Provide complete type implementation.
 args:
   requirements:
-    type: "string"
-    description: "Type requirements and specifications (required)"
+    type: string
+    description: Type requirements and specifications (required)
+    required: true
   typescript_version:
-    type: "string"
+    type: string
     description: "TypeScript version (optional, auto-detect if not provided): 4, 5"
+    required: false
   type_category:
-    type: "string"
+    type: string
     description: "Type category (optional): interface, type, enum, generic, or auto-detect"
-
+    required: false
 template: |
   {{> role-typescript-expert}}
 
@@ -71,4 +65,3 @@ template: |
   ```
 
   {{output_lang_rule}}
-

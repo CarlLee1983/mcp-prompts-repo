@@ -1,40 +1,39 @@
-id: "laravel-api-implementation"
-title: "Laravel API Implementation"
-description: >
-  Authority tool for Laravel RESTful API implementation.
-  TRIGGER: When user mentions "implement laravel api", "create laravel api", "laravel api endpoint", "laravel rest api", or "laravel api routes".
-  RULES:
-  1. MUST use this tool for Laravel API implementation tasks.
-  2. Implement RESTful APIs following Laravel best practices.
-  3. Provide complete Laravel implementation with controllers, requests, services, and routes.
-  4. Consider Laravel API resources and form requests.
-
+id: laravel-api-implementation
+title: Laravel API Implementation
+description: |
+  Authority tool for Laravel RESTful API implementation. TRIGGER: When user mentions "implement laravel api", "create laravel api", "laravel api endpoint", "laravel rest api", or "laravel api routes". RULES: 1. MUST use this tool for Laravel API implementation tasks. 2. Implement RESTful APIs following Laravel best practices. 3. Provide complete Laravel implementation with controllers, requests, services, and routes. 4. Consider Laravel API resources and form requests.
 args:
   resource:
-    type: "string"
-    description: "Resource name (e.g., users, products, orders)"
+    type: string
+    description: Resource name (e.g., users, products, orders)
+    required: true
   requirements:
-    type: "string"
-    description: "API requirements and use cases"
+    type: string
+    description: API requirements and use cases
+    required: true
   php_version:
-    type: "string"
+    type: string
     description: "PHP version (optional, auto-detect if not provided): 8.1, 8.2, 8.3"
+    required: false
   laravel_version:
-    type: "string"
+    type: string
     description: "Laravel version (optional, auto-detect if not provided): 10, 11"
+    required: false
   include_auth:
-    type: "boolean"
-    description: "Include authentication and authorization implementation"
+    type: boolean
+    description: Include authentication and authorization implementation
     default: true
+    required: false
   include_validation:
-    type: "boolean"
-    description: "Include Form Request validation"
+    type: boolean
+    description: Include Form Request validation
     default: true
+    required: false
   version:
-    type: "string"
-    description: "API version (e.g., v1, v2)"
-    default: "v1"
-
+    type: string
+    description: API version (e.g., v1, v2)
+    default: v1
+    required: false
 template: |
   {{> role-laravel-expert}}
 
@@ -336,4 +335,3 @@ template: |
   8. **Response Format**: Consistent JSON response format
 
   {{output_lang_rule}}
-

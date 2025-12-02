@@ -1,41 +1,39 @@
-id: "laravel-error-handling"
-title: "Laravel Error Handling Design"
-description: >
-  Authority tool for designing comprehensive Laravel error handling patterns and exception structures.
-  TRIGGER: When user mentions "laravel error handling", "laravel exception design", "laravel error management", "laravel error recovery", "laravel error logging", or "laravel error patterns".
-  RULES:
-  1. MUST use this tool for Laravel error handling design tasks.
-  2. Design error handling patterns following Laravel best practices.
-  3. Create Laravel exception hierarchies and error response structures.
-  4. Include Laravel logging and monitoring strategies.
-  5. Provide Laravel-specific error recovery mechanisms.
-
+id: laravel-error-handling
+title: Laravel Error Handling Design
+description: |
+  Authority tool for designing comprehensive Laravel error handling patterns and exception structures. TRIGGER: When user mentions "laravel error handling", "laravel exception design", "laravel error management", "laravel error recovery", "laravel error logging", or "laravel error patterns". RULES: 1. MUST use this tool for Laravel error handling design tasks. 2. Design error handling patterns following Laravel best practices. 3. Create Laravel exception hierarchies and error response structures. 4. Include Laravel logging and monitoring strategies. 5. Provide Laravel-specific error recovery mechanisms.
 args:
   code:
-    type: "string"
-    description: "Existing Laravel code to analyze for error handling (optional)"
+    type: string
+    description: Existing Laravel code to analyze for error handling (optional)
+    required: false
   php_version:
-    type: "string"
+    type: string
     description: "PHP version (optional, auto-detect if not provided): 8.1, 8.2, 8.3"
+    required: false
   laravel_version:
-    type: "string"
+    type: string
     description: "Laravel version (optional, auto-detect if not provided): 10, 11"
+    required: false
   error_types:
-    type: "string"
+    type: string
     description: "Error types to focus on (optional): validation, business, system, network, authentication, authorization, or all"
+    required: false
   include_logging:
-    type: "boolean"
-    description: "Include Laravel logging strategy design"
+    type: boolean
+    description: Include Laravel logging strategy design
     default: true
+    required: false
   include_monitoring:
-    type: "boolean"
-    description: "Include monitoring and alerting design"
+    type: boolean
+    description: Include monitoring and alerting design
     default: true
+    required: false
   error_response_format:
-    type: "string"
+    type: string
     description: "Error response format (optional): json, json-api, or custom"
-    default: "json"
-
+    default: json
+    required: false
 template: |
   {{> role-laravel-expert}}
 
@@ -334,4 +332,3 @@ template: |
   - [ ] Error handling follows Laravel {{#if laravel_version}}{{laravel_version}}{{else}}conventions{{/if}}
 
   {{output_lang_rule}}
-

@@ -1,30 +1,25 @@
-id: "spring-controller-design"
-title: "Spring Boot Controller Design"
-description: >
-  Authority tool for designing Spring Boot REST controllers and endpoints.
-  TRIGGER: When user mentions "spring controller", "spring rest controller", "spring api", "spring endpoint", or "spring boot controller".
-  RULES:
-  1. MUST use this tool for Spring Boot controller design tasks.
-  2. Design controllers following Spring Boot best practices.
-  3. Create RESTful endpoints with proper annotations.
-  4. Include proper error handling and validation.
-  5. Provide complete controller implementation.
-
+id: spring-controller-design
+title: Spring Boot Controller Design
+description: |
+  Authority tool for designing Spring Boot REST controllers and endpoints. TRIGGER: When user mentions "spring controller", "spring rest controller", "spring api", "spring endpoint", or "spring boot controller". RULES: 1. MUST use this tool for Spring Boot controller design tasks. 2. Design controllers following Spring Boot best practices. 3. Create RESTful endpoints with proper annotations. 4. Include proper error handling and validation. 5. Provide complete controller implementation.
 args:
   requirements:
-    type: "string"
-    description: "Controller requirements and specifications (required)"
+    type: string
+    description: Controller requirements and specifications (required)
+    required: true
   spring_version:
-    type: "string"
+    type: string
     description: "Spring Boot version (optional, auto-detect if not provided): 2, 3"
+    required: false
   java_version:
-    type: "string"
+    type: string
     description: "Java version (optional, auto-detect if not provided): 11, 17, 21"
+    required: false
   use_validation:
-    type: "boolean"
-    description: "Include validation annotations"
+    type: boolean
+    description: Include validation annotations
     default: true
-
+    required: false
 template: |
   {{> role-spring-expert}}
 
@@ -77,4 +72,3 @@ template: |
   ```
 
   {{output_lang_rule}}
-

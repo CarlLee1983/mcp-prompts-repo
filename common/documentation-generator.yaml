@@ -1,41 +1,39 @@
-id: "documentation-generator"
-title: "Documentation Generator"
-description: >
-  Authority tool for generating comprehensive documentation including API docs, code comments, and README files.
-  TRIGGER: When user mentions "generate docs", "create documentation", "api docs", "code comments", "readme", "document code", or "write docs".
-  RULES:
-  1. MUST use this tool for documentation generation tasks.
-  2. Generate documentation following industry standards and best practices.
-  3. Support multiple documentation formats (Markdown, OpenAPI, JSDoc, PHPDoc, etc.).
-  4. Include examples and usage patterns when requested.
-  5. Ensure documentation is clear, comprehensive, and maintainable.
-
+id: documentation-generator
+title: Documentation Generator
+description: |
+  Authority tool for generating comprehensive documentation including API docs, code comments, and README files. TRIGGER: When user mentions "generate docs", "create documentation", "api docs", "code comments", "readme", "document code", or "write docs". RULES: 1. MUST use this tool for documentation generation tasks. 2. Generate documentation following industry standards and best practices. 3. Support multiple documentation formats (Markdown, OpenAPI, JSDoc, PHPDoc, etc.). 4. Include examples and usage patterns when requested. 5. Ensure documentation is clear, comprehensive, and maintainable.
 args:
   code:
-    type: "string"
-    description: "Code to generate documentation for (optional)"
+    type: string
+    description: Code to generate documentation for (optional)
+    required: false
   doc_type:
-    type: "string"
+    type: string
     description: "Documentation type (required): api, code, readme"
+    required: true
   language:
-    type: "string"
+    type: string
     description: "Programming language (optional, auto-detect if not provided): php, javascript, typescript, python, go, java, csharp, ruby, etc."
+    required: false
   framework:
-    type: "string"
-    description: "Framework (optional, e.g., laravel, express, django, spring, react, vue)"
+    type: string
+    description: Framework (optional, e.g., laravel, express, django, spring, react, vue)
+    required: false
   format:
-    type: "string"
+    type: string
     description: "Documentation format (optional): markdown, openapi, jsdoc, phpdoc, sphinx, asciidoc"
-    default: "markdown"
+    default: markdown
+    required: false
   include_examples:
-    type: "boolean"
-    description: "Include code examples and usage patterns"
+    type: boolean
+    description: Include code examples and usage patterns
     default: true
+    required: false
   include_diagrams:
-    type: "boolean"
-    description: "Include diagrams and visual representations"
+    type: boolean
+    description: Include diagrams and visual representations
     default: false
-
+    required: false
 template: |
   {{> role-expert}}
 
@@ -94,14 +92,14 @@ template: |
     version: 1.0.0
     description: |
       [API description]
-  
+
   servers:
     - url: https://api.example.com/v1
       description: Production server
-  
+
   paths:
     # [Define API endpoints]
-  
+
   components:
     schemas:
       # [Define data models]
@@ -115,24 +113,24 @@ template: |
   - **Method**: [HTTP Method]
   - **URL**: `/api/endpoint`
   - **Description**: [Endpoint description]
-  
+
   **Request Parameters**:
   - [List request parameters]
-  
+
   **Request Body**:
   ```json
   {
     // Request body structure
   }
   ```
-  
+
   **Response**:
   ```json
   {
     // Response structure
   }
   ```
-  
+
   **Status Codes**:
   - `200 OK`: [Description]
   - `400 Bad Request`: [Description]
@@ -389,4 +387,3 @@ template: |
   - [ ] Version information should be kept current
 
   {{output_lang_rule}}
-

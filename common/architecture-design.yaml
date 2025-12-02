@@ -1,42 +1,40 @@
-id: "architecture-design"
-title: "Architecture Design"
-description: >
-  Authority tool for designing system architecture and module structures.
-  TRIGGER: When user mentions "architecture", "system design", "module design", "system architecture", "software architecture", "microservices", "monolith", or "system structure".
-  RULES:
-  1. MUST use this tool for architecture and system design tasks.
-  2. Design scalable, maintainable, and robust system architectures.
-  3. Consider different architectural patterns (monolith, microservices, serverless, etc.).
-  4. Provide module structure and component design.
-  5. Include scalability, maintainability, and performance considerations.
-
+id: architecture-design
+title: Architecture Design
+description: |
+  Authority tool for designing system architecture and module structures. TRIGGER: When user mentions "architecture", "system design", "module design", "system architecture", "software architecture", "microservices", "monolith", or "system structure". RULES: 1. MUST use this tool for architecture and system design tasks. 2. Design scalable, maintainable, and robust system architectures. 3. Consider different architectural patterns (monolith, microservices, serverless, etc.). 4. Provide module structure and component design. 5. Include scalability, maintainability, and performance considerations.
 args:
   requirements:
-    type: "string"
-    description: "System requirements and specifications (required)"
+    type: string
+    description: System requirements and specifications (required)
+    required: true
   system_type:
-    type: "string"
+    type: string
     description: "System architecture type (optional): monolith, microservices, serverless, event_driven, layered, mvc, mvp, mvi, or auto-select"
-    default: "monolith"
+    default: monolith
+    required: false
   language:
-    type: "string"
+    type: string
     description: "Primary programming language (optional): php, javascript, typescript, python, go, java, csharp, ruby, etc."
+    required: false
   framework:
-    type: "string"
-    description: "Framework (optional, e.g., laravel, express, django, spring, react, vue)"
+    type: string
+    description: Framework (optional, e.g., laravel, express, django, spring, react, vue)
+    required: false
   scale:
-    type: "string"
+    type: string
     description: "Expected scale (optional): small, medium, large, enterprise"
-    default: "medium"
+    default: medium
+    required: false
   include_diagrams:
-    type: "boolean"
-    description: "Include architecture diagrams and visual representations"
+    type: boolean
+    description: Include architecture diagrams and visual representations
     default: true
+    required: false
   include_patterns:
-    type: "boolean"
-    description: "Include design patterns recommendations"
+    type: boolean
+    description: Include design patterns recommendations
     default: true
-
+    required: false
 template: |
   {{> role-expert}}
 
@@ -409,4 +407,3 @@ template: |
   5. **Documentation**: [Documentation recommendations]
 
   {{output_lang_rule}}
-

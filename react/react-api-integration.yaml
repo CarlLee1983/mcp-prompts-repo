@@ -1,29 +1,25 @@
-id: "react-api-integration"
-title: "React API Integration"
-description: >
-  Authority tool for React API integration patterns and implementation.
-  TRIGGER: When user mentions "react api", "react fetch", "react axios", "react api integration", "react http client", or "react data fetching".
-  RULES:
-  1. MUST use this tool for React API integration tasks.
-  2. Implement API integration using React patterns (hooks, context, etc.).
-  3. Provide hooks for API calls with proper error handling and loading states.
-  4. Follow React best practices for API integration.
-
+id: react-api-integration
+title: React API Integration
+description: |
+  Authority tool for React API integration patterns and implementation. TRIGGER: When user mentions "react api", "react fetch", "react axios", "react api integration", "react http client", or "react data fetching". RULES: 1. MUST use this tool for React API integration tasks. 2. Implement API integration using React patterns (hooks, context, etc.). 3. Provide hooks for API calls with proper error handling and loading states. 4. Follow React best practices for API integration.
 args:
   api_endpoint:
-    type: "string"
-    description: "API endpoint or resource name (e.g., /api/users, users)"
+    type: string
+    description: API endpoint or resource name (e.g., /api/users, users)
+    required: true
   react_version:
-    type: "string"
+    type: string
     description: "React version (optional, auto-detect if not provided): 18, 19"
+    required: false
   http_client:
-    type: "string"
-    description: "HTTP client library (optional, e.g., fetch, axios, ky)"
+    type: string
+    description: HTTP client library (optional, e.g., fetch, axios, ky)
+    required: false
   use_typescript:
-    type: "boolean"
-    description: "Include TypeScript types and interfaces"
+    type: boolean
+    description: Include TypeScript types and interfaces
     default: true
-
+    required: false
 template: |
   {{> role-react-expert}}
 
@@ -86,4 +82,3 @@ template: |
   ```
 
   {{output_lang_rule}}
-

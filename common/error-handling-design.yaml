@@ -1,41 +1,39 @@
-id: "error-handling-design"
-title: "Error Handling Design"
-description: >
-  Authority tool for designing comprehensive error handling patterns and exception structures.
-  TRIGGER: When user mentions "error handling", "exception design", "error management", "error recovery", "error logging", or "error patterns".
-  RULES:
-  1. MUST use this tool for error handling design tasks.
-  2. Design error handling patterns following language and framework best practices.
-  3. Create exception hierarchies and error response structures.
-  4. Include logging and monitoring strategies.
-  5. Provide error recovery mechanisms.
-
+id: error-handling-design
+title: Error Handling Design
+description: |
+  Authority tool for designing comprehensive error handling patterns and exception structures. TRIGGER: When user mentions "error handling", "exception design", "error management", "error recovery", "error logging", or "error patterns". RULES: 1. MUST use this tool for error handling design tasks. 2. Design error handling patterns following language and framework best practices. 3. Create exception hierarchies and error response structures. 4. Include logging and monitoring strategies. 5. Provide error recovery mechanisms.
 args:
   code:
-    type: "string"
-    description: "Existing code to analyze for error handling (optional)"
+    type: string
+    description: Existing code to analyze for error handling (optional)
+    required: false
   language:
-    type: "string"
+    type: string
     description: "Programming language (optional, auto-detect if not provided): php, javascript, typescript, python, go, java, csharp, ruby, etc."
+    required: false
   framework:
-    type: "string"
-    description: "Framework (optional, e.g., laravel, express, django, spring, react, vue)"
+    type: string
+    description: Framework (optional, e.g., laravel, express, django, spring, react, vue)
+    required: false
   error_types:
-    type: "string"
+    type: string
     description: "Error types to focus on (optional): validation, business, system, network, authentication, authorization, or all"
+    required: false
   include_logging:
-    type: "boolean"
-    description: "Include logging strategy design"
+    type: boolean
+    description: Include logging strategy design
     default: true
+    required: false
   include_monitoring:
-    type: "boolean"
-    description: "Include monitoring and alerting design"
+    type: boolean
+    description: Include monitoring and alerting design
     default: true
+    required: false
   error_response_format:
-    type: "string"
+    type: string
     description: "Error response format (optional): json, xml, or custom"
-    default: "json"
-
+    default: json
+    required: false
 template: |
   {{> role-expert}}
 
@@ -328,4 +326,3 @@ template: |
   {{/if}}
 
   {{output_lang_rule}}
-

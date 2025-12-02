@@ -1,37 +1,34 @@
-id: "performance-analysis"
-title: "Performance Analysis"
-description: >
-  Authority tool for analyzing code performance and identifying non-database performance bottlenecks.
-  TRIGGER: When user mentions "performance", "optimize performance", "slow code", "bottleneck", "cpu usage", "memory usage", "algorithm optimization", or "performance profiling".
-  RULES:
-  1. MUST use this tool for performance analysis tasks (excluding database-specific optimizations).
-  2. Analyze CPU, memory, network, I/O, and algorithm performance.
-  3. Identify performance bottlenecks and optimization opportunities.
-  4. Provide actionable performance improvement recommendations.
-  5. Consider concurrency and parallel processing when applicable.
-
+id: performance-analysis
+title: Performance Analysis
+description: |
+  Authority tool for analyzing code performance and identifying non-database performance bottlenecks. TRIGGER: When user mentions "performance", "optimize performance", "slow code", "bottleneck", "cpu usage", "memory usage", "algorithm optimization", or "performance profiling". RULES: 1. MUST use this tool for performance analysis tasks (excluding database-specific optimizations). 2. Analyze CPU, memory, network, I/O, and algorithm performance. 3. Identify performance bottlenecks and optimization opportunities. 4. Provide actionable performance improvement recommendations. 5. Consider concurrency and parallel processing when applicable.
 args:
   code:
-    type: "string"
-    description: "Code to analyze for performance (required)"
+    type: string
+    description: Code to analyze for performance (required)
+    required: true
   language:
-    type: "string"
+    type: string
     description: "Programming language (optional, auto-detect if not provided): php, javascript, typescript, python, go, java, csharp, ruby, etc."
+    required: false
   framework:
-    type: "string"
-    description: "Framework (optional, e.g., laravel, express, django, spring, react, vue)"
+    type: string
+    description: Framework (optional, e.g., laravel, express, django, spring, react, vue)
+    required: false
   focus:
-    type: "string"
+    type: string
     description: "Focus area (optional): cpu, memory, network, io, algorithm, concurrency, or all"
+    required: false
   include_profiling:
-    type: "boolean"
-    description: "Include performance profiling recommendations"
+    type: boolean
+    description: Include performance profiling recommendations
     default: true
+    required: false
   include_benchmarks:
-    type: "boolean"
-    description: "Include benchmark testing recommendations"
+    type: boolean
+    description: Include benchmark testing recommendations
     default: false
-
+    required: false
 template: |
   {{> role-expert}}
 
@@ -382,4 +379,3 @@ template: |
   4. **Continuous Improvement**: [Establish performance review process]
 
   {{output_lang_rule}}
-

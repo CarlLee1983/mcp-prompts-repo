@@ -1,38 +1,35 @@
-id: "vue-router-config"
-title: "Vue Router Configuration"
-description: >
-  Authority tool for designing Vue Router configurations and routing structures.
-  TRIGGER: When user mentions "vue router", "router config", "vue routing", "route design", "vue router setup", or "vue navigation".
-  RULES:
-  1. MUST use this tool for Vue Router configuration tasks.
-  2. Design router configurations following Vue Router best practices.
-  3. Define proper route structures, guards, and lazy loading.
-  4. Consider route organization and navigation patterns.
-  5. Provide complete router implementation.
-
+id: vue-router-config
+title: Vue Router Configuration
+description: |
+  Authority tool for designing Vue Router configurations and routing structures. TRIGGER: When user mentions "vue router", "router config", "vue routing", "route design", "vue router setup", or "vue navigation". RULES: 1. MUST use this tool for Vue Router configuration tasks. 2. Design router configurations following Vue Router best practices. 3. Define proper route structures, guards, and lazy loading. 4. Consider route organization and navigation patterns. 5. Provide complete router implementation.
 args:
   requirements:
-    type: "string"
-    description: "Router requirements and route specifications (required)"
+    type: string
+    description: Router requirements and route specifications (required)
+    required: true
   vue_version:
-    type: "string"
+    type: string
     description: "Vue version (optional, auto-detect if not provided): 3"
+    required: false
   router_version:
-    type: "string"
+    type: string
     description: "Vue Router version (optional, auto-detect if not provided): 4"
+    required: false
   include_guards:
-    type: "boolean"
-    description: "Include route guards (navigation guards)"
+    type: boolean
+    description: Include route guards (navigation guards)
     default: true
+    required: false
   include_lazy_loading:
-    type: "boolean"
-    description: "Include lazy loading routes"
+    type: boolean
+    description: Include lazy loading routes
     default: true
+    required: false
   use_typescript:
-    type: "boolean"
-    description: "Use TypeScript"
+    type: boolean
+    description: Use TypeScript
     default: true
-
+    required: false
 template: |
   {{> role-vue-expert}}
 
@@ -164,4 +161,3 @@ template: |
   - [ ] Router follows Vue Router {{#if router_version}}{{router_version}}{{else}}4{{/if}} conventions
 
   {{output_lang_rule}}
-

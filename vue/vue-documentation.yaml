@@ -1,38 +1,35 @@
-id: "vue-documentation"
-title: "Vue Documentation Generator"
-description: >
-  Authority tool for generating comprehensive Vue documentation including component docs, JSDoc comments, and README files.
-  TRIGGER: When user mentions "generate vue docs", "create vue documentation", "vue component docs", "jsdoc", "vue code comments", "vue readme", or "document vue code".
-  RULES:
-  1. MUST use this tool for Vue documentation generation tasks.
-  2. Generate documentation following JSDoc and Vue documentation standards.
-  3. Support JSDoc, Markdown, and component documentation formats.
-  4. Include Vue-specific examples and usage patterns.
-  5. Ensure documentation is clear, comprehensive, and maintainable.
-
+id: vue-documentation
+title: Vue Documentation Generator
+description: |
+  Authority tool for generating comprehensive Vue documentation including component docs, JSDoc comments, and README files. TRIGGER: When user mentions "generate vue docs", "create vue documentation", "vue component docs", "jsdoc", "vue code comments", "vue readme", or "document vue code". RULES: 1. MUST use this tool for Vue documentation generation tasks. 2. Generate documentation following JSDoc and Vue documentation standards. 3. Support JSDoc, Markdown, and component documentation formats. 4. Include Vue-specific examples and usage patterns. 5. Ensure documentation is clear, comprehensive, and maintainable.
 args:
   code:
-    type: "string"
-    description: "Vue code to generate documentation for (optional)"
+    type: string
+    description: Vue code to generate documentation for (optional)
+    required: false
   doc_type:
-    type: "string"
+    type: string
     description: "Documentation type (required): api, code, readme, component"
+    required: true
   vue_version:
-    type: "string"
+    type: string
     description: "Vue version (optional, auto-detect if not provided): 3"
+    required: false
   format:
-    type: "string"
+    type: string
     description: "Documentation format (optional): markdown, jsdoc, component-docs"
-    default: "jsdoc"
+    default: jsdoc
+    required: false
   include_examples:
-    type: "boolean"
-    description: "Include code examples and usage patterns"
+    type: boolean
+    description: Include code examples and usage patterns
     default: true
+    required: false
   include_diagrams:
-    type: "boolean"
-    description: "Include diagrams and visual representations"
+    type: boolean
+    description: Include diagrams and visual representations
     default: false
-
+    required: false
 template: |
   {{> role-vue-expert}}
 
@@ -246,4 +243,3 @@ template: |
   6. **Maintenance**: Keep documentation up-to-date
 
   {{output_lang_rule}}
-

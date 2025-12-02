@@ -1,38 +1,35 @@
-id: "vue-error-handling"
-title: "Vue Error Handling Design"
-description: >
-  Authority tool for designing comprehensive Vue error handling patterns and error structures.
-  TRIGGER: When user mentions "vue error handling", "vue error management", "vue error recovery", "vue error logging", "vue error boundaries", or "vue error patterns".
-  RULES:
-  1. MUST use this tool for Vue error handling design tasks.
-  2. Design error handling patterns following Vue best practices.
-  3. Create error boundary patterns and error response structures.
-  4. Include Vue error logging and monitoring strategies.
-  5. Provide Vue-specific error recovery mechanisms.
-
+id: vue-error-handling
+title: Vue Error Handling Design
+description: |
+  Authority tool for designing comprehensive Vue error handling patterns and error structures. TRIGGER: When user mentions "vue error handling", "vue error management", "vue error recovery", "vue error logging", "vue error boundaries", or "vue error patterns". RULES: 1. MUST use this tool for Vue error handling design tasks. 2. Design error handling patterns following Vue best practices. 3. Create error boundary patterns and error response structures. 4. Include Vue error logging and monitoring strategies. 5. Provide Vue-specific error recovery mechanisms.
 args:
   code:
-    type: "string"
-    description: "Existing Vue code to analyze for error handling (optional)"
+    type: string
+    description: Existing Vue code to analyze for error handling (optional)
+    required: false
   vue_version:
-    type: "string"
+    type: string
     description: "Vue version (optional, auto-detect if not provided): 3"
+    required: false
   error_types:
-    type: "string"
+    type: string
     description: "Error types to focus on (optional): validation, api, component, network, or all"
+    required: false
   include_logging:
-    type: "boolean"
-    description: "Include Vue error logging strategy design"
+    type: boolean
+    description: Include Vue error logging strategy design
     default: true
+    required: false
   include_monitoring:
-    type: "boolean"
-    description: "Include monitoring and alerting design"
+    type: boolean
+    description: Include monitoring and alerting design
     default: true
+    required: false
   error_response_format:
-    type: "string"
+    type: string
     description: "Error response format (optional): json, component, or custom"
-    default: "component"
-
+    default: component
+    required: false
 template: |
   {{> role-vue-expert}}
 
@@ -317,4 +314,3 @@ template: |
   - [ ] Error handling follows Vue {{#if vue_version}}{{vue_version}}{{else}}conventions{{/if}}
 
   {{output_lang_rule}}
-

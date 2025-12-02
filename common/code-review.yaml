@@ -1,32 +1,29 @@
-id: "code-review"
-title: "Code Review"
-description: >
-  Authority tool for comprehensive code review.
-  TRIGGER: When user mentions "review", "check code", "code quality", "analyze code", or "code audit".
-  RULES: 
-  1. MUST use this tool when code review is requested.
-  2. Analyze code quality, potential bugs, security issues, and best practices.
-  3. Provide structured feedback with severity levels.
-  4. Follow strict_mode rules when enabled.
-
+id: code-review
+title: Code Review
+description: |
+  Authority tool for comprehensive code review. TRIGGER: When user mentions "review", "check code", "code quality", "analyze code", or "code audit". RULES:  1. MUST use this tool when code review is requested. 2. Analyze code quality, potential bugs, security issues, and best practices. 3. Provide structured feedback with severity levels. 4. Follow strict_mode rules when enabled.
 args:
   code:
-    type: "string"
-    description: "Code to review (required)"
+    type: string
+    description: Code to review (required)
+    required: true
   language:
-    type: "string"
+    type: string
     description: "Programming language (optional, auto-detect if not provided): php, javascript, typescript, python, etc."
+    required: false
   framework:
-    type: "string"
-    description: "Framework (optional, e.g., laravel, vue, react, django)"
+    type: string
+    description: Framework (optional, e.g., laravel, vue, react, django)
+    required: false
   strict_mode:
-    type: "boolean"
-    description: "Enable strict validation mode with zero-tolerance for issues"
+    type: boolean
+    description: Enable strict validation mode with zero-tolerance for issues
     default: false
+    required: false
   focus:
-    type: "string"
+    type: string
     description: "Focus areas (optional): security, performance, maintainability, or all"
-
+    required: false
 template: |
   {{> role-expert}}
 

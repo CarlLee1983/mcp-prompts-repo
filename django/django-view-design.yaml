@@ -1,30 +1,25 @@
-id: "django-view-design"
-title: "Django View Design"
-description: >
-  Authority tool for designing Django views and API endpoints.
-  TRIGGER: When user mentions "django view", "django api", "django endpoint", "django rest", or "django viewset".
-  RULES:
-  1. MUST use this tool for Django view design tasks.
-  2. Design views following Django best practices.
-  3. Create RESTful endpoints with Django REST Framework.
-  4. Include proper serialization and validation.
-  5. Provide complete view implementation.
-
+id: django-view-design
+title: Django View Design
+description: |
+  Authority tool for designing Django views and API endpoints. TRIGGER: When user mentions "django view", "django api", "django endpoint", "django rest", or "django viewset". RULES: 1. MUST use this tool for Django view design tasks. 2. Design views following Django best practices. 3. Create RESTful endpoints with Django REST Framework. 4. Include proper serialization and validation. 5. Provide complete view implementation.
 args:
   requirements:
-    type: "string"
-    description: "View requirements and specifications (required)"
+    type: string
+    description: View requirements and specifications (required)
+    required: true
   django_version:
-    type: "string"
+    type: string
     description: "Django version (optional, auto-detect if not provided): 3, 4, 5"
+    required: false
   python_version:
-    type: "string"
+    type: string
     description: "Python version (optional, auto-detect if not provided): 3.8, 3.9, 3.10, 3.11, 3.12"
+    required: false
   use_drf:
-    type: "boolean"
-    description: "Use Django REST Framework"
+    type: boolean
+    description: Use Django REST Framework
     default: true
-
+    required: false
 template: |
   {{> role-django-expert}}
 
@@ -75,4 +70,3 @@ template: |
   {{/if}}
 
   {{output_lang_rule}}
-

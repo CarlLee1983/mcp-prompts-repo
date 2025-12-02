@@ -1,29 +1,25 @@
-id: "vue-api-integration"
-title: "Vue API Integration"
-description: >
-  Authority tool for Vue 3 API integration patterns and implementation.
-  TRIGGER: When user mentions "vue api", "vue fetch", "vue axios", "vue composable api", "vue api integration", or "vue http client".
-  RULES:
-  1. MUST use this tool for Vue 3 API integration tasks.
-  2. Implement API integration using Vue 3 Composition API patterns.
-  3. Provide composables for API calls with proper error handling and loading states.
-  4. Follow Vue 3 best practices for API integration.
-
+id: vue-api-integration
+title: Vue API Integration
+description: |
+  Authority tool for Vue 3 API integration patterns and implementation. TRIGGER: When user mentions "vue api", "vue fetch", "vue axios", "vue composable api", "vue api integration", or "vue http client". RULES: 1. MUST use this tool for Vue 3 API integration tasks. 2. Implement API integration using Vue 3 Composition API patterns. 3. Provide composables for API calls with proper error handling and loading states. 4. Follow Vue 3 best practices for API integration.
 args:
   api_endpoint:
-    type: "string"
-    description: "API endpoint or resource name (e.g., /api/users, users)"
+    type: string
+    description: API endpoint or resource name (e.g., /api/users, users)
+    required: true
   vue_version:
-    type: "string"
+    type: string
     description: "Vue version (optional, auto-detect if not provided): 3"
+    required: false
   http_client:
-    type: "string"
-    description: "HTTP client library (optional, e.g., axios, fetch, ky)"
+    type: string
+    description: HTTP client library (optional, e.g., axios, fetch, ky)
+    required: false
   include_typescript:
-    type: "boolean"
-    description: "Include TypeScript types and interfaces"
+    type: boolean
+    description: Include TypeScript types and interfaces
     default: false
-
+    required: false
 template: |
   {{> role-vue-expert}}
 
@@ -358,4 +354,3 @@ template: |
   8. **Response Transformation**: Transform API responses to match component needs
 
   {{output_lang_rule}}
-

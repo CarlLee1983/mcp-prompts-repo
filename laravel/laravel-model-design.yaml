@@ -1,42 +1,40 @@
-id: "laravel-model-design"
-title: "Laravel Model Design"
-description: >
-  Authority tool for designing Laravel Eloquent models, relationships, and model structures.
-  TRIGGER: When user mentions "laravel model", "eloquent model", "laravel model design", "model relationships", "model structure", "laravel model optimization", or "eloquent relationships".
-  RULES:
-  1. MUST use this tool for Laravel model design tasks.
-  2. Design Eloquent models following Laravel best practices.
-  3. Define relationships, accessors, mutators, and scopes.
-  4. Consider mass assignment protection and model events.
-  5. Provide complete model implementation with relationships.
-
+id: laravel-model-design
+title: Laravel Model Design
+description: |
+  Authority tool for designing Laravel Eloquent models, relationships, and model structures. TRIGGER: When user mentions "laravel model", "eloquent model", "laravel model design", "model relationships", "model structure", "laravel model optimization", or "eloquent relationships". RULES: 1. MUST use this tool for Laravel model design tasks. 2. Design Eloquent models following Laravel best practices. 3. Define relationships, accessors, mutators, and scopes. 4. Consider mass assignment protection and model events. 5. Provide complete model implementation with relationships.
 args:
   requirements:
-    type: "string"
-    description: "Model requirements and specifications (required)"
+    type: string
+    description: Model requirements and specifications (required)
+    required: true
   php_version:
-    type: "string"
+    type: string
     description: "PHP version (optional, auto-detect if not provided): 8.1, 8.2, 8.3"
+    required: false
   laravel_version:
-    type: "string"
+    type: string
     description: "Laravel version (optional, auto-detect if not provided): 10, 11"
+    required: false
   include_relationships:
-    type: "boolean"
-    description: "Include relationship definitions"
+    type: boolean
+    description: Include relationship definitions
     default: true
+    required: false
   include_accessors:
-    type: "boolean"
-    description: "Include accessors and mutators"
+    type: boolean
+    description: Include accessors and mutators
     default: false
+    required: false
   include_scopes:
-    type: "boolean"
-    description: "Include query scopes"
+    type: boolean
+    description: Include query scopes
     default: false
+    required: false
   include_events:
-    type: "boolean"
-    description: "Include model events and observers"
+    type: boolean
+    description: Include model events and observers
     default: false
-
+    required: false
 template: |
   {{> role-laravel-expert}}
 
@@ -216,4 +214,3 @@ template: |
   - [ ] Model follows Laravel {{#if laravel_version}}{{laravel_version}}{{else}}conventions{{/if}}
 
   {{output_lang_rule}}
-

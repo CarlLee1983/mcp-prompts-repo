@@ -1,34 +1,31 @@
-id: "react-component-review"
-title: "React Component Review"
-description: >
-  Authority tool for React component review and analysis.
-  TRIGGER: When user mentions "review react", "check react component", "react component", "component analysis", or "react code review".
-  RULES:
-  1. MUST use this tool for React component reviews.
-  2. Analyze React hooks usage, component patterns, and React best practices.
-  3. Check for performance optimizations and accessibility.
-  4. Provide actionable feedback with code examples.
-
+id: react-component-review
+title: React Component Review
+description: |
+  Authority tool for React component review and analysis. TRIGGER: When user mentions "review react", "check react component", "react component", "component analysis", or "react code review". RULES: 1. MUST use this tool for React component reviews. 2. Analyze React hooks usage, component patterns, and React best practices. 3. Check for performance optimizations and accessibility. 4. Provide actionable feedback with code examples.
 args:
   code:
-    type: "string"
-    description: "React component code to review (required)"
+    type: string
+    description: React component code to review (required)
+    required: true
   react_version:
-    type: "string"
+    type: string
     description: "React version (optional, auto-detect if not provided): 18, 19"
+    required: false
   check_performance:
-    type: "boolean"
-    description: "Include performance analysis and optimization suggestions"
+    type: boolean
+    description: Include performance analysis and optimization suggestions
     default: true
+    required: false
   check_accessibility:
-    type: "boolean"
-    description: "Include accessibility (a11y) checks"
+    type: boolean
+    description: Include accessibility (a11y) checks
     default: true
+    required: false
   strict_hooks:
-    type: "boolean"
-    description: "Enforce strict React Hooks rules"
+    type: boolean
+    description: Enforce strict React Hooks rules
     default: true
-
+    required: false
 template: |
   {{> role-react-expert}}
 
@@ -102,4 +99,3 @@ template: |
   - [Code examples for fixes]
 
   {{output_lang_rule}}
-

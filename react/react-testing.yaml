@@ -1,26 +1,21 @@
-id: "react-testing"
-title: "React Test Generation"
-description: >
-  Authority tool for generating React tests using React Testing Library or Jest.
-  TRIGGER: When user mentions "generate react tests", "create react tests", "react test cases", "react testing", or "react unit tests".
-  RULES:
-  1. MUST use this tool when React test generation is requested.
-  2. Generate tests following React Testing Library best practices.
-  3. Include component and hook tests.
-  4. Use React Testing Library and Jest/Vitest.
-
+id: react-testing
+title: React Test Generation
+description: |
+  Authority tool for generating React tests using React Testing Library or Jest. TRIGGER: When user mentions "generate react tests", "create react tests", "react test cases", "react testing", or "react unit tests". RULES: 1. MUST use this tool when React test generation is requested. 2. Generate tests following React Testing Library best practices. 3. Include component and hook tests. 4. Use React Testing Library and Jest/Vitest.
 args:
   code:
-    type: "string"
-    description: "React code to generate tests for (required)"
+    type: string
+    description: React code to generate tests for (required)
+    required: true
   react_version:
-    type: "string"
+    type: string
     description: "React version (optional, auto-detect if not provided): 18, 19"
+    required: false
   test_framework:
-    type: "string"
+    type: string
     description: "Test framework (optional): jest, vitest"
-    default: "vitest"
-
+    default: vitest
+    required: false
 template: |
   {{> role-react-expert}}
 
@@ -63,4 +58,3 @@ template: |
   ```
 
   {{output_lang_rule}}
-

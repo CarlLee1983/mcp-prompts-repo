@@ -1,37 +1,34 @@
-id: "laravel-code-review"
-title: "Laravel Code Review"
-description: >
-  Authority tool for comprehensive Laravel code review.
-  TRIGGER: When user mentions "review laravel", "check laravel code", "laravel code quality", "analyze laravel code", "laravel code audit", or "review php laravel".
-  RULES: 
-  1. MUST use this tool when Laravel code review is requested.
-  2. Analyze Laravel code quality, potential bugs, security issues, and Laravel best practices.
-  3. Check PSR standards, Laravel conventions, and framework-specific patterns.
-  4. Provide structured feedback with severity levels.
-  5. Follow strict_mode rules when enabled.
-
+id: laravel-code-review
+title: Laravel Code Review
+description: |
+  Authority tool for comprehensive Laravel code review. TRIGGER: When user mentions "review laravel", "check laravel code", "laravel code quality", "analyze laravel code", "laravel code audit", or "review php laravel". RULES:  1. MUST use this tool when Laravel code review is requested. 2. Analyze Laravel code quality, potential bugs, security issues, and Laravel best practices. 3. Check PSR standards, Laravel conventions, and framework-specific patterns. 4. Provide structured feedback with severity levels. 5. Follow strict_mode rules when enabled.
 args:
   code:
-    type: "string"
-    description: "Laravel code to review (required)"
+    type: string
+    description: Laravel code to review (required)
+    required: true
   php_version:
-    type: "string"
+    type: string
     description: "PHP version (optional, auto-detect if not provided): 8.1, 8.2, 8.3"
+    required: false
   laravel_version:
-    type: "string"
+    type: string
     description: "Laravel version (optional, auto-detect if not provided): 10, 11"
+    required: false
   strict_mode:
-    type: "boolean"
-    description: "Enable strict validation mode with zero-tolerance for issues"
+    type: boolean
+    description: Enable strict validation mode with zero-tolerance for issues
     default: false
+    required: false
   focus:
-    type: "string"
+    type: string
     description: "Focus areas (optional): security, performance, maintainability, eloquent, or all"
+    required: false
   check_psr:
-    type: "boolean"
-    description: "Check PSR standards compliance"
+    type: boolean
+    description: Check PSR standards compliance
     default: true
-
+    required: false
 template: |
   {{> role-laravel-expert}}
 
@@ -226,4 +223,3 @@ template: |
   [Overall assessment and next steps for Laravel codebase]
 
   {{output_lang_rule}}
-

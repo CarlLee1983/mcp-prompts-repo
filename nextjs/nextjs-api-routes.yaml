@@ -1,30 +1,26 @@
-id: "nextjs-api-routes"
-title: "Next.js API Routes"
-description: >
-  Authority tool for designing Next.js API routes and handlers.
-  TRIGGER: When user mentions "nextjs api", "next api routes", "nextjs api handler", "next api endpoint", or "nextjs api implementation".
-  RULES:
-  1. MUST use this tool for Next.js API route design tasks.
-  2. Design API routes following Next.js best practices.
-  3. Consider Route Handlers (App Router) and API Routes (Pages Router).
-  4. Provide complete API route implementation.
-
+id: nextjs-api-routes
+title: Next.js API Routes
+description: |
+  Authority tool for designing Next.js API routes and handlers. TRIGGER: When user mentions "nextjs api", "next api routes", "nextjs api handler", "next api endpoint", or "nextjs api implementation". RULES: 1. MUST use this tool for Next.js API route design tasks. 2. Design API routes following Next.js best practices. 3. Consider Route Handlers (App Router) and API Routes (Pages Router). 4. Provide complete API route implementation.
 args:
   requirements:
-    type: "string"
-    description: "API route requirements and specifications (required)"
+    type: string
+    description: API route requirements and specifications (required)
+    required: true
   nextjs_version:
-    type: "string"
+    type: string
     description: "Next.js version (optional, auto-detect if not provided): 13, 14, 15"
+    required: false
   router_type:
-    type: "string"
+    type: string
     description: "Router type (optional): app, pages, or auto-detect"
-    default: "app"
+    default: app
+    required: false
   use_typescript:
-    type: "boolean"
-    description: "Use TypeScript"
+    type: boolean
+    description: Use TypeScript
     default: true
-
+    required: false
 template: |
   {{> role-nextjs-expert}}
 
@@ -82,4 +78,3 @@ template: |
   {{/if}}
 
   {{output_lang_rule}}
-

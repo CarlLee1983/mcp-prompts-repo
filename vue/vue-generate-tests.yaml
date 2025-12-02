@@ -1,39 +1,36 @@
-id: "vue-generate-tests"
-title: "Vue Test Generation"
-description: >
-  Authority tool for generating Vue unit tests and component tests using Vitest or Jest.
-  TRIGGER: When user mentions "generate vue tests", "create vue tests", "write vue tests", "vitest tests", "vue test cases", or "vue testing".
-  RULES:
-  1. MUST use this tool when Vue test generation is requested.
-  2. Generate Vitest/Jest tests following Vue testing best practices.
-  3. Include both unit tests and component tests as appropriate.
-  4. Use Vue Test Utils and testing helpers.
-  5. Include component interaction testing when applicable.
-
+id: vue-generate-tests
+title: Vue Test Generation
+description: |
+  Authority tool for generating Vue unit tests and component tests using Vitest or Jest. TRIGGER: When user mentions "generate vue tests", "create vue tests", "write vue tests", "vitest tests", "vue test cases", or "vue testing". RULES: 1. MUST use this tool when Vue test generation is requested. 2. Generate Vitest/Jest tests following Vue testing best practices. 3. Include both unit tests and component tests as appropriate. 4. Use Vue Test Utils and testing helpers. 5. Include component interaction testing when applicable.
 args:
   code:
-    type: "string"
-    description: "Vue code to generate tests for (required)"
+    type: string
+    description: Vue code to generate tests for (required)
+    required: true
   vue_version:
-    type: "string"
+    type: string
     description: "Vue version (optional, auto-detect if not provided): 3"
+    required: false
   test_framework:
-    type: "string"
+    type: string
     description: "Test framework (optional): vitest, jest"
-    default: "vitest"
+    default: vitest
+    required: false
   include_edge_cases:
-    type: "boolean"
-    description: "Include edge case tests"
+    type: boolean
+    description: Include edge case tests
     default: true
+    required: false
   include_error_handling:
-    type: "boolean"
-    description: "Include error handling tests"
+    type: boolean
+    description: Include error handling tests
     default: true
+    required: false
   include_interactions:
-    type: "boolean"
-    description: "Include component interaction tests"
+    type: boolean
+    description: Include component interaction tests
     default: true
-
+    required: false
 template: |
   {{> role-vue-expert}}
 
@@ -179,4 +176,3 @@ template: |
      - [ ] Composables are mocked if needed
 
   {{output_lang_rule}}
-

@@ -1,27 +1,21 @@
-id: "express-route-design"
-title: "Express.js Route Design"
-description: >
-  Authority tool for designing Express.js routes and handlers.
-  TRIGGER: When user mentions "express route", "express api", "express endpoint", "express handler", or "express routing".
-  RULES:
-  1. MUST use this tool for Express.js route design tasks.
-  2. Design routes following Express.js best practices.
-  3. Create RESTful endpoints with proper middleware.
-  4. Include proper error handling and validation.
-  5. Provide complete route implementation.
-
+id: express-route-design
+title: Express.js Route Design
+description: |
+  Authority tool for designing Express.js routes and handlers. TRIGGER: When user mentions "express route", "express api", "express endpoint", "express handler", or "express routing". RULES: 1. MUST use this tool for Express.js route design tasks. 2. Design routes following Express.js best practices. 3. Create RESTful endpoints with proper middleware. 4. Include proper error handling and validation. 5. Provide complete route implementation.
 args:
   requirements:
-    type: "string"
-    description: "Route requirements and specifications (required)"
+    type: string
+    description: Route requirements and specifications (required)
+    required: true
   express_version:
-    type: "string"
+    type: string
     description: "Express version (optional, auto-detect if not provided): 4, 5"
+    required: false
   use_typescript:
-    type: "boolean"
-    description: "Use TypeScript"
+    type: boolean
+    description: Use TypeScript
     default: true
-
+    required: false
 template: |
   {{> role-express-expert}}
 
@@ -64,4 +58,3 @@ template: |
   ```
 
   {{output_lang_rule}}
-

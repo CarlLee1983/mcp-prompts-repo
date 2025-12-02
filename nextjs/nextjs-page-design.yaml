@@ -1,30 +1,26 @@
-id: "nextjs-page-design"
-title: "Next.js Page Design"
-description: >
-  Authority tool for designing Next.js pages and routing structures.
-  TRIGGER: When user mentions "nextjs page", "next page design", "nextjs routing", "next page structure", or "nextjs page implementation".
-  RULES:
-  1. MUST use this tool for Next.js page design tasks.
-  2. Design pages following Next.js best practices.
-  3. Consider App Router and Pages Router patterns.
-  4. Provide complete page implementation.
-
+id: nextjs-page-design
+title: Next.js Page Design
+description: |
+  Authority tool for designing Next.js pages and routing structures. TRIGGER: When user mentions "nextjs page", "next page design", "nextjs routing", "next page structure", or "nextjs page implementation". RULES: 1. MUST use this tool for Next.js page design tasks. 2. Design pages following Next.js best practices. 3. Consider App Router and Pages Router patterns. 4. Provide complete page implementation.
 args:
   requirements:
-    type: "string"
-    description: "Page requirements and specifications (required)"
+    type: string
+    description: Page requirements and specifications (required)
+    required: true
   nextjs_version:
-    type: "string"
+    type: string
     description: "Next.js version (optional, auto-detect if not provided): 13, 14, 15"
+    required: false
   router_type:
-    type: "string"
+    type: string
     description: "Router type (optional): app, pages, or auto-detect"
-    default: "app"
+    default: app
+    required: false
   use_typescript:
-    type: "boolean"
-    description: "Use TypeScript"
+    type: boolean
+    description: Use TypeScript
     default: true
-
+    required: false
 template: |
   {{> role-nextjs-expert}}
 
@@ -73,4 +69,3 @@ template: |
   {{/if}}
 
   {{output_lang_rule}}
-

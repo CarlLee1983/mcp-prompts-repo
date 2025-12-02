@@ -1,42 +1,40 @@
-id: "code-generation"
-title: "Code Generation"
-description: >
-  Authority tool for generating code skeletons and implementations from specifications.
-  TRIGGER: When user mentions "generate code", "create code", "code skeleton", "scaffold code", "implement from spec", "code from requirements", or "generate implementation".
-  RULES:
-  1. MUST use this tool for code generation tasks.
-  2. Generate code from specifications following language and framework best practices.
-  3. Create complete, production-ready code structures.
-  4. Include proper error handling, validation, and documentation.
-  5. Follow SOLID principles and design patterns when applicable.
-
+id: code-generation
+title: Code Generation
+description: |
+  Authority tool for generating code skeletons and implementations from specifications. TRIGGER: When user mentions "generate code", "create code", "code skeleton", "scaffold code", "implement from spec", "code from requirements", or "generate implementation". RULES: 1. MUST use this tool for code generation tasks. 2. Generate code from specifications following language and framework best practices. 3. Create complete, production-ready code structures. 4. Include proper error handling, validation, and documentation. 5. Follow SOLID principles and design patterns when applicable.
 args:
   specification:
-    type: "string"
-    description: "Code specification and requirements (required)"
+    type: string
+    description: Code specification and requirements (required)
+    required: true
   language:
-    type: "string"
+    type: string
     description: "Programming language (required): php, javascript, typescript, python, go, java, csharp, ruby, etc."
+    required: true
   framework:
-    type: "string"
-    description: "Framework (optional, e.g., laravel, express, django, spring, react, vue)"
+    type: string
+    description: Framework (optional, e.g., laravel, express, django, spring, react, vue)
+    required: false
   code_type:
-    type: "string"
+    type: string
     description: "Code type (optional): class, function, module, api, component, service, or auto-detect"
-    default: "class"
+    default: class
+    required: false
   include_tests:
-    type: "boolean"
-    description: "Include test code generation"
+    type: boolean
+    description: Include test code generation
     default: false
+    required: false
   include_docs:
-    type: "boolean"
-    description: "Include code documentation and comments"
+    type: boolean
+    description: Include code documentation and comments
     default: true
+    required: false
   coding_style:
-    type: "string"
+    type: string
     description: "Coding style (optional): follow language conventions, or specify style guide"
-    default: "auto"
-
+    default: auto
+    required: false
 template: |
   {{> role-expert}}
 
@@ -452,4 +450,3 @@ template: |
   5. **Integrate**: Integrate code into existing codebase
 
   {{output_lang_rule}}
-

@@ -1,39 +1,36 @@
-id: "vue-architecture"
-title: "Vue Architecture Design"
-description: >
-  Authority tool for designing Vue application architecture and component structures.
-  TRIGGER: When user mentions "vue architecture", "vue system design", "vue module design", "vue application structure", "vue component architecture", or "vue project structure".
-  RULES:
-  1. MUST use this tool for Vue architecture and system design tasks.
-  2. Design scalable, maintainable, and robust Vue architectures.
-  3. Consider Vue architectural patterns (Component-based, Composition API, etc.).
-  4. Provide Vue module structure and component design.
-  5. Include Vue scalability, maintainability, and performance considerations.
-
+id: vue-architecture
+title: Vue Architecture Design
+description: |
+  Authority tool for designing Vue application architecture and component structures. TRIGGER: When user mentions "vue architecture", "vue system design", "vue module design", "vue application structure", "vue component architecture", or "vue project structure". RULES: 1. MUST use this tool for Vue architecture and system design tasks. 2. Design scalable, maintainable, and robust Vue architectures. 3. Consider Vue architectural patterns (Component-based, Composition API, etc.). 4. Provide Vue module structure and component design. 5. Include Vue scalability, maintainability, and performance considerations.
 args:
   requirements:
-    type: "string"
-    description: "System requirements and specifications (required)"
+    type: string
+    description: System requirements and specifications (required)
+    required: true
   vue_version:
-    type: "string"
+    type: string
     description: "Vue version (optional, auto-detect if not provided): 3"
+    required: false
   architecture_pattern:
-    type: "string"
+    type: string
     description: "Architecture pattern (optional): component-based, feature-based, or auto-select"
-    default: "component-based"
+    default: component-based
+    required: false
   scale:
-    type: "string"
+    type: string
     description: "Expected scale (optional): small, medium, large, enterprise"
-    default: "medium"
+    default: medium
+    required: false
   include_diagrams:
-    type: "boolean"
-    description: "Include architecture diagrams and visual representations"
+    type: boolean
+    description: Include architecture diagrams and visual representations
     default: true
+    required: false
   include_patterns:
-    type: "boolean"
-    description: "Include Vue design patterns recommendations"
+    type: boolean
+    description: Include Vue design patterns recommendations
     default: true
-
+    required: false
 template: |
   {{> role-vue-expert}}
 
@@ -239,4 +236,3 @@ template: |
   - [ ] Deployment strategy defined
 
   {{output_lang_rule}}
-

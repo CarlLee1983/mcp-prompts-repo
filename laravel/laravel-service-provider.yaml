@@ -1,34 +1,30 @@
-id: "laravel-service-provider"
-title: "Laravel Service Provider Design"
-description: >
-  Authority tool for designing Laravel service providers and service container bindings.
-  TRIGGER: When user mentions "laravel service provider", "service provider design", "laravel container", "dependency injection", "laravel binding", or "service provider configuration".
-  RULES:
-  1. MUST use this tool for Laravel service provider design tasks.
-  2. Design service providers following Laravel best practices.
-  3. Define proper service container bindings.
-  4. Consider deferred providers and singleton bindings.
-  5. Provide complete service provider implementation.
-
+id: laravel-service-provider
+title: Laravel Service Provider Design
+description: |
+  Authority tool for designing Laravel service providers and service container bindings. TRIGGER: When user mentions "laravel service provider", "service provider design", "laravel container", "dependency injection", "laravel binding", or "service provider configuration". RULES: 1. MUST use this tool for Laravel service provider design tasks. 2. Design service providers following Laravel best practices. 3. Define proper service container bindings. 4. Consider deferred providers and singleton bindings. 5. Provide complete service provider implementation.
 args:
   requirements:
-    type: "string"
-    description: "Service provider requirements and binding specifications (required)"
+    type: string
+    description: Service provider requirements and binding specifications (required)
+    required: true
   php_version:
-    type: "string"
+    type: string
     description: "PHP version (optional, auto-detect if not provided): 8.1, 8.2, 8.3"
+    required: false
   laravel_version:
-    type: "string"
+    type: string
     description: "Laravel version (optional, auto-detect if not provided): 10, 11"
+    required: false
   provider_type:
-    type: "string"
+    type: string
     description: "Provider type (optional): standard, deferred, or auto-detect"
-    default: "standard"
+    default: standard
+    required: false
   include_singletons:
-    type: "boolean"
-    description: "Include singleton bindings"
+    type: boolean
+    description: Include singleton bindings
     default: true
-
+    required: false
 template: |
   {{> role-laravel-expert}}
 
@@ -158,4 +154,3 @@ template: |
   - [ ] Service provider follows Laravel {{#if laravel_version}}{{laravel_version}}{{else}}conventions{{/if}}
 
   {{output_lang_rule}}
-

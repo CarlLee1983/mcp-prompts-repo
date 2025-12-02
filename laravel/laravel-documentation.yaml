@@ -1,41 +1,39 @@
-id: "laravel-documentation"
-title: "Laravel Documentation Generator"
-description: >
-  Authority tool for generating comprehensive Laravel documentation including API docs, PHPDoc comments, and README files.
-  TRIGGER: When user mentions "generate laravel docs", "create laravel documentation", "laravel api docs", "phpdoc", "laravel code comments", "laravel readme", or "document laravel code".
-  RULES:
-  1. MUST use this tool for Laravel documentation generation tasks.
-  2. Generate documentation following PHPDoc and Laravel documentation standards.
-  3. Support PHPDoc, Markdown, and OpenAPI formats.
-  4. Include Laravel-specific examples and usage patterns.
-  5. Ensure documentation is clear, comprehensive, and maintainable.
-
+id: laravel-documentation
+title: Laravel Documentation Generator
+description: |
+  Authority tool for generating comprehensive Laravel documentation including API docs, PHPDoc comments, and README files. TRIGGER: When user mentions "generate laravel docs", "create laravel documentation", "laravel api docs", "phpdoc", "laravel code comments", "laravel readme", or "document laravel code". RULES: 1. MUST use this tool for Laravel documentation generation tasks. 2. Generate documentation following PHPDoc and Laravel documentation standards. 3. Support PHPDoc, Markdown, and OpenAPI formats. 4. Include Laravel-specific examples and usage patterns. 5. Ensure documentation is clear, comprehensive, and maintainable.
 args:
   code:
-    type: "string"
-    description: "Laravel code to generate documentation for (optional)"
+    type: string
+    description: Laravel code to generate documentation for (optional)
+    required: false
   doc_type:
-    type: "string"
+    type: string
     description: "Documentation type (required): api, code, readme"
+    required: true
   php_version:
-    type: "string"
+    type: string
     description: "PHP version (optional, auto-detect if not provided): 8.1, 8.2, 8.3"
+    required: false
   laravel_version:
-    type: "string"
+    type: string
     description: "Laravel version (optional, auto-detect if not provided): 10, 11"
+    required: false
   format:
-    type: "string"
+    type: string
     description: "Documentation format (optional): markdown, openapi, phpdoc"
-    default: "phpdoc"
+    default: phpdoc
+    required: false
   include_examples:
-    type: "boolean"
-    description: "Include code examples and usage patterns"
+    type: boolean
+    description: Include code examples and usage patterns
     default: true
+    required: false
   include_diagrams:
-    type: "boolean"
-    description: "Include diagrams and visual representations"
+    type: boolean
+    description: Include diagrams and visual representations
     default: false
-
+    required: false
 template: |
   {{> role-laravel-expert}}
 
@@ -94,14 +92,14 @@ template: |
     version: 1.0.0
     description: |
       [Laravel API description]
-  
+
   servers:
     - url: https://api.example.com/v1
       description: Production server
-  
+
   paths:
     # [Define Laravel API endpoints]
-  
+
   components:
     schemas:
       # [Define data models]
@@ -116,23 +114,23 @@ template: |
   - **Route**: `/api/endpoint`
   - **Controller**: `App\Http\Controllers\Api\[ControllerName]`
   - **Description**: [Endpoint description]
-  
+
   **Request Parameters**:
   - [List request parameters]
-  
+
   **Form Request Validation**:
   ```php
   // app/Http/Requests/[RequestName].php
   [Validation rules]
   ```
-  
+
   **Response**:
   ```json
   {
     // Response structure
   }
   ```
-  
+
   **Status Codes**:
   - `200 OK`: [Description]
   - `400 Bad Request`: [Description]
@@ -365,4 +363,3 @@ template: |
   6. **Maintenance**: Keep documentation up-to-date
 
   {{output_lang_rule}}
-

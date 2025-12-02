@@ -1,27 +1,21 @@
-id: "nestjs-controller-design"
-title: "NestJS Controller Design"
-description: >
-  Authority tool for designing NestJS controllers and endpoints.
-  TRIGGER: When user mentions "nestjs controller", "nestjs api", "nestjs endpoint", "nestjs route", or "nestjs handler".
-  RULES:
-  1. MUST use this tool for NestJS controller design tasks.
-  2. Design controllers following NestJS best practices.
-  3. Create RESTful endpoints with proper decorators.
-  4. Include proper DTOs and validation.
-  5. Provide complete controller implementation.
-
+id: nestjs-controller-design
+title: NestJS Controller Design
+description: |
+  Authority tool for designing NestJS controllers and endpoints. TRIGGER: When user mentions "nestjs controller", "nestjs api", "nestjs endpoint", "nestjs route", or "nestjs handler". RULES: 1. MUST use this tool for NestJS controller design tasks. 2. Design controllers following NestJS best practices. 3. Create RESTful endpoints with proper decorators. 4. Include proper DTOs and validation. 5. Provide complete controller implementation.
 args:
   requirements:
-    type: "string"
-    description: "Controller requirements and specifications (required)"
+    type: string
+    description: Controller requirements and specifications (required)
+    required: true
   nestjs_version:
-    type: "string"
+    type: string
     description: "NestJS version (optional, auto-detect if not provided): 9, 10"
+    required: false
   use_typescript:
-    type: "boolean"
-    description: "Use TypeScript"
+    type: boolean
+    description: Use TypeScript
     default: true
-
+    required: false
 template: |
   {{> role-nestjs-expert}}
 
@@ -69,4 +63,3 @@ template: |
   ```
 
   {{output_lang_rule}}
-

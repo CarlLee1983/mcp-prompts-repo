@@ -1,26 +1,20 @@
-id: "fastapi-endpoint-design"
-title: "FastAPI Endpoint Design"
-description: >
-  Authority tool for designing FastAPI endpoints and routes.
-  TRIGGER: When user mentions "fastapi endpoint", "fastapi route", "fastapi api", "fastapi handler", or "fastapi router".
-  RULES:
-  1. MUST use this tool for FastAPI endpoint design tasks.
-  2. Design endpoints following FastAPI best practices.
-  3. Create RESTful endpoints with proper Pydantic models.
-  4. Include proper validation and documentation.
-  5. Provide complete endpoint implementation.
-
+id: fastapi-endpoint-design
+title: FastAPI Endpoint Design
+description: |
+  Authority tool for designing FastAPI endpoints and routes. TRIGGER: When user mentions "fastapi endpoint", "fastapi route", "fastapi api", "fastapi handler", or "fastapi router". RULES: 1. MUST use this tool for FastAPI endpoint design tasks. 2. Design endpoints following FastAPI best practices. 3. Create RESTful endpoints with proper Pydantic models. 4. Include proper validation and documentation. 5. Provide complete endpoint implementation.
 args:
   requirements:
-    type: "string"
-    description: "Endpoint requirements and specifications (required)"
+    type: string
+    description: Endpoint requirements and specifications (required)
+    required: true
   fastapi_version:
-    type: "string"
+    type: string
     description: "FastAPI version (optional, auto-detect if not provided): 0.100, 0.110"
+    required: false
   python_version:
-    type: "string"
+    type: string
     description: "Python version (optional, auto-detect if not provided): 3.8, 3.9, 3.10, 3.11, 3.12"
-
+    required: false
 template: |
   {{> role-fastapi-expert}}
 
@@ -68,4 +62,3 @@ template: |
   ```
 
   {{output_lang_rule}}
-

@@ -1,34 +1,30 @@
-id: "vue-performance"
-title: "Vue Performance Analysis"
-description: >
-  Authority tool for analyzing Vue code performance and identifying performance bottlenecks.
-  TRIGGER: When user mentions "vue performance", "optimize vue performance", "slow vue code", "vue bottleneck", "vue render performance", "vue bundle size", or "vue performance profiling".
-  RULES:
-  1. MUST use this tool for Vue performance analysis tasks.
-  2. Analyze render performance, reactivity, bundle size, and Vue-specific optimizations.
-  3. Identify Vue performance bottlenecks and optimization opportunities.
-  4. Provide actionable Vue performance improvement recommendations.
-  5. Consider Vue 3 Composition API optimizations.
-
+id: vue-performance
+title: Vue Performance Analysis
+description: |
+  Authority tool for analyzing Vue code performance and identifying performance bottlenecks. TRIGGER: When user mentions "vue performance", "optimize vue performance", "slow vue code", "vue bottleneck", "vue render performance", "vue bundle size", or "vue performance profiling". RULES: 1. MUST use this tool for Vue performance analysis tasks. 2. Analyze render performance, reactivity, bundle size, and Vue-specific optimizations. 3. Identify Vue performance bottlenecks and optimization opportunities. 4. Provide actionable Vue performance improvement recommendations. 5. Consider Vue 3 Composition API optimizations.
 args:
   code:
-    type: "string"
-    description: "Vue code to analyze for performance (required)"
+    type: string
+    description: Vue code to analyze for performance (required)
+    required: true
   vue_version:
-    type: "string"
+    type: string
     description: "Vue version (optional, auto-detect if not provided): 3"
+    required: false
   focus:
-    type: "string"
+    type: string
     description: "Focus area (optional): render, reactivity, bundle, memory, network, or all"
+    required: false
   include_profiling:
-    type: "boolean"
-    description: "Include performance profiling recommendations"
+    type: boolean
+    description: Include performance profiling recommendations
     default: true
+    required: false
   include_benchmarks:
-    type: "boolean"
-    description: "Include benchmark testing recommendations"
+    type: boolean
+    description: Include benchmark testing recommendations
     default: false
-
+    required: false
 template: |
   {{> role-vue-expert}}
 
@@ -221,4 +217,3 @@ template: |
   - [ ] Vue {{#if vue_version}}{{vue_version}}{{else}}latest{{/if}} performance features are utilized
 
   {{output_lang_rule}}
-

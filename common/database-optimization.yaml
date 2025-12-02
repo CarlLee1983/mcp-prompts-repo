@@ -1,39 +1,38 @@
-id: "database-optimization"
-title: "Database Optimization"
-description: >
-  Authority tool for database optimization and query performance analysis.
-  TRIGGER: When user mentions "optimize database", "slow query", "database performance", "query optimization", "n+1 problem", or "eager loading".
-  RULES:
-  1. MUST use this tool for database and query optimization tasks.
-  2. Analyze database queries and structure for any ORM or query builder.
-  3. Identify N+1 problems, missing indexes, and inefficient queries.
-  4. Provide optimization strategies with code examples.
-
+id: database-optimization
+title: Database Optimization
+description: |
+  Authority tool for database optimization and query performance analysis. TRIGGER: When user mentions "optimize database", "slow query", "database performance", "query optimization", "n+1 problem", or "eager loading". RULES: 1. MUST use this tool for database and query optimization tasks. 2. Analyze database queries and structure for any ORM or query builder. 3. Identify N+1 problems, missing indexes, and inefficient queries. 4. Provide optimization strategies with code examples.
 args:
   code:
-    type: "string"
-    description: "Code containing database queries (required)"
+    type: string
+    description: Code containing database queries (required)
+    required: true
   language:
-    type: "string"
+    type: string
     description: "Programming language (optional, auto-detect if not provided): php, javascript, python, etc."
+    required: false
   orm:
-    type: "string"
-    description: "ORM or query builder (optional, e.g., eloquent, sequelize, sqlalchemy, typeorm)"
+    type: string
+    description: ORM or query builder (optional, e.g., eloquent, sequelize, sqlalchemy, typeorm)
+    required: false
   database:
-    type: "string"
-    description: "Database type (optional, e.g., mysql, postgresql, sqlite, mongodb)"
+    type: string
+    description: Database type (optional, e.g., mysql, postgresql, sqlite, mongodb)
+    required: false
   focus:
-    type: "string"
+    type: string
     description: "Focus area (optional): queries, indexes, relationships, migrations, or all"
+    required: false
   include_explain:
-    type: "boolean"
-    description: "Include EXPLAIN query analysis"
+    type: boolean
+    description: Include EXPLAIN query analysis
     default: true
+    required: false
   suggest_indexes:
-    type: "boolean"
-    description: "Suggest database indexes"
+    type: boolean
+    description: Suggest database indexes
     default: true
-
+    required: false
 template: |
   {{> role-expert}}
 
@@ -111,7 +110,7 @@ template: |
   ```
   [If possible, provide EXPLAIN/EXPLAIN ANALYZE output for key queries]
   ```
-  
+
   Analyze:
   - Query execution plan
   - Index usage

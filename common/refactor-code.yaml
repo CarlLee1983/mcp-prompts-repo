@@ -1,36 +1,34 @@
-id: "refactor-code"
-title: "Refactor Code"
-description: >
-  Authority tool for code refactoring.
-  TRIGGER: When user mentions "refactor", "improve code", "optimize code", "restructure code", or "code cleanup".
-  RULES:
-  1. MUST use this tool for code refactoring tasks.
-  2. Maintain existing functionality while improving code structure.
-  3. Apply SOLID principles and best practices.
-  4. Auto-infer refactoring opportunities if intent is not specified.
-
+id: refactor-code
+title: Refactor Code
+description: |
+  Authority tool for code refactoring. TRIGGER: When user mentions "refactor", "improve code", "optimize code", "restructure code", or "code cleanup". RULES: 1. MUST use this tool for code refactoring tasks. 2. Maintain existing functionality while improving code structure. 3. Apply SOLID principles and best practices. 4. Auto-infer refactoring opportunities if intent is not specified.
 args:
   code:
-    type: "string"
-    description: "Code to refactor (required)"
+    type: string
+    description: Code to refactor (required)
+    required: true
   language:
-    type: "string"
+    type: string
     description: "Programming language (optional, auto-detect if not provided): php, javascript, typescript, python, etc."
+    required: false
   framework:
-    type: "string"
-    description: "Framework (optional, e.g., laravel, vue, react, django)"
+    type: string
+    description: Framework (optional, e.g., laravel, vue, react, django)
+    required: false
   intent:
-    type: "string"
+    type: string
     description: "Specific refactoring intent (optional): extract-methods, single-responsibility, dependency-injection, or auto-infer"
+    required: false
   preserve_api:
-    type: "boolean"
-    description: "Preserve existing API contracts and response formats"
+    type: boolean
+    description: Preserve existing API contracts and response formats
     default: true
+    required: false
   apply_solid:
-    type: "boolean"
-    description: "Apply SOLID principles strictly"
+    type: boolean
+    description: Apply SOLID principles strictly
     default: true
-
+    required: false
 template: |
   {{> role-expert}}
 
@@ -163,4 +161,3 @@ template: |
   - [Backward compatibility notes]
 
   {{output_lang_rule}}
-

@@ -1,34 +1,30 @@
-id: "vue-composable-design"
-title: "Vue Composable Design"
-description: >
-  Authority tool for designing Vue composables and reusable Composition API functions.
-  TRIGGER: When user mentions "vue composable", "composable design", "vue composition api", "reusable vue logic", "vue composable pattern", or "vue composable function".
-  RULES:
-  1. MUST use this tool for Vue composable design tasks.
-  2. Design composables following Vue Composition API best practices.
-  3. Create reusable, testable, and maintainable composables.
-  4. Consider composable patterns and conventions.
-  5. Provide complete composable implementation.
-
+id: vue-composable-design
+title: Vue Composable Design
+description: |
+  Authority tool for designing Vue composables and reusable Composition API functions. TRIGGER: When user mentions "vue composable", "composable design", "vue composition api", "reusable vue logic", "vue composable pattern", or "vue composable function". RULES: 1. MUST use this tool for Vue composable design tasks. 2. Design composables following Vue Composition API best practices. 3. Create reusable, testable, and maintainable composables. 4. Consider composable patterns and conventions. 5. Provide complete composable implementation.
 args:
   requirements:
-    type: "string"
-    description: "Composable requirements and specifications (required)"
+    type: string
+    description: Composable requirements and specifications (required)
+    required: true
   vue_version:
-    type: "string"
+    type: string
     description: "Vue version (optional, auto-detect if not provided): 3"
+    required: false
   composable_type:
-    type: "string"
+    type: string
     description: "Composable type (optional): utility, state, lifecycle, or auto-detect"
+    required: false
   use_typescript:
-    type: "boolean"
-    description: "Use TypeScript"
+    type: boolean
+    description: Use TypeScript
     default: true
+    required: false
   include_tests:
-    type: "boolean"
-    description: "Include test examples"
+    type: boolean
+    description: Include test examples
     default: false
-
+    required: false
 template: |
   {{> role-vue-expert}}
 
@@ -159,4 +155,3 @@ template: |
   {{/if}}
 
   {{output_lang_rule}}
-

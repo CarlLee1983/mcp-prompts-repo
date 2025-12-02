@@ -1,37 +1,34 @@
-id: "laravel-migration-design"
-title: "Laravel Migration Design"
-description: >
-  Authority tool for designing Laravel database migrations and schema structures.
-  TRIGGER: When user mentions "laravel migration", "database migration", "laravel schema", "create table", "alter table", "laravel migration design", or "database structure".
-  RULES:
-  1. MUST use this tool for Laravel migration design tasks.
-  2. Design migrations following Laravel best practices.
-  3. Define proper table structures, indexes, and foreign keys.
-  4. Consider migration rollback strategies.
-  5. Provide complete migration implementation.
-
+id: laravel-migration-design
+title: Laravel Migration Design
+description: |
+  Authority tool for designing Laravel database migrations and schema structures. TRIGGER: When user mentions "laravel migration", "database migration", "laravel schema", "create table", "alter table", "laravel migration design", or "database structure". RULES: 1. MUST use this tool for Laravel migration design tasks. 2. Design migrations following Laravel best practices. 3. Define proper table structures, indexes, and foreign keys. 4. Consider migration rollback strategies. 5. Provide complete migration implementation.
 args:
   requirements:
-    type: "string"
-    description: "Migration requirements and table specifications (required)"
+    type: string
+    description: Migration requirements and table specifications (required)
+    required: true
   php_version:
-    type: "string"
+    type: string
     description: "PHP version (optional, auto-detect if not provided): 8.1, 8.2, 8.3"
+    required: false
   laravel_version:
-    type: "string"
+    type: string
     description: "Laravel version (optional, auto-detect if not provided): 10, 11"
+    required: false
   database:
-    type: "string"
+    type: string
     description: "Database type (optional): mysql, postgresql, sqlite"
+    required: false
   include_indexes:
-    type: "boolean"
-    description: "Include index definitions"
+    type: boolean
+    description: Include index definitions
     default: true
+    required: false
   include_foreign_keys:
-    type: "boolean"
-    description: "Include foreign key constraints"
+    type: boolean
+    description: Include foreign key constraints
     default: true
-
+    required: false
 template: |
   {{> role-laravel-expert}}
 
@@ -142,4 +139,3 @@ template: |
   - [ ] Migration follows Laravel {{#if laravel_version}}{{laravel_version}}{{else}}conventions{{/if}}
 
   {{output_lang_rule}}
-

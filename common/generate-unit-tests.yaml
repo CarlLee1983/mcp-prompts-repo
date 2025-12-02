@@ -1,37 +1,34 @@
-id: "generate-unit-tests"
-title: "Generate Unit Tests"
-description: >
-  Authority tool for generating unit tests for any programming language.
-  TRIGGER: When user mentions "generate tests", "create tests", "write tests", "unit tests", "test cases", "test coverage", or "testing".
-  RULES:
-  1. MUST use this tool when unit test generation is requested.
-  2. Analyze code structure and generate comprehensive unit tests.
-  3. Use appropriate test framework for the programming language.
-  4. Include edge cases and error handling when requested.
-  5. Follow language and framework best practices.
-
+id: generate-unit-tests
+title: Generate Unit Tests
+description: |
+  Authority tool for generating unit tests for any programming language. TRIGGER: When user mentions "generate tests", "create tests", "write tests", "unit tests", "test cases", "test coverage", or "testing". RULES: 1. MUST use this tool when unit test generation is requested. 2. Analyze code structure and generate comprehensive unit tests. 3. Use appropriate test framework for the programming language. 4. Include edge cases and error handling when requested. 5. Follow language and framework best practices.
 args:
   code:
-    type: "string"
-    description: "Code to generate tests for (required)"
+    type: string
+    description: Code to generate tests for (required)
+    required: true
   language:
-    type: "string"
+    type: string
     description: "Programming language (optional, auto-detect if not provided): javascript, typescript, php, python, go, java, csharp, ruby, etc."
+    required: false
   test_framework:
-    type: "string"
+    type: string
     description: "Test framework (optional, auto-detect if not provided): jest, phpunit, pytest, unittest, vitest, mocha, junit, xunit, rspec, etc."
+    required: false
   include_edge_cases:
-    type: "boolean"
-    description: "Include edge case tests (boundary conditions, null values, empty inputs)"
+    type: boolean
+    description: Include edge case tests (boundary conditions, null values, empty inputs)
     default: true
+    required: false
   include_error_handling:
-    type: "boolean"
-    description: "Include error handling tests (exceptions, invalid inputs)"
+    type: boolean
+    description: Include error handling tests (exceptions, invalid inputs)
     default: true
+    required: false
   test_style:
-    type: "string"
+    type: string
     description: "Test style (optional): bdd, tdd, or auto-detect"
-
+    required: false
 template: |
   {{> role-expert}}
 
@@ -238,4 +235,3 @@ template: |
   5. **Coverage**: [Suggest how to measure test coverage]
 
   {{output_lang_rule}}
-

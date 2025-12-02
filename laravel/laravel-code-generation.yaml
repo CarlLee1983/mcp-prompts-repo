@@ -1,42 +1,40 @@
-id: "laravel-code-generation"
-title: "Laravel Code Generation"
-description: >
-  Authority tool for generating Laravel code skeletons and implementations from specifications.
-  TRIGGER: When user mentions "generate laravel code", "create laravel code", "laravel code skeleton", "scaffold laravel code", "laravel artisan", "implement laravel from spec", or "generate laravel implementation".
-  RULES:
-  1. MUST use this tool for Laravel code generation tasks.
-  2. Generate Laravel code from specifications following Laravel best practices.
-  3. Create complete, production-ready Laravel code structures.
-  4. Include proper error handling, validation, and documentation.
-  5. Follow SOLID principles and Laravel design patterns.
-
+id: laravel-code-generation
+title: Laravel Code Generation
+description: |
+  Authority tool for generating Laravel code skeletons and implementations from specifications. TRIGGER: When user mentions "generate laravel code", "create laravel code", "laravel code skeleton", "scaffold laravel code", "laravel artisan", "implement laravel from spec", or "generate laravel implementation". RULES: 1. MUST use this tool for Laravel code generation tasks. 2. Generate Laravel code from specifications following Laravel best practices. 3. Create complete, production-ready Laravel code structures. 4. Include proper error handling, validation, and documentation. 5. Follow SOLID principles and Laravel design patterns.
 args:
   specification:
-    type: "string"
-    description: "Code specification and requirements (required)"
+    type: string
+    description: Code specification and requirements (required)
+    required: true
   php_version:
-    type: "string"
+    type: string
     description: "PHP version (optional, auto-detect if not provided): 8.1, 8.2, 8.3"
+    required: false
   laravel_version:
-    type: "string"
+    type: string
     description: "Laravel version (optional, auto-detect if not provided): 10, 11"
+    required: false
   code_type:
-    type: "string"
+    type: string
     description: "Code type (optional): controller, model, service, request, resource, command, job, or auto-detect"
-    default: "controller"
+    default: controller
+    required: false
   include_tests:
-    type: "boolean"
-    description: "Include PHPUnit test code generation"
+    type: boolean
+    description: Include PHPUnit test code generation
     default: false
+    required: false
   include_docs:
-    type: "boolean"
-    description: "Include PHPDoc documentation and comments"
+    type: boolean
+    description: Include PHPDoc documentation and comments
     default: true
+    required: false
   coding_style:
-    type: "string"
+    type: string
     description: "Coding style (optional): follow Laravel conventions, or specify style guide"
-    default: "auto"
-
+    default: auto
+    required: false
 template: |
   {{> role-laravel-expert}}
 
@@ -306,4 +304,3 @@ template: |
   - [ ] Follows PSR standards
 
   {{output_lang_rule}}
-

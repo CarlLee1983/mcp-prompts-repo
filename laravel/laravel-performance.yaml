@@ -1,37 +1,34 @@
-id: "laravel-performance"
-title: "Laravel Performance Analysis"
-description: >
-  Authority tool for analyzing Laravel code performance and identifying non-database performance bottlenecks.
-  TRIGGER: When user mentions "laravel performance", "optimize laravel performance", "slow laravel code", "laravel bottleneck", "laravel cpu usage", "laravel memory usage", or "laravel performance profiling".
-  RULES:
-  1. MUST use this tool for Laravel performance analysis tasks (excluding database-specific optimizations, use eloquent-optimization for that).
-  2. Analyze CPU, memory, network, I/O, and algorithm performance in Laravel context.
-  3. Identify Laravel-specific performance bottlenecks and optimization opportunities.
-  4. Provide actionable Laravel performance improvement recommendations.
-  5. Consider Laravel caching, queues, and optimization features.
-
+id: laravel-performance
+title: Laravel Performance Analysis
+description: |
+  Authority tool for analyzing Laravel code performance and identifying non-database performance bottlenecks. TRIGGER: When user mentions "laravel performance", "optimize laravel performance", "slow laravel code", "laravel bottleneck", "laravel cpu usage", "laravel memory usage", or "laravel performance profiling". RULES: 1. MUST use this tool for Laravel performance analysis tasks (excluding database-specific optimizations, use eloquent-optimization for that). 2. Analyze CPU, memory, network, I/O, and algorithm performance in Laravel context. 3. Identify Laravel-specific performance bottlenecks and optimization opportunities. 4. Provide actionable Laravel performance improvement recommendations. 5. Consider Laravel caching, queues, and optimization features.
 args:
   code:
-    type: "string"
-    description: "Laravel code to analyze for performance (required)"
+    type: string
+    description: Laravel code to analyze for performance (required)
+    required: true
   php_version:
-    type: "string"
+    type: string
     description: "PHP version (optional, auto-detect if not provided): 8.1, 8.2, 8.3"
+    required: false
   laravel_version:
-    type: "string"
+    type: string
     description: "Laravel version (optional, auto-detect if not provided): 10, 11"
+    required: false
   focus:
-    type: "string"
+    type: string
     description: "Focus area (optional): cpu, memory, network, io, algorithm, concurrency, caching, or all"
+    required: false
   include_profiling:
-    type: "boolean"
-    description: "Include performance profiling recommendations"
+    type: boolean
+    description: Include performance profiling recommendations
     default: true
+    required: false
   include_benchmarks:
-    type: "boolean"
-    description: "Include benchmark testing recommendations"
+    type: boolean
+    description: Include benchmark testing recommendations
     default: false
-
+    required: false
 template: |
   {{> role-laravel-expert}}
 
@@ -228,4 +225,3 @@ template: |
   - [ ] Laravel {{#if laravel_version}}{{laravel_version}}{{else}}latest{{/if}} performance features are utilized
 
   {{output_lang_rule}}
-

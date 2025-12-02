@@ -1,35 +1,31 @@
-id: "vue-pinia-setup"
-title: "Vue Pinia Store Setup"
-description: >
-  Authority tool for designing Pinia stores and state management structures.
-  TRIGGER: When user mentions "vue pinia", "pinia store", "vue state management", "pinia setup", "vue store design", or "pinia configuration".
-  RULES:
-  1. MUST use this tool for Pinia store design tasks.
-  2. Design Pinia stores following Pinia best practices.
-  3. Define proper state, getters, and actions.
-  4. Consider store organization and modularity.
-  5. Provide complete Pinia store implementation.
-
+id: vue-pinia-setup
+title: Vue Pinia Store Setup
+description: |
+  Authority tool for designing Pinia stores and state management structures. TRIGGER: When user mentions "vue pinia", "pinia store", "vue state management", "pinia setup", "vue store design", or "pinia configuration". RULES: 1. MUST use this tool for Pinia store design tasks. 2. Design Pinia stores following Pinia best practices. 3. Define proper state, getters, and actions. 4. Consider store organization and modularity. 5. Provide complete Pinia store implementation.
 args:
   requirements:
-    type: "string"
-    description: "Store requirements and state specifications (required)"
+    type: string
+    description: Store requirements and state specifications (required)
+    required: true
   vue_version:
-    type: "string"
+    type: string
     description: "Vue version (optional, auto-detect if not provided): 3"
+    required: false
   store_type:
-    type: "string"
+    type: string
     description: "Store type (optional): setup, options, or auto-select"
-    default: "setup"
+    default: setup
+    required: false
   use_typescript:
-    type: "boolean"
-    description: "Use TypeScript"
+    type: boolean
+    description: Use TypeScript
     default: true
+    required: false
   include_persistence:
-    type: "boolean"
-    description: "Include state persistence"
+    type: boolean
+    description: Include state persistence
     default: false
-
+    required: false
 template: |
   {{> role-vue-expert}}
 
@@ -205,4 +201,3 @@ template: |
   - [ ] Store follows Pinia conventions
 
   {{output_lang_rule}}
-

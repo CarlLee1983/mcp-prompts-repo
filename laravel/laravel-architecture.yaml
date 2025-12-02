@@ -1,42 +1,40 @@
-id: "laravel-architecture"
-title: "Laravel Architecture Design"
-description: >
-  Authority tool for designing Laravel system architecture and module structures.
-  TRIGGER: When user mentions "laravel architecture", "laravel system design", "laravel module design", "laravel system architecture", "laravel software architecture", or "laravel structure".
-  RULES:
-  1. MUST use this tool for Laravel architecture and system design tasks.
-  2. Design scalable, maintainable, and robust Laravel architectures.
-  3. Consider Laravel architectural patterns (MVC, Service Layer, Repository, etc.).
-  4. Provide Laravel module structure and component design.
-  5. Include Laravel scalability, maintainability, and performance considerations.
-
+id: laravel-architecture
+title: Laravel Architecture Design
+description: |
+  Authority tool for designing Laravel system architecture and module structures. TRIGGER: When user mentions "laravel architecture", "laravel system design", "laravel module design", "laravel system architecture", "laravel software architecture", or "laravel structure". RULES: 1. MUST use this tool for Laravel architecture and system design tasks. 2. Design scalable, maintainable, and robust Laravel architectures. 3. Consider Laravel architectural patterns (MVC, Service Layer, Repository, etc.). 4. Provide Laravel module structure and component design. 5. Include Laravel scalability, maintainability, and performance considerations.
 args:
   requirements:
-    type: "string"
-    description: "System requirements and specifications (required)"
+    type: string
+    description: System requirements and specifications (required)
+    required: true
   system_type:
-    type: "string"
+    type: string
     description: "System architecture type (optional): monolith, microservices, modular-monolith, or auto-select"
-    default: "monolith"
+    default: monolith
+    required: false
   php_version:
-    type: "string"
+    type: string
     description: "PHP version (optional, auto-detect if not provided): 8.1, 8.2, 8.3"
+    required: false
   laravel_version:
-    type: "string"
+    type: string
     description: "Laravel version (optional, auto-detect if not provided): 10, 11"
+    required: false
   scale:
-    type: "string"
+    type: string
     description: "Expected scale (optional): small, medium, large, enterprise"
-    default: "medium"
+    default: medium
+    required: false
   include_diagrams:
-    type: "boolean"
-    description: "Include architecture diagrams and visual representations"
+    type: boolean
+    description: Include architecture diagrams and visual representations
     default: true
+    required: false
   include_patterns:
-    type: "boolean"
-    description: "Include Laravel design patterns recommendations"
+    type: boolean
+    description: Include Laravel design patterns recommendations
     default: true
-
+    required: false
 template: |
   {{> role-laravel-expert}}
 
@@ -305,4 +303,3 @@ template: |
   - [ ] Deployment strategy defined
 
   {{output_lang_rule}}
-
