@@ -21,6 +21,11 @@ args:
     description: Use TypeScript
     default: true
     required: false
+
+dependencies:
+  partials:
+    - role-nextjs-expert
+
 template: |
   {{> role-nextjs-expert}}
 

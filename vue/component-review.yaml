@@ -26,6 +26,11 @@ args:
     description: Enforce strict Composition API patterns (no Options API patterns)
     default: false
     required: false
+
+dependencies:
+  partials:
+    - role-vue-expert
+
 template: |
   {{> role-vue-expert}}
 

@@ -20,6 +20,11 @@ args:
     description: Include TypeScript types and interfaces
     default: false
     required: false
+
+dependencies:
+  partials:
+    - role-vue-expert
+
 template: |
   {{> role-vue-expert}}
 

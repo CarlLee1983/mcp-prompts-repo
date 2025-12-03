@@ -24,6 +24,11 @@ args:
     description: "Severity level filter (optional): critical, high, medium, low, or all"
     default: all
     required: false
+
+dependencies:
+  partials:
+    - role-vue-expert
+
 template: |
   {{> role-vue-expert}}
 

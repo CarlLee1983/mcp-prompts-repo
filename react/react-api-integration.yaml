@@ -20,6 +20,11 @@ args:
     description: Include TypeScript types and interfaces
     default: true
     required: false
+
+dependencies:
+  partials:
+    - role-react-expert
+
 template: |
   {{> role-react-expert}}
 

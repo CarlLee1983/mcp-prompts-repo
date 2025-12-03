@@ -28,6 +28,11 @@ args:
     description: "Severity level filter (optional): critical, high, medium, low, or all"
     default: all
     required: false
+
+dependencies:
+  partials:
+    - role-expert
+
 template: |
   {{> role-expert}}
 

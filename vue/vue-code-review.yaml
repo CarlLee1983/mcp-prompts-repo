@@ -30,6 +30,11 @@ args:
     type: string
     description: "Focus areas (optional): security, performance, maintainability, reactivity, or all"
     required: false
+
+dependencies:
+  partials:
+    - role-vue-expert
+
 template: |
   {{> role-vue-expert}}
 

@@ -20,6 +20,11 @@ args:
     description: Use Django REST Framework
     default: true
     required: false
+
+dependencies:
+  partials:
+    - role-django-expert
+
 template: |
   {{> role-django-expert}}
 

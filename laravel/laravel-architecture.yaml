@@ -35,6 +35,11 @@ args:
     description: Include Laravel design patterns recommendations
     default: true
     required: false
+
+dependencies:
+  partials:
+    - role-laravel-expert
+
 template: |
   {{> role-laravel-expert}}
 

@@ -35,6 +35,11 @@ args:
     description: Include design patterns recommendations
     default: true
     required: false
+
+dependencies:
+  partials:
+    - role-expert
+
 template: |
   {{> role-expert}}
 

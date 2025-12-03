@@ -16,6 +16,11 @@ args:
     description: Use TypeScript
     default: true
     required: false
+
+dependencies:
+  partials:
+    - role-nestjs-expert
+
 template: |
   {{> role-nestjs-expert}}
 

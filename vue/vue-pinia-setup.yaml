@@ -26,6 +26,11 @@ args:
     description: Include state persistence
     default: false
     required: false
+
+dependencies:
+  partials:
+    - role-vue-expert
+
 template: |
   {{> role-vue-expert}}
 

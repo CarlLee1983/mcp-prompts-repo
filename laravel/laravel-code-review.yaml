@@ -29,6 +29,11 @@ args:
     description: Check PSR standards compliance
     default: true
     required: false
+
+dependencies:
+  partials:
+    - role-laravel-expert
+
 template: |
   {{> role-laravel-expert}}
 

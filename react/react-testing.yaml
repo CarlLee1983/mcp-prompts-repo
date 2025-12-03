@@ -16,6 +16,11 @@ args:
     description: "Test framework (optional): jest, vitest"
     default: vitest
     required: false
+
+dependencies:
+  partials:
+    - role-react-expert
+
 template: |
   {{> role-react-expert}}
 

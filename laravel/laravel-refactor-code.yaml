@@ -29,6 +29,11 @@ args:
     description: Apply SOLID principles strictly
     default: true
     required: false
+
+dependencies:
+  partials:
+    - role-laravel-expert
+
 template: |
   {{> role-laravel-expert}}
 

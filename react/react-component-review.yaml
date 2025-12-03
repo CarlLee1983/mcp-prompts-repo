@@ -26,6 +26,11 @@ args:
     description: Enforce strict React Hooks rules
     default: true
     required: false
+
+dependencies:
+  partials:
+    - role-react-expert
+
 template: |
   {{> role-react-expert}}
 

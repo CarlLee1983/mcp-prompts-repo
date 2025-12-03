@@ -24,6 +24,11 @@ args:
     type: string
     description: "Focus areas (optional): security, performance, maintainability, or all"
     required: false
+
+dependencies:
+  partials:
+    - role-expert
+
 template: |
   {{> role-expert}}
 

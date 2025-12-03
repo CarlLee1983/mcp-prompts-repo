@@ -35,6 +35,11 @@ args:
     description: "Coding style (optional): follow Laravel conventions, or specify style guide"
     default: auto
     required: false
+
+dependencies:
+  partials:
+    - role-laravel-expert
+
 template: |
   {{> role-laravel-expert}}
 

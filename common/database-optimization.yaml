@@ -33,6 +33,11 @@ args:
     description: Suggest database indexes
     default: true
     required: false
+
+dependencies:
+  partials:
+    - role-expert
+
 template: |
   {{> role-expert}}
 

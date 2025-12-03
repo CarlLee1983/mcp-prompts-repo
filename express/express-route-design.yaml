@@ -16,6 +16,11 @@ args:
     description: Use TypeScript
     default: true
     required: false
+
+dependencies:
+  partials:
+    - role-express-expert
+
 template: |
   {{> role-express-expert}}
 

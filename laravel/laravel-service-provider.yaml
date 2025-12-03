@@ -25,6 +25,11 @@ args:
     description: Include singleton bindings
     default: true
     required: false
+
+dependencies:
+  partials:
+    - role-laravel-expert
+
 template: |
   {{> role-laravel-expert}}
 

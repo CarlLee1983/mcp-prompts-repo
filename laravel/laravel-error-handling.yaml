@@ -34,6 +34,11 @@ args:
     description: "Error response format (optional): json, json-api, or custom"
     default: json
     required: false
+
+dependencies:
+  partials:
+    - role-laravel-expert
+
 template: |
   {{> role-laravel-expert}}
 

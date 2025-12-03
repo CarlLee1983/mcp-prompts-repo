@@ -35,6 +35,11 @@ args:
     description: Include model events and observers
     default: false
     required: false
+
+dependencies:
+  partials:
+    - role-laravel-expert
+
 template: |
   {{> role-laravel-expert}}
 

@@ -25,6 +25,11 @@ args:
     description: Include test examples
     default: false
     required: false
+
+dependencies:
+  partials:
+    - role-react-expert
+
 template: |
   {{> role-react-expert}}
 

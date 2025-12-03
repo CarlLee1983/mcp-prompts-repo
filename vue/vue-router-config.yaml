@@ -30,6 +30,11 @@ args:
     description: Use TypeScript
     default: true
     required: false
+
+dependencies:
+  partials:
+    - role-vue-expert
+
 template: |
   {{> role-vue-expert}}
 

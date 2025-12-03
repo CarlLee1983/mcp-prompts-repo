@@ -29,6 +29,11 @@ args:
     type: string
     description: "Test style (optional): bdd, tdd, or auto-detect"
     required: false
+
+dependencies:
+  partials:
+    - role-expert
+
 template: |
   {{> role-expert}}
 

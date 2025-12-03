@@ -25,6 +25,11 @@ args:
     description: Refactor to Composition API if using Options API
     default: true
     required: false
+
+dependencies:
+  partials:
+    - role-vue-expert
+
 template: |
   {{> role-vue-expert}}
 

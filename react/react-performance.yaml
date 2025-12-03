@@ -15,6 +15,11 @@ args:
     type: string
     description: "Focus area (optional): render, re-render, bundle, memory, or all"
     required: false
+
+dependencies:
+  partials:
+    - role-react-expert
+
 template: |
   {{> role-react-expert}}
 

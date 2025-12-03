@@ -35,6 +35,11 @@ args:
     description: "Coding style (optional): follow language conventions, or specify style guide"
     default: auto
     required: false
+
+dependencies:
+  partials:
+    - role-expert
+
 template: |
   {{> role-expert}}
 

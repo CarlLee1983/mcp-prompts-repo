@@ -30,6 +30,11 @@ args:
     description: "Error response format (optional): json, component, or custom"
     default: component
     required: false
+
+dependencies:
+  partials:
+    - role-vue-expert
+
 template: |
   {{> role-vue-expert}}
 

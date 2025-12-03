@@ -30,6 +30,11 @@ args:
     description: Include diagrams and visual representations
     default: false
     required: false
+
+dependencies:
+  partials:
+    - role-vue-expert
+
 template: |
   {{> role-vue-expert}}
 

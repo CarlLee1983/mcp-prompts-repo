@@ -25,6 +25,11 @@ args:
     description: Include benchmark testing recommendations
     default: false
     required: false
+
+dependencies:
+  partials:
+    - role-vue-expert
+
 template: |
   {{> role-vue-expert}}
 

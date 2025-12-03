@@ -35,6 +35,11 @@ args:
     description: Include database testing (migrations, factories, seeders)
     default: true
     required: false
+
+dependencies:
+  partials:
+    - role-laravel-expert
+
 template: |
   {{> role-laravel-expert}}
 

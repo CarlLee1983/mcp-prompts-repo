@@ -31,6 +31,11 @@ args:
     description: Include component interaction tests
     default: true
     required: false
+
+dependencies:
+  partials:
+    - role-vue-expert
+
 template: |
   {{> role-vue-expert}}
 

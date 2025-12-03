@@ -20,6 +20,11 @@ args:
     description: Include validation annotations
     default: true
     required: false
+
+dependencies:
+  partials:
+    - role-spring-expert
+
 template: |
   {{> role-spring-expert}}
 
