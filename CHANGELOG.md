@@ -7,24 +7,19 @@ and this project is licensed under [CC0 1.0](https://creativecommons.org/publicd
 
 ## [Unreleased]
 
-### Removed
-
-#### Removed executable code; converted to a data-only repository
-- CLI tool (`scripts/pm.js`) — all validation, doc generation, and related features are now handled by the shared CLI tool
-- `package.json` — Node.js dependencies and scripts are no longer needed
-- `pnpm-lock.yaml` — dependency management is no longer required
-
 ### Changed
-
-#### Documentation updates
-- All docs updated to remove CLI-related content
+- All documentation updated to remove CLI-related content
   - `README.md` — rewritten as a data-only repository guide
   - `README.zh-TW.md` — Traditional Chinese docs updated in sync
   - `USAGE.md` — simplified to focus on data structure
   - `CONTRIBUTING.md` — removed validation and installation steps
 
-#### Notes
-This repository is now a **data-only repository** focused on storing prompt templates and configuration files. All functional code (validation, doc generation, etc.) has moved to a shared CLI tool to improve separation of concerns and maintainability.
+### Removed
+- CLI tool (`scripts/pm.js`) — all validation, doc generation, and related features are now handled by the shared CLI tool
+- `package.json` — Node.js dependencies and scripts are no longer needed
+- `pnpm-lock.yaml` — dependency management is no longer required
+
+**Note**: This repository is now a **data-only repository** focused on storing prompt templates and configuration files. All functional code (validation, doc generation, etc.) has moved to a shared CLI tool to improve separation of concerns and maintainability.
 
 ## [1.0.0] - 2024-12-01
 
@@ -110,33 +105,12 @@ This repository is now a **data-only repository** focused on storing prompt temp
 - `LICENSE`: ISC License
 - `.gitignore`: Comprehensive Git ignore rules
 
-### Technical Details
+#### Technical Details
+- Dependencies: `js-yaml` ^4.1.1 (YAML parsing)
+- Tooling: Node.js CLI tool with automatic documentation generation, YAML format validation, and group management
 
-#### Dependencies
-- `js-yaml`: ^4.1.1 (YAML parsing)
-
-#### Tooling
-- Node.js CLI tool
-- Automatic documentation generation
-- YAML format validation
-- Group management
-
-### Stats
+#### Statistics
 - Total prompts: 53
 - Framework coverage: 11 frameworks/languages
 - General prompts: 11
 - Framework-specific prompts: 42
-
----
-
-## Version Notes
-
-- **[Unreleased]**: Changes not yet released
-- **[version]**: Released versions with date and change types
-
-### Change Types
-
-- **Added**: New features
-- **Changed**: Changes to existing features
-- **Deprecated**: Features soon to be removed
-- **Removed**: Features removed

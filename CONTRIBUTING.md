@@ -64,13 +64,14 @@ Every prompt file must be YAML and include these required fields:
 ```yaml
 id: "your-prompt-id"
 title: "Your Prompt Title"
-description: >
-  Authority tool for [feature description].
-  TRIGGER: When user mentions "[trigger keywords]".
-  RULES:
-  1. MUST use this tool for [usage scenario].
-  2. [rule 2]
-  3. [rule 3]
+description: |
+  Authority tool for [feature description]. RULES: 1. MUST use this tool for [usage scenario]. 2. [rule 2]. 3. [rule 3].
+
+triggers:
+  patterns:
+    - "trigger keyword 1"
+    - "trigger keyword 2"
+    - "trigger keyword 3"
 
 args:
   param1:
@@ -80,6 +81,10 @@ args:
   param2:
     type: "number"
     description: "Another parameter"
+
+dependencies:
+  partials:
+    - role-expert
 
 template: |
   {{> role-expert}}
@@ -92,8 +97,10 @@ template: |
 
 - **id**: Unique identifier for the prompt (lowercase, kebab-case)
 - **title**: Prompt title (concise and clear)
-- **description**: Detailed description including TRIGGER and RULES
+- **description**: Detailed description including RULES (TRIGGER patterns are defined separately in `triggers.patterns`)
+- **triggers**: Trigger patterns array (required, defines when the prompt should be used)
 - **args**: Parameter definitions (optional but recommended)
+- **dependencies**: Partial dependencies (required if using `{{> partial }}` in template)
 - **template**: Handlebars template content
 
 ### Parameter Types
@@ -124,9 +131,11 @@ prompts:
 
 ## Synchronization Rules
 
-### Registry Synchronization (MANDATORY)
+**⚠️ IMPORTANT**: The synchronization rules below are **MANDATORY** and **NON-NEGOTIABLE**. Pull requests that violate these rules will be **automatically rejected**. Please ensure all synchronization requirements are met before submitting your PR.
 
-**Critical**: The `registry.yaml` file must be kept 100% synchronized with all prompt files. This is a mandatory requirement.
+### Registry Synchronization (MANDATORY - PR REJECTION RISK)
+
+**Critical**: The `registry.yaml` file must be kept **100% synchronized** with all prompt files. This is a **mandatory requirement** and violations will result in PR rejection.
 
 #### Rules:
 
@@ -156,9 +165,9 @@ prompts:
 - [ ] All `id` values match exactly
 - [ ] File names match their `id` values (e.g., `code-review.yaml` has `id: code-review`)
 
-### Dependencies Synchronization (MANDATORY)
+### Partial Dependencies Synchronization (MANDATORY - PR REJECTION RISK)
 
-**Critical**: The `dependencies.partials` field must reference only existing partials. This is a mandatory requirement.
+**Critical**: All prompt files that use `{{> partial }}` syntax in their templates **MUST** declare those partials in the `dependencies.partials` field. Additionally, all partials referenced in `dependencies.partials` must exist in the `partials/` directory. This is a **mandatory requirement** and violations will result in PR rejection.
 
 #### Rules:
 
@@ -183,9 +192,34 @@ prompts:
 
 #### Validation Checklist:
 
+- [ ] All prompt files using `{{> partial }}` have a `dependencies.partials` field
 - [ ] All partials in `dependencies.partials` exist in `partials/` directory
 - [ ] All partial filenames match their references (without `.hbs` extension)
 - [ ] No orphaned partials (unless intentionally kept for future use)
+- [ ] All `{{> partial }}` references in templates are declared in `dependencies.partials`
+
+### Pre-Submission Validation Checklist
+
+Before submitting your PR, ensure you have completed **ALL** of the following checks:
+
+#### Registry Synchronization
+- [ ] All prompt files are registered in `registry.yaml`
+- [ ] All registry entries have corresponding prompt files
+- [ ] All `id` values match exactly between files and registry
+- [ ] File names match their `id` values (e.g., `code-review.yaml` has `id: code-review`)
+- [ ] `group` values in registry match the directory structure
+
+#### Partial Dependencies Synchronization
+- [ ] All prompt files using `{{> partial }}` have a `dependencies.partials` field
+- [ ] All partials in `dependencies.partials` exist in `partials/` directory
+- [ ] All partial filenames match their references (without `.hbs` extension)
+- [ ] No `{{> partial }}` references exist without corresponding `dependencies.partials` entry
+
+#### General Validation
+- [ ] All prompt files have valid YAML syntax
+- [ ] All required fields are present (`id`, `title`, `description`, `triggers`, `template`)
+- [ ] All `triggers.patterns` arrays are non-empty
+- [ ] Description does not contain "TRIGGER:" text (triggers should be in `triggers.patterns` only)
 
 ## Prompt Guidelines
 
