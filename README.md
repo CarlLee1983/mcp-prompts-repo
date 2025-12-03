@@ -1,8 +1,92 @@
 # Prompt Repository
 
-Auto-generated documentation.
+這是一個純資料結構倉庫，包含用於 MCP Prompt Manager 的 prompt 模板和配置檔案。
 
-## 📂 Group: common
+## 📋 專案說明
+
+本倉庫是一個**純資料結構倉庫**，不包含任何功能代碼或 CLI 工具。所有驗證、文檔生成等功能已由通用的 CLI 工具處理。
+
+## 📂 資料結構
+
+### 核心檔案
+
+- **`registry.yaml`** - Prompt 註冊表，定義所有可用的 prompts 及其元資料
+- **`partials/`** - Handlebars partials 模板目錄
+
+### Prompt 檔案
+
+Prompts 按群組組織在不同的目錄中：
+
+- **`common/`** - 通用 prompts，適用於所有語言和框架
+- **`laravel/`** - Laravel 特定的 prompts
+- **`vue/`** - Vue.js 特定的 prompts
+- **`react/`** - React 特定的 prompts
+- **`nestjs/`** - NestJS 特定的 prompts
+- **`nextjs/`** - Next.js 特定的 prompts
+- **`express/`** - Express.js 特定的 prompts
+- **`fastapi/`** - FastAPI 特定的 prompts
+- **`spring/`** - Spring Boot 特定的 prompts
+- **`django/`** - Django 特定的 prompts
+- **`typescript/`** - TypeScript 特定的 prompts
+
+每個 prompt 檔案是 YAML 格式，包含以下欄位：
+
+```yaml
+id: "prompt-id"
+title: "Prompt Title"
+description: "詳細描述，包含 TRIGGER 和 RULES"
+args:
+  param1:
+    type: "string"
+    description: "參數描述"
+template: |
+  {{> role-expert}}
+  
+  # 模板內容
+```
+
+## 📚 文檔
+
+- [使用指南](./USAGE.md) - 資料結構說明和與 MCP Prompt Manager 整合
+- [貢獻指南](./CONTRIBUTING.md) - 如何為專案做出貢獻
+- [變更日誌](./CHANGELOG.md) - 版本變更記錄
+- [繁體中文文檔](./README.zh-TW.md) - 繁體中文說明
+
+## 🔗 與 MCP Prompt Manager 整合
+
+### 設定環境變數
+
+在 MCP Prompt Manager 的配置中設定：
+
+```bash
+# 本地路徑
+PROMPT_REPO_URL=/path/to/prompts-repo
+
+# 或 Git URL
+PROMPT_REPO_URL=https://github.com/yourusername/prompts-repo.git
+
+# 指定要載入的群組
+MCP_GROUPS=laravel,vue,react
+```
+
+### 群組過濾
+
+- **根目錄** (`/`): 永遠載入
+- **common 群組**: 永遠載入
+- **其他群組**: 需在 `MCP_GROUPS` 中指定
+
+範例：
+- `MCP_GROUPS=laravel,vue` → 載入 common、laravel、vue
+- `MCP_GROUPS=` → 只載入 common
+
+## 📦 統計
+
+- **總 Prompts**: 53 個
+- **框架覆蓋**: 11 個框架/語言
+- **通用 Prompts**: 11 個
+- **框架特定 Prompts**: 42 個
+
+## 📂 群組：common（通用）
 
 - **api-design**: Authority tool for RESTful API design and architecture. TRIGGER: When user mentions "design api", "create api", "api endpoint", "rest api", "api architecture", or "api structure". RULES: 1. MUST use this tool for API design tasks. 2. Design RESTful APIs following industry best practices. 3. Consider backend and frontend integration patterns. 4. Provide complete API specification with examples.
 
@@ -27,22 +111,22 @@ Auto-generated documentation.
 - **security-audit**: Authority tool for comprehensive security vulnerability assessment and security audit. TRIGGER: When user mentions "security audit", "security review", "vulnerability", "security check", "penetration test", "security scan", "owasp", or "security assessment". RULES: 1. MUST use this tool for security audit and vulnerability assessment tasks. 2. Focus on identifying security vulnerabilities and risks. 3. Check against OWASP Top 10, CWE, and other security standards. 4. Provide actionable security recommendations. 5. Prioritize vulnerabilities by severity and impact.
 
 
-## 📂 Group: django
+## 📂 群組：django
 
 - **django-view-design**: Authority tool for designing Django views and API endpoints. TRIGGER: When user mentions "django view", "django api", "django endpoint", "django rest", or "django viewset". RULES: 1. MUST use this tool for Django view design tasks. 2. Design views following Django best practices. 3. Create RESTful endpoints with Django REST Framework. 4. Include proper serialization and validation. 5. Provide complete view implementation.
 
 
-## 📂 Group: express
+## 📂 群組：express
 
 - **express-route-design**: Authority tool for designing Express.js routes and handlers. TRIGGER: When user mentions "express route", "express api", "express endpoint", "express handler", or "express routing". RULES: 1. MUST use this tool for Express.js route design tasks. 2. Design routes following Express.js best practices. 3. Create RESTful endpoints with proper middleware. 4. Include proper error handling and validation. 5. Provide complete route implementation.
 
 
-## 📂 Group: fastapi
+## 📂 群組：fastapi
 
 - **fastapi-endpoint-design**: Authority tool for designing FastAPI endpoints and routes. TRIGGER: When user mentions "fastapi endpoint", "fastapi route", "fastapi api", "fastapi handler", or "fastapi router". RULES: 1. MUST use this tool for FastAPI endpoint design tasks. 2. Design endpoints following FastAPI best practices. 3. Create RESTful endpoints with proper Pydantic models. 4. Include proper validation and documentation. 5. Provide complete endpoint implementation.
 
 
-## 📂 Group: laravel
+## 📂 群組：laravel
 
 - **eloquent-optimization**: Authority tool for Laravel Eloquent ORM optimization and query performance analysis. TRIGGER: When user mentions "optimize eloquent", "eloquent performance", "eloquent query", "n+1 eloquent", or "eager loading eloquent". RULES: 1. MUST use this tool for Eloquent ORM optimization tasks. 2. Analyze Eloquent queries and relationships. 3. Identify N+1 problems, missing indexes, and inefficient Eloquent queries. 4. Provide Eloquent-specific optimization strategies.
 
@@ -75,19 +159,19 @@ Auto-generated documentation.
 - **refactor-controller**: Authority tool for Laravel controller refactoring. TRIGGER: When user mentions "refactor controller", "improve controller", "optimize controller", or "restructure controller". RULES: 1. MUST use this tool for Laravel controller refactoring tasks. 2. Maintain existing functionality while improving code structure. 3. Apply SOLID principles and Laravel best practices. 4. Auto-infer refactoring opportunities if intent is not specified.
 
 
-## 📂 Group: nestjs
+## 📂 群組：nestjs
 
 - **nestjs-controller-design**: Authority tool for designing NestJS controllers and endpoints. TRIGGER: When user mentions "nestjs controller", "nestjs api", "nestjs endpoint", "nestjs route", or "nestjs handler". RULES: 1. MUST use this tool for NestJS controller design tasks. 2. Design controllers following NestJS best practices. 3. Create RESTful endpoints with proper decorators. 4. Include proper DTOs and validation. 5. Provide complete controller implementation.
 
 
-## 📂 Group: nextjs
+## 📂 群組：nextjs
 
 - **nextjs-api-routes**: Authority tool for designing Next.js API routes and handlers. TRIGGER: When user mentions "nextjs api", "next api routes", "nextjs api handler", "next api endpoint", or "nextjs api implementation". RULES: 1. MUST use this tool for Next.js API route design tasks. 2. Design API routes following Next.js best practices. 3. Consider Route Handlers (App Router) and API Routes (Pages Router). 4. Provide complete API route implementation.
 
 - **nextjs-page-design**: Authority tool for designing Next.js pages and routing structures. TRIGGER: When user mentions "nextjs page", "next page design", "nextjs routing", "next page structure", or "nextjs page implementation". RULES: 1. MUST use this tool for Next.js page design tasks. 2. Design pages following Next.js best practices. 3. Consider App Router and Pages Router patterns. 4. Provide complete page implementation.
 
 
-## 📂 Group: react
+## 📂 群組：react
 
 - **react-api-integration**: Authority tool for React API integration patterns and implementation. TRIGGER: When user mentions "react api", "react fetch", "react axios", "react api integration", "react http client", or "react data fetching". RULES: 1. MUST use this tool for React API integration tasks. 2. Implement API integration using React patterns (hooks, context, etc.). 3. Provide hooks for API calls with proper error handling and loading states. 4. Follow React best practices for API integration.
 
@@ -100,17 +184,17 @@ Auto-generated documentation.
 - **react-testing**: Authority tool for generating React tests using React Testing Library or Jest. TRIGGER: When user mentions "generate react tests", "create react tests", "react test cases", "react testing", or "react unit tests". RULES: 1. MUST use this tool when React test generation is requested. 2. Generate tests following React Testing Library best practices. 3. Include component and hook tests. 4. Use React Testing Library and Jest/Vitest.
 
 
-## 📂 Group: spring
+## 📂 群組：spring
 
 - **spring-controller-design**: Authority tool for designing Spring Boot REST controllers and endpoints. TRIGGER: When user mentions "spring controller", "spring rest controller", "spring api", "spring endpoint", or "spring boot controller". RULES: 1. MUST use this tool for Spring Boot controller design tasks. 2. Design controllers following Spring Boot best practices. 3. Create RESTful endpoints with proper annotations. 4. Include proper error handling and validation. 5. Provide complete controller implementation.
 
 
-## 📂 Group: typescript
+## 📂 群組：typescript
 
 - **typescript-type-design**: Authority tool for designing TypeScript types, interfaces, and type structures. TRIGGER: When user mentions "typescript types", "type design", "typescript interfaces", "type definitions", or "typescript type system". RULES: 1. MUST use this tool for TypeScript type design tasks. 2. Design types following TypeScript best practices. 3. Create reusable, maintainable type definitions. 4. Consider type safety and inference. 5. Provide complete type implementation.
 
 
-## 📂 Group: vue
+## 📂 群組：vue
 
 - **vue-component-review**: Authority tool for Vue 3 component review and analysis. TRIGGER: When user mentions "review vue", "check component", "vue component", "component analysis", or "vue code review". RULES: 1. MUST use this tool for Vue 3 component reviews. 2. Analyze Composition API usage, reactivity, and Vue 3 best practices. 3. Check for performance optimizations and accessibility. 4. Provide actionable feedback with code examples.
 
@@ -139,5 +223,3 @@ Auto-generated documentation.
 - **vue-router-config**: Authority tool for designing Vue Router configurations and routing structures. TRIGGER: When user mentions "vue router", "router config", "vue routing", "route design", "vue router setup", or "vue navigation". RULES: 1. MUST use this tool for Vue Router configuration tasks. 2. Design router configurations following Vue Router best practices. 3. Define proper route structures, guards, and lazy loading. 4. Consider route organization and navigation patterns. 5. Provide complete router implementation.
 
 - **vue-security**: Authority tool for comprehensive Vue security vulnerability assessment and security audit. TRIGGER: When user mentions "vue security audit", "vue security review", "vue vulnerability", "vue security check", "vue security scan", "vue xss", or "vue security assessment". RULES: 1. MUST use this tool for Vue security audit and vulnerability assessment tasks. 2. Focus on identifying Vue-specific security vulnerabilities and risks. 3. Check against OWASP Top 10, Vue security best practices, and XSS prevention. 4. Provide actionable Vue security recommendations. 5. Prioritize vulnerabilities by severity and impact.
-
-

@@ -1,31 +1,83 @@
 # 提示詞倉庫 (Prompt Repository)
 
-自動生成的說明文件。
+這是一個純資料結構倉庫，包含用於 MCP Prompt Manager 的 prompt 模板和配置檔案。
 
-> **提示**: 這是自動生成的文檔。如需完整的使用指南，請參閱 [USAGE.md](./USAGE.md)。如需貢獻指南，請參閱 [CONTRIBUTING.md](./CONTRIBUTING.md)。
+## 📋 專案說明
+
+本倉庫是一個**純資料結構倉庫**，不包含任何功能代碼或 CLI 工具。所有驗證、文檔生成等功能已由通用的 CLI 工具處理。
+
+## 📂 資料結構
+
+### 核心檔案
+
+- **`registry.yaml`** - Prompt 註冊表，定義所有可用的 prompts 及其元資料
+- **`partials/`** - Handlebars partials 模板目錄
+
+### Prompt 檔案
+
+Prompts 按群組組織在不同的目錄中：
+
+- **`common/`** - 通用 prompts，適用於所有語言和框架
+- **`laravel/`** - Laravel 特定的 prompts
+- **`vue/`** - Vue.js 特定的 prompts
+- **`react/`** - React 特定的 prompts
+- **`nestjs/`** - NestJS 特定的 prompts
+- **`nextjs/`** - Next.js 特定的 prompts
+- **`express/`** - Express.js 特定的 prompts
+- **`fastapi/`** - FastAPI 特定的 prompts
+- **`spring/`** - Spring Boot 特定的 prompts
+- **`django/`** - Django 特定的 prompts
+- **`typescript/`** - TypeScript 特定的 prompts
+
+每個 prompt 檔案是 YAML 格式，包含以下欄位：
+
+```yaml
+id: "prompt-id"
+title: "Prompt Title"
+description: "詳細描述，包含 TRIGGER 和 RULES"
+args:
+  param1:
+    type: "string"
+    description: "參數描述"
+template: |
+  {{> role-expert}}
+  
+  # 模板內容
+```
 
 ## 📚 文檔
 
-- [使用指南](./USAGE.md) - 詳細的使用說明和 CLI 工具介紹
+- [使用指南](./USAGE.md) - 資料結構說明和與 MCP Prompt Manager 整合
 - [貢獻指南](./CONTRIBUTING.md) - 如何為專案做出貢獻
 - [變更日誌](./CHANGELOG.md) - 版本變更記錄
 - [英文文檔](./README.md) - 英文說明
 
-## 🚀 快速開始
+## 🔗 與 MCP Prompt Manager 整合
+
+### 設定環境變數
+
+在 MCP Prompt Manager 的配置中設定：
 
 ```bash
-# 安裝依賴
-pnpm install
+# 本地路徑
+PROMPT_REPO_URL=/path/to/prompts-repo
 
-# 驗證所有 prompts
-npm run validate
+# 或 Git URL
+PROMPT_REPO_URL=https://github.com/yourusername/prompts-repo.git
 
-# 查看所有 prompts
-npm run list
-
-# 生成文檔
-npm run docs
+# 指定要載入的群組
+MCP_GROUPS=laravel,vue,react
 ```
+
+### 群組過濾
+
+- **根目錄** (`/`): 永遠載入
+- **common 群組**: 永遠載入
+- **其他群組**: 需在 `MCP_GROUPS` 中指定
+
+範例：
+- `MCP_GROUPS=laravel,vue` → 載入 common、laravel、vue
+- `MCP_GROUPS=` → 只載入 common
 
 ## 📦 統計
 

@@ -1,143 +1,136 @@
-# 貢獻指南 (Contributing Guide)
+# Contributing Guide
 
-感謝您對 Prompt Repository 的貢獻！本文件將指導您如何為專案做出貢獻。
+Thank you for contributing to the Prompt Repository! This guide explains how to contribute to the project.
 
-## 📋 目錄
+## 📋 Table of Contents
 
-- [行為準則](#行為準則)
-- [如何貢獻](#如何貢獻)
-- [建立新的 Prompt](#建立新的-prompt)
-- [Prompt 規範](#prompt-規範)
-- [提交變更](#提交變更)
-- [程式碼風格](#程式碼風格)
+- [Code of Conduct](#code-of-conduct)
+- [How to Contribute](#how-to-contribute)
+- [Create a New Prompt](#create-a-new-prompt)
+- [Prompt Guidelines](#prompt-guidelines)
+- [Submit Changes](#submit-changes)
+- [Code Style](#code-style)
 
-## 行為準則
+## Code of Conduct
 
-請保持友善、尊重和專業的態度。我們歡迎所有形式的貢獻，無論是：
-- 報告錯誤
-- 建議新功能
-- 提交 Pull Request
-- 改進文檔
-- 分享使用經驗
+Please stay friendly, respectful, and professional. We welcome all types of contributions, including:
+- Reporting bugs
+- Suggesting new features
+- Submitting Pull Requests
+- Improving documentation
+- Sharing usage experiences
 
-## 如何貢獻
+## How to Contribute
 
-### 1. Fork 並 Clone 專案
+### 1. Fork and Clone the Repository
 
 ```bash
-# Fork 專案後，clone 到本地
+# After forking, clone to your local machine
 git clone https://github.com/yourusername/prompts-repo.git
 cd prompts-repo
 ```
 
-### 2. 建立分支
+### 2. Create a Branch
 
 ```bash
 git checkout -b feature/your-feature-name
-# 或
+# or
 git checkout -b fix/your-bug-fix
 ```
 
-### 3. 安裝依賴
+### 3. Make Changes
 
-```bash
-pnpm install
-```
+Implement your changes and ensure you follow the guidelines in this document.
 
-### 4. 進行變更
+### 4. Submit Changes
 
-進行您的變更，並確保遵循本指南的規範。
+Please follow the [Commit Message Guidelines](#commit-message-guidelines).
 
-### 5. 驗證變更
+## Create a New Prompt
 
-```bash
-# 驗證所有 prompts 格式
-npm run validate
+### Choose the Correct Group
 
-# 檢查 prompts 列表
-npm run list
+- **common/**: General prompts for all languages and frameworks
+- **laravel/**: Laravel-specific prompts
+- **vue/**: Vue.js-specific prompts
+- **react/**: React-specific prompts
+- **Other frameworks/**: Prompts for the corresponding frameworks
 
-# 重新生成文檔
-npm run docs
-```
+### Prompt File Structure
 
-### 6. 提交變更
-
-請遵循 [Commit Message 規範](#commit-message-規範)。
-
-## 建立新的 Prompt
-
-### 選擇正確的群組
-
-- **common/**: 通用 prompts，適用於所有語言和框架
-- **laravel/**: Laravel 特定的 prompts
-- **vue/**: Vue.js 特定的 prompts
-- **react/**: React 特定的 prompts
-- **其他框架/**: 對應的框架特定 prompts
-
-### Prompt 檔案結構
-
-每個 Prompt 檔案必須是 YAML 格式，包含以下必要欄位：
+Every prompt file must be YAML and include these required fields:
 
 ```yaml
 id: "your-prompt-id"
 title: "Your Prompt Title"
 description: >
-  Authority tool for [功能描述].
-  TRIGGER: When user mentions "[觸發關鍵字]".
+  Authority tool for [feature description].
+  TRIGGER: When user mentions "[trigger keywords]".
   RULES:
-  1. MUST use this tool for [使用場景].
-  2. [規則 2]
-  3. [規則 3]
+  1. MUST use this tool for [usage scenario].
+  2. [rule 2]
+  3. [rule 3]
 
 args:
   param1:
     type: "string"
-    description: "參數描述"
-    default: "預設值"  # 可選
+    description: "Parameter description"
+    default: "default value"  # optional
   param2:
     type: "number"
-    description: "另一個參數"
+    description: "Another parameter"
 
 template: |
   {{> role-expert}}
   
   # Context
-  [您的 Handlebars 模板內容]
+  [Your Handlebars template content]
 ```
 
-### 必要欄位說明
+### Required Field Descriptions
 
-- **id**: Prompt 的唯一識別碼（小寫，使用連字號分隔）
-- **title**: Prompt 的標題（簡潔明瞭）
-- **description**: 詳細描述，包含 TRIGGER 和 RULES
-- **args**: 參數定義（可選，但建議提供）
-- **template**: Handlebars 模板內容
+- **id**: Unique identifier for the prompt (lowercase, kebab-case)
+- **title**: Prompt title (concise and clear)
+- **description**: Detailed description including TRIGGER and RULES
+- **args**: Parameter definitions (optional but recommended)
+- **template**: Handlebars template content
 
-### 參數類型
+### Parameter Types
 
-支援的參數類型：
-- `string`: 字串類型
-- `number`: 數字類型
-- `boolean`: 布林類型
+Supported parameter types:
+- `string`
+- `number`
+- `boolean`
 
-### 檔案命名規範
+### File Naming Rules
 
-- 使用小寫字母
-- 使用連字號 (`-`) 分隔單詞
-- 檔案副檔名為 `.yaml` 或 `.yml`
-- 範例：`code-review.yaml`, `laravel-api-implementation.yaml`
+- Use lowercase letters
+- Separate words with hyphens (`-`)
+- File extension is `.yaml` or `.yml`
+- Examples: `code-review.yaml`, `laravel-api-implementation.yaml`
 
-## Prompt 規範
+### Update registry.yaml
 
-### 1. Description 格式
+After adding a prompt, register it in `registry.yaml`:
 
-Description 必須包含：
-- **功能描述**: 簡要說明此 prompt 的用途
-- **TRIGGER**: 觸發此 prompt 的關鍵字或情境
-- **RULES**: 使用此 prompt 的規則（至少 3 條）
+```yaml
+prompts:
+  - id: "your-prompt-id"
+    group: "common"  # or the appropriate group name
+    visibility: "public"  # or "internal"
+    deprecated: false
+```
 
-範例：
+## Prompt Guidelines
+
+### 1. Description Format
+
+Description must include:
+- **Feature description**: Briefly explain the prompt purpose
+- **TRIGGER**: Keywords or scenarios that trigger the prompt
+- **RULES**: Rules for using the prompt (at least 3)
+
+Example:
 
 ```yaml
 description: >
@@ -150,28 +143,28 @@ description: >
   4. Follow strict_mode rules when enabled.
 ```
 
-### 2. Template 規範
+### 2. Template Guidelines
 
-- 使用 Handlebars 語法 (`{{}}`)
-- 支援 Partials (`{{> partial-name}}`)
-- 使用條件語句 (`{{#if}}`, `{{#unless}}`)
-- 使用迴圈 (`{{#each}}`)
+- Use Handlebars syntax (`{{}}`)
+- Support partials (`{{> partial-name}}`)
+- Use conditionals (`{{#if}}`, `{{#unless}}`)
+- Use loops (`{{#each}}`)
 
-### 3. 通用 vs 框架特定
+### 3. General vs. Framework-Specific
 
-**通用 Prompt (common/)**:
-- 不依賴特定框架
-- 使用 `{{> role-expert}}`
-- 參數包含 `language` 和 `framework`（可選）
+**General Prompts (common/):**
+- Do not depend on a specific framework
+- Use `{{> role-expert}}`
+- Include `language` and `framework` parameters (optional)
 
-**框架特定 Prompt**:
-- 針對特定框架
-- 使用 `{{> role-laravel-expert}}` 等框架特定 partials
-- 包含框架版本參數（如 `laravel_version`, `vue_version`）
+**Framework-Specific Prompts:**
+- Target a specific framework
+- Use framework-specific partials such as `{{> role-laravel-expert}}`
+- Include framework version parameters (e.g., `laravel_version`, `vue_version`)
 
-### 4. 版本參數
+### 4. Version Parameters
 
-框架特定的 prompts 應包含版本參數：
+Framework-specific prompts should include version parameters:
 
 ```yaml
 args:
@@ -181,86 +174,70 @@ args:
     default: "11.x"
 ```
 
-## 提交變更
+## Submit Changes
 
-### Commit Message 規範
+### Commit Message Guidelines
 
-請遵循以下格式：
+Use the following format:
 
 ```
-<type>：[ <scope> ] <subject>
+<type>:[ <scope> ] <subject>
 
 <body>
 
 <footer>
 ```
 
-**Type 類型**:
-- `feat`: 新增功能
-- `fix`: 修復錯誤
-- `docs`: 文檔變更
-- `style`: 程式碼格式變更
-- `refactor`: 重構
-- `test`: 測試相關
-- `chore`: 建構或工具變更
+**Type options:**
+- `feat`: New feature
+- `fix`: Bug fix
+- `docs`: Documentation changes
+- `style`: Code style changes
+- `refactor`: Refactoring
+- `test`: Tests
+- `chore`: Build or tooling changes
 
-**範例**:
+**Example:**
 
 ```
-feat: [common] 新增 code-review prompt
+feat: [common] add code-review prompt
 
-新增通用的代碼審查 prompt，支援多種程式語言和框架
-包含完整的參數定義和 Handlebars 模板
+Add a general code review prompt that supports multiple languages and frameworks
+Includes full parameter definitions and Handlebars template
 ```
 
-### Pull Request 流程
+### Pull Request Process
 
-1. 確保您的變更通過驗證 (`npm run validate`)
-2. 更新相關文檔（如需要）
-3. 提交 Pull Request，並提供清晰的描述
-4. 等待審查和反饋
+1. Ensure your changes follow these guidelines
+2. Update related documentation if needed
+3. Open a Pull Request with a clear description
+4. Wait for review and feedback
 
-## 程式碼風格
+## Code Style
 
-### YAML 格式
+### YAML Formatting
 
-- 使用 2 個空格縮排
-- 字串使用 `>` 或 `|` 進行多行處理
-- 保持一致的格式
+- Use 2-space indentation
+- Use `>` or `|` for multiline strings
+- Keep formatting consistent
 
-### 命名規範
+### Naming Rules
 
-- **檔案名稱**: 小寫，連字號分隔（`kebab-case`）
-- **Prompt ID**: 小寫，連字號分隔（`kebab-case`）
-- **參數名稱**: 小寫，底線分隔（`snake_case`）
+- **File names**: lowercase, kebab-case
+- **Prompt IDs**: lowercase, kebab-case
+- **Parameter names**: lowercase, snake_case
 
-## 測試
+## Issue Reporting
 
-在提交前，請確保：
+If you find an issue:
+1. Check whether a related issue already exists
+2. Open a new issue with detailed information
+3. Include reproduction steps when applicable
 
-```bash
-# 驗證所有 prompts
-npm run validate
+## Contact
 
-# 檢查文檔是否正確生成
-npm run docs
+If you have questions:
+- Open an issue for discussion
+- Refer to existing prompts as examples
 
-# 確認沒有遺漏的檔案
-git status
-```
-
-## 問題回報
-
-如果發現問題，請：
-1. 檢查是否已有相關 Issue
-2. 建立新的 Issue，提供詳細描述
-3. 包含重現步驟（如適用）
-
-## 聯絡方式
-
-如有疑問，請：
-- 建立 Issue 進行討論
-- 參考現有的 prompts 作為範例
-
-感謝您的貢獻！🎉
-
+Thank you for your contribution! 🎉

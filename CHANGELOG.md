@@ -1,131 +1,144 @@
-# 變更日誌 (Changelog)
+# Changelog
 
-本專案遵循 [Semantic Versioning](https://semver.org/lang/zh-TW/) 版本規範。
+This project follows [Semantic Versioning](https://semver.org/).
 
-格式基於 [Keep a Changelog](https://keepachangelog.com/zh-TW/1.0.0/)，
-本專案採用 [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/deed.zh_TW) 授權。
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project is licensed under [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/).
 
 ## [Unreleased]
 
-### 計劃中
-- 更多框架支援
-- Prompt 版本管理
-- 測試工具增強
+### Breaking Changes
+
+#### Removed executable code; converted to a data-only repository
+- **Removed**: CLI tool (`scripts/pm.js`) — all validation, doc generation, and related features are now handled by the shared CLI tool
+- **Removed**: `package.json` — Node.js dependencies and scripts are no longer needed
+- **Removed**: `pnpm-lock.yaml` — dependency management is no longer required
+- **Updated**: All docs updated to remove CLI-related content
+  - `README.md` — rewritten as a data-only repository guide
+  - `README.zh-TW.md` — Traditional Chinese docs updated in sync
+  - `USAGE.md` — simplified to focus on data structure
+  - `CONTRIBUTING.md` — removed validation and installation steps
+
+#### Notes
+This repository is now a **data-only repository** focused on storing prompt templates and configuration files. All functional code (validation, doc generation, etc.) has moved to a shared CLI tool to improve separation of concerns and maintainability.
+
+### Planned
+- More framework support
+- Prompt versioning
 
 ## [1.0.0] - 2024-12-01
 
-### 新增 (Added)
+### Added
 
-#### 核心功能
-- 初始化 Prompt Repository 專案結構
-- 建立 CLI 工具 (`scripts/pm.js`) 支援基本操作
-  - `list`: 列出所有 prompts
-  - `validate`: 驗證 prompts 格式
-  - `config`: 顯示配置資訊
-  - `docs`: 自動生成文檔
-  - `add`: 新增 prompt（開發中）
+#### Core
+- Initialize Prompt Repository project structure
+- Create CLI tool (`scripts/pm.js`) supporting basic operations
+  - `list`: list all prompts
+  - `validate`: validate prompt formats
+  - `config`: show configuration info
+  - `docs`: auto-generate documentation
+  - `add`: add a prompt (in progress)
 
-#### 通用 Prompts (common/)
-- `api-design`: RESTful API 設計與架構
-- `architecture-design`: 系統架構與模組設計
-- `code-generation`: 從規格生成代碼
-- `code-review`: 全面代碼審查
-- `database-optimization`: 資料庫優化與查詢效能分析
-- `documentation-generator`: 文檔生成工具
-- `error-handling-design`: 錯誤處理模式設計
-- `generate-unit-tests`: 通用單元測試生成器
-- `performance-analysis`: 非資料庫效能分析
-- `refactor-code`: 代碼重構
-- `security-audit`: 安全漏洞評估
+#### General Prompts (common/)
+- `api-design`: RESTful API design and architecture
+- `architecture-design`: System architecture and module design
+- `code-generation`: Generate code from specifications
+- `code-review`: Comprehensive code review
+- `database-optimization`: Database optimization and query performance analysis
+- `documentation-generator`: Documentation generation tool
+- `error-handling-design`: Error-handling pattern design
+- `generate-unit-tests`: General unit-test generator
+- `performance-analysis`: Non-database performance analysis
+- `refactor-code`: Code refactoring
+- `security-audit`: Security vulnerability assessment
 
 #### Laravel Prompts (laravel/)
-- `eloquent-optimization`: Eloquent ORM 優化
-- `laravel-api-implementation`: Laravel RESTful API 實作
-- `laravel-architecture`: Laravel 系統架構設計
-- `laravel-code-generation`: Laravel 代碼生成
-- `laravel-code-review`: Laravel 代碼審查
-- `laravel-documentation`: Laravel 文檔生成
-- `laravel-error-handling`: Laravel 錯誤處理設計
-- `laravel-generate-tests`: Laravel 測試生成（PHPUnit）
-- `laravel-migration-design`: Laravel 資料庫遷移設計
-- `laravel-model-design`: Laravel Eloquent 模型設計
-- `laravel-performance`: Laravel 效能分析
-- `laravel-refactor-code`: Laravel 代碼重構
-- `laravel-security`: Laravel 安全稽核
-- `laravel-service-provider`: Laravel 服務提供者設計
-- `refactor-controller`: Laravel 控制器重構
+- `eloquent-optimization`: Eloquent ORM optimization
+- `laravel-api-implementation`: Laravel RESTful API implementation
+- `laravel-architecture`: Laravel system architecture design
+- `laravel-code-generation`: Laravel code generation
+- `laravel-code-review`: Laravel code review
+- `laravel-documentation`: Laravel documentation generation
+- `laravel-error-handling`: Laravel error handling design
+- `laravel-generate-tests`: Laravel test generation (PHPUnit)
+- `laravel-migration-design`: Laravel database migration design
+- `laravel-model-design`: Laravel Eloquent model design
+- `laravel-performance`: Laravel performance analysis
+- `laravel-refactor-code`: Laravel code refactoring
+- `laravel-security`: Laravel security audit
+- `laravel-service-provider`: Laravel service provider design
+- `refactor-controller`: Laravel controller refactoring
 
 #### Vue Prompts (vue/)
-- `vue-component-review`: Vue 3 元件審查
-- `vue-api-integration`: Vue 3 API 整合
-- `vue-architecture`: Vue 應用架構設計
-- `vue-code-generation`: Vue 代碼生成
-- `vue-code-review`: Vue 代碼審查
-- `vue-composable-design`: Vue Composables 設計
-- `vue-documentation`: Vue 文檔生成
-- `vue-error-handling`: Vue 錯誤處理設計
-- `vue-generate-tests`: Vue 測試生成（Vitest/Jest）
-- `vue-performance`: Vue 效能分析
-- `vue-pinia-setup`: Pinia Store 設計
-- `vue-refactor-code`: Vue 代碼重構
-- `vue-router-config`: Vue Router 配置
-- `vue-security`: Vue 安全稽核
+- `vue-component-review`: Vue 3 component review
+- `vue-api-integration`: Vue 3 API integration
+- `vue-architecture`: Vue application architecture design
+- `vue-code-generation`: Vue code generation
+- `vue-code-review`: Vue code review
+- `vue-composable-design`: Vue composable design
+- `vue-documentation`: Vue documentation generation
+- `vue-error-handling`: Vue error handling design
+- `vue-generate-tests`: Vue test generation (Vitest/Jest)
+- `vue-performance`: Vue performance analysis
+- `vue-pinia-setup`: Pinia store design
+- `vue-refactor-code`: Vue code refactoring
+- `vue-router-config`: Vue Router configuration
+- `vue-security`: Vue security audit
 
 #### React Prompts (react/)
-- `react-api-integration`: React API 整合
-- `react-component-review`: React 元件審查
-- `react-hooks-design`: React Hooks 設計
-- `react-performance`: React 效能分析
-- `react-testing`: React 測試生成
+- `react-api-integration`: React API integration
+- `react-component-review`: React component review
+- `react-hooks-design`: React Hooks design
+- `react-performance`: React performance analysis
+- `react-testing`: React test generation
 
 #### Next.js Prompts (nextjs/)
-- `nextjs-api-routes`: Next.js API 路由設計
-- `nextjs-page-design`: Next.js 頁面設計
+- `nextjs-api-routes`: Next.js API route design
+- `nextjs-page-design`: Next.js page design
 
-#### 其他框架 Prompts
-- `django-view-design`: Django 視圖設計
-- `express-route-design`: Express.js 路由設計
-- `fastapi-endpoint-design`: FastAPI 端點設計
-- `nestjs-controller-design`: NestJS 控制器設計
-- `spring-controller-design`: Spring Boot 控制器設計
-- `typescript-type-design`: TypeScript 類型設計
+#### Other Framework Prompts
+- `django-view-design`: Django view design
+- `express-route-design`: Express.js route design
+- `fastapi-endpoint-design`: FastAPI endpoint design
+- `nestjs-controller-design`: NestJS controller design
+- `spring-controller-design`: Spring Boot controller design
+- `typescript-type-design`: TypeScript type design
 
-#### 文檔
-- `README.md`: 自動生成的英文文檔
-- `README.zh-TW.md`: 繁體中文文檔
+#### Documentation
+- `README.md`: Auto-generated English documentation
+- `README.zh-TW.md`: Traditional Chinese documentation
 - `LICENSE`: ISC License
-- `.gitignore`: 完整的 Git 忽略規則
+- `.gitignore`: Comprehensive Git ignore rules
 
-### 技術細節
+### Technical Details
 
-#### 依賴
-- `js-yaml`: ^4.1.1 (YAML 解析)
+#### Dependencies
+- `js-yaml`: ^4.1.1 (YAML parsing)
 
-#### 工具
-- Node.js CLI 工具
-- 自動文檔生成
-- YAML 格式驗證
-- 群組管理
+#### Tooling
+- Node.js CLI tool
+- Automatic documentation generation
+- YAML format validation
+- Group management
 
-### 統計
-- 總 Prompts 數: 53 個
-- 框架覆蓋: 11 個框架/語言
-- 通用 Prompts: 11 個
-- 框架特定 Prompts: 42 個
+### Stats
+- Total prompts: 53
+- Framework coverage: 11 frameworks/languages
+- General prompts: 11
+- Framework-specific prompts: 42
 
 ---
 
-## 版本說明
+## Version Notes
 
-- **[Unreleased]**: 尚未發布的變更
-- **[版本號]**: 已發布的版本，包含日期和變更類型
+- **[Unreleased]**: Changes not yet released
+- **[version]**: Released versions with date and change types
 
-### 變更類型
+### Change Types
 
-- **Added**: 新增功能
-- **Changed**: 對現有功能的變更
-- **Deprecated**: 即將移除的功能
-- **Removed**: 已移除的功能
-- **Fixed**: 錯誤修復
-- **Security**: 安全性相關的變更
-
+- **Added**: New features
+- **Changed**: Changes to existing features
+- **Deprecated**: Features soon to be removed
+- **Removed**: Features removed
+- **Fixed**: Bug fixes
+- **Security**: Security-related changes
