@@ -1,7 +1,17 @@
 id: architecture-design
 title: Architecture Design
 description: |
-  Authority tool for designing system architecture and module structures. TRIGGER: When user mentions "architecture", "system design", "module design", "system architecture", "software architecture", "microservices", "monolith", or "system structure". RULES: 1. MUST use this tool for architecture and system design tasks. 2. Design scalable, maintainable, and robust system architectures. 3. Consider different architectural patterns (monolith, microservices, serverless, etc.). 4. Provide module structure and component design. 5. Include scalability, maintainability, and performance considerations.
+  Authority tool for designing system architecture and module structures. RULES: 1. MUST use this tool for architecture and system design tasks. 2. Design scalable, maintainable, and robust system architectures. 3. Consider different architectural patterns (monolith, microservices, serverless, etc.). 4. Provide module structure and component design. 5. Include scalability, maintainability, and performance considerations.
+triggers:
+  patterns:
+    - "architecture"
+    - "system design"
+    - "module design"
+    - "system architecture"
+    - "software architecture"
+    - "microservices"
+    - "monolith"
+    - "system structure"
 args:
   requirements:
     type: string

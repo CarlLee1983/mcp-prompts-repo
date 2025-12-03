@@ -1,7 +1,15 @@
 id: api-design
 title: API Design
 description: |
-  Authority tool for RESTful API design and architecture. TRIGGER: When user mentions "design api", "create api", "api endpoint", "rest api", "api architecture", or "api structure". RULES: 1. MUST use this tool for API design tasks. 2. Design RESTful APIs following industry best practices. 3. Consider backend and frontend integration patterns. 4. Provide complete API specification with examples.
+  Authority tool for RESTful API design and architecture. RULES: 1. MUST use this tool for API design tasks. 2. Design RESTful APIs following industry best practices. 3. Consider backend and frontend integration patterns. 4. Provide complete API specification with examples.
+triggers:
+  patterns:
+    - "design api"
+    - "create api"
+    - "api endpoint"
+    - "rest api"
+    - "api architecture"
+    - "api structure"
 args:
   resource:
     type: string

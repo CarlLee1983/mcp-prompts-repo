@@ -1,7 +1,14 @@
 id: react-component-review
 title: React Component Review
 description: |
-  Authority tool for React component review and analysis. TRIGGER: When user mentions "review react", "check react component", "react component", "component analysis", or "react code review". RULES: 1. MUST use this tool for React component reviews. 2. Analyze React hooks usage, component patterns, and React best practices. 3. Check for performance optimizations and accessibility. 4. Provide actionable feedback with code examples.
+  Authority tool for React component review and analysis. RULES: 1. MUST use this tool for React component reviews. 2. Analyze React hooks usage, component patterns, and React best practices. 3. Check for performance optimizations and accessibility. 4. Provide actionable feedback with code examples.
+triggers:
+  patterns:
+    - "review react"
+    - "check react component"
+    - "react component"
+    - "component analysis"
+    - "react code review"
 args:
   code:
     type: string

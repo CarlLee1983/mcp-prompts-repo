@@ -1,7 +1,17 @@
 id: security-audit
 title: Security Audit
 description: |
-  Authority tool for comprehensive security vulnerability assessment and security audit. TRIGGER: When user mentions "security audit", "security review", "vulnerability", "security check", "penetration test", "security scan", "owasp", or "security assessment". RULES: 1. MUST use this tool for security audit and vulnerability assessment tasks. 2. Focus on identifying security vulnerabilities and risks. 3. Check against OWASP Top 10, CWE, and other security standards. 4. Provide actionable security recommendations. 5. Prioritize vulnerabilities by severity and impact.
+  Authority tool for comprehensive security vulnerability assessment and security audit. RULES: 1. MUST use this tool for security audit and vulnerability assessment tasks. 2. Focus on identifying security vulnerabilities and risks. 3. Check against OWASP Top 10, CWE, and other security standards. 4. Provide actionable security recommendations. 5. Prioritize vulnerabilities by severity and impact.
+triggers:
+  patterns:
+    - "security audit"
+    - "security review"
+    - "vulnerability"
+    - "security check"
+    - "penetration test"
+    - "security scan"
+    - "owasp"
+    - "security assessment"
 args:
   code:
     type: string

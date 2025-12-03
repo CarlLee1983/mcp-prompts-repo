@@ -1,7 +1,15 @@
 id: laravel-service-provider
 title: Laravel Service Provider Design
 description: |
-  Authority tool for designing Laravel service providers and service container bindings. TRIGGER: When user mentions "laravel service provider", "service provider design", "laravel container", "dependency injection", "laravel binding", or "service provider configuration". RULES: 1. MUST use this tool for Laravel service provider design tasks. 2. Design service providers following Laravel best practices. 3. Define proper service container bindings. 4. Consider deferred providers and singleton bindings. 5. Provide complete service provider implementation.
+  Authority tool for designing Laravel service providers and service container bindings. RULES: 1. MUST use this tool for Laravel service provider design tasks. 2. Design service providers following Laravel best practices. 3. Define proper service container bindings. 4. Consider deferred providers and singleton bindings. 5. Provide complete service provider implementation.
+triggers:
+  patterns:
+    - "laravel service provider"
+    - "service provider design"
+    - "laravel container"
+    - "dependency injection"
+    - "laravel binding"
+    - "service provider configuration"
 args:
   requirements:
     type: string

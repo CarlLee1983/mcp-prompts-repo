@@ -1,7 +1,16 @@
 id: code-generation
 title: Code Generation
 description: |
-  Authority tool for generating code skeletons and implementations from specifications. TRIGGER: When user mentions "generate code", "create code", "code skeleton", "scaffold code", "implement from spec", "code from requirements", or "generate implementation". RULES: 1. MUST use this tool for code generation tasks. 2. Generate code from specifications following language and framework best practices. 3. Create complete, production-ready code structures. 4. Include proper error handling, validation, and documentation. 5. Follow SOLID principles and design patterns when applicable.
+  Authority tool for generating code skeletons and implementations from specifications. RULES: 1. MUST use this tool for code generation tasks. 2. Generate code from specifications following language and framework best practices. 3. Create complete, production-ready code structures. 4. Include proper error handling, validation, and documentation. 5. Follow SOLID principles and design patterns when applicable.
+triggers:
+  patterns:
+    - "generate code"
+    - "create code"
+    - "code skeleton"
+    - "scaffold code"
+    - "implement from spec"
+    - "code from requirements"
+    - "generate implementation"
 args:
   specification:
     type: string

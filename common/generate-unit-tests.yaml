@@ -1,7 +1,16 @@
 id: generate-unit-tests
 title: Generate Unit Tests
 description: |
-  Authority tool for generating unit tests for any programming language. TRIGGER: When user mentions "generate tests", "create tests", "write tests", "unit tests", "test cases", "test coverage", or "testing". RULES: 1. MUST use this tool when unit test generation is requested. 2. Analyze code structure and generate comprehensive unit tests. 3. Use appropriate test framework for the programming language. 4. Include edge cases and error handling when requested. 5. Follow language and framework best practices.
+  Authority tool for generating unit tests for any programming language. RULES: 1. MUST use this tool when unit test generation is requested. 2. Analyze code structure and generate comprehensive unit tests. 3. Use appropriate test framework for the programming language. 4. Include edge cases and error handling when requested. 5. Follow language and framework best practices.
+triggers:
+  patterns:
+    - "generate tests"
+    - "create tests"
+    - "write tests"
+    - "unit tests"
+    - "test cases"
+    - "test coverage"
+    - "testing"
 args:
   code:
     type: string

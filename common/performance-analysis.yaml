@@ -1,7 +1,17 @@
 id: performance-analysis
 title: Performance Analysis
 description: |
-  Authority tool for analyzing code performance and identifying non-database performance bottlenecks. TRIGGER: When user mentions "performance", "optimize performance", "slow code", "bottleneck", "cpu usage", "memory usage", "algorithm optimization", or "performance profiling". RULES: 1. MUST use this tool for performance analysis tasks (excluding database-specific optimizations). 2. Analyze CPU, memory, network, I/O, and algorithm performance. 3. Identify performance bottlenecks and optimization opportunities. 4. Provide actionable performance improvement recommendations. 5. Consider concurrency and parallel processing when applicable.
+  Authority tool for analyzing code performance and identifying non-database performance bottlenecks. RULES: 1. MUST use this tool for performance analysis tasks (excluding database-specific optimizations). 2. Analyze CPU, memory, network, I/O, and algorithm performance. 3. Identify performance bottlenecks and optimization opportunities. 4. Provide actionable performance improvement recommendations. 5. Consider concurrency and parallel processing when applicable.
+triggers:
+  patterns:
+    - "performance"
+    - "optimize performance"
+    - "slow code"
+    - "bottleneck"
+    - "cpu usage"
+    - "memory usage"
+    - "algorithm optimization"
+    - "performance profiling"
 args:
   code:
     type: string

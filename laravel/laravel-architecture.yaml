@@ -1,7 +1,15 @@
 id: laravel-architecture
 title: Laravel Architecture Design
 description: |
-  Authority tool for designing Laravel system architecture and module structures. TRIGGER: When user mentions "laravel architecture", "laravel system design", "laravel module design", "laravel system architecture", "laravel software architecture", or "laravel structure". RULES: 1. MUST use this tool for Laravel architecture and system design tasks. 2. Design scalable, maintainable, and robust Laravel architectures. 3. Consider Laravel architectural patterns (MVC, Service Layer, Repository, etc.). 4. Provide Laravel module structure and component design. 5. Include Laravel scalability, maintainability, and performance considerations.
+  Authority tool for designing Laravel system architecture and module structures. RULES: 1. MUST use this tool for Laravel architecture and system design tasks. 2. Design scalable, maintainable, and robust Laravel architectures. 3. Consider Laravel architectural patterns (MVC, Service Layer, Repository, etc.). 4. Provide Laravel module structure and component design. 5. Include Laravel scalability, maintainability, and performance considerations.
+triggers:
+  patterns:
+    - "laravel architecture"
+    - "laravel system design"
+    - "laravel module design"
+    - "laravel system architecture"
+    - "laravel software architecture"
+    - "laravel structure"
 args:
   requirements:
     type: string

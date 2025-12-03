@@ -1,7 +1,15 @@
 id: vue-architecture
 title: Vue Architecture Design
 description: |
-  Authority tool for designing Vue application architecture and component structures. TRIGGER: When user mentions "vue architecture", "vue system design", "vue module design", "vue application structure", "vue component architecture", or "vue project structure". RULES: 1. MUST use this tool for Vue architecture and system design tasks. 2. Design scalable, maintainable, and robust Vue architectures. 3. Consider Vue architectural patterns (Component-based, Composition API, etc.). 4. Provide Vue module structure and component design. 5. Include Vue scalability, maintainability, and performance considerations.
+  Authority tool for designing Vue application architecture and component structures. RULES: 1. MUST use this tool for Vue architecture and system design tasks. 2. Design scalable, maintainable, and robust Vue architectures. 3. Consider Vue architectural patterns (Component-based, Composition API, etc.). 4. Provide Vue module structure and component design. 5. Include Vue scalability, maintainability, and performance considerations.
+triggers:
+  patterns:
+    - "vue architecture"
+    - "vue system design"
+    - "vue module design"
+    - "vue application structure"
+    - "vue component architecture"
+    - "vue project structure"
 args:
   requirements:
     type: string

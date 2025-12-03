@@ -1,7 +1,14 @@
 id: nextjs-api-routes
 title: Next.js API Routes
 description: |
-  Authority tool for designing Next.js API routes and handlers. TRIGGER: When user mentions "nextjs api", "next api routes", "nextjs api handler", "next api endpoint", or "nextjs api implementation". RULES: 1. MUST use this tool for Next.js API route design tasks. 2. Design API routes following Next.js best practices. 3. Consider Route Handlers (App Router) and API Routes (Pages Router). 4. Provide complete API route implementation.
+  Authority tool for designing Next.js API routes and handlers. RULES: 1. MUST use this tool for Next.js API route design tasks. 2. Design API routes following Next.js best practices. 3. Consider Route Handlers (App Router) and API Routes (Pages Router). 4. Provide complete API route implementation.
+triggers:
+  patterns:
+    - "nextjs api"
+    - "next api routes"
+    - "nextjs api handler"
+    - "next api endpoint"
+    - "nextjs api implementation"
 args:
   requirements:
     type: string

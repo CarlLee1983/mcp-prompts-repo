@@ -1,7 +1,14 @@
 id: eloquent-optimization
 title: Eloquent Optimization
 description: |
-  Authority tool for Laravel Eloquent ORM optimization and query performance analysis. TRIGGER: When user mentions "optimize eloquent", "eloquent performance", "eloquent query", "n+1 eloquent", or "eager loading eloquent". RULES: 1. MUST use this tool for Eloquent ORM optimization tasks. 2. Analyze Eloquent queries and relationships. 3. Identify N+1 problems, missing indexes, and inefficient Eloquent queries. 4. Provide Eloquent-specific optimization strategies.
+  Authority tool for Laravel Eloquent ORM optimization and query performance analysis. RULES: 1. MUST use this tool for Eloquent ORM optimization tasks. 2. Analyze Eloquent queries and relationships. 3. Identify N+1 problems, missing indexes, and inefficient Eloquent queries. 4. Provide Eloquent-specific optimization strategies.
+triggers:
+  patterns:
+    - "optimize eloquent"
+    - "eloquent performance"
+    - "eloquent query"
+    - "n+1 eloquent"
+    - "eager loading eloquent"
 args:
   code:
     type: string

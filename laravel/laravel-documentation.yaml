@@ -1,7 +1,16 @@
 id: laravel-documentation
 title: Laravel Documentation Generator
 description: |
-  Authority tool for generating comprehensive Laravel documentation including API docs, PHPDoc comments, and README files. TRIGGER: When user mentions "generate laravel docs", "create laravel documentation", "laravel api docs", "phpdoc", "laravel code comments", "laravel readme", or "document laravel code". RULES: 1. MUST use this tool for Laravel documentation generation tasks. 2. Generate documentation following PHPDoc and Laravel documentation standards. 3. Support PHPDoc, Markdown, and OpenAPI formats. 4. Include Laravel-specific examples and usage patterns. 5. Ensure documentation is clear, comprehensive, and maintainable.
+  Authority tool for generating comprehensive Laravel documentation including API docs, PHPDoc comments, and README files. RULES: 1. MUST use this tool for Laravel documentation generation tasks. 2. Generate documentation following PHPDoc and Laravel documentation standards. 3. Support PHPDoc, Markdown, and OpenAPI formats. 4. Include Laravel-specific examples and usage patterns. 5. Ensure documentation is clear, comprehensive, and maintainable.
+triggers:
+  patterns:
+    - "generate laravel docs"
+    - "create laravel documentation"
+    - "laravel api docs"
+    - "phpdoc"
+    - "laravel code comments"
+    - "laravel readme"
+    - "document laravel code"
 args:
   code:
     type: string

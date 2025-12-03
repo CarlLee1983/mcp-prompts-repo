@@ -7,6 +7,7 @@ Thank you for contributing to the Prompt Repository! This guide explains how to 
 - [Code of Conduct](#code-of-conduct)
 - [How to Contribute](#how-to-contribute)
 - [Create a New Prompt](#create-a-new-prompt)
+- [Synchronization Rules](#synchronization-rules)
 - [Prompt Guidelines](#prompt-guidelines)
 - [Submit Changes](#submit-changes)
 - [Code Style](#code-style)
@@ -121,26 +122,94 @@ prompts:
     deprecated: false
 ```
 
+## Synchronization Rules
+
+### Registry Synchronization (MANDATORY)
+
+**Critical**: The `registry.yaml` file must be kept 100% synchronized with all prompt files. This is a mandatory requirement.
+
+#### Rules:
+
+1. **Adding a Prompt**:
+   - When creating a new prompt file, you MUST add a corresponding entry to `registry.yaml`
+   - The `id` in the prompt file must exactly match the `id` in `registry.yaml`
+   - The `group` in `registry.yaml` must match the directory where the prompt file is located
+
+2. **Modifying a Prompt ID**:
+   - If you change the `id` field in a prompt file, you MUST update the corresponding entry in `registry.yaml`
+   - The filename should also be updated to match the new `id` (e.g., `old-id.yaml` → `new-id.yaml`)
+
+3. **Deleting a Prompt**:
+   - When removing a prompt file, you MUST remove the corresponding entry from `registry.yaml`
+   - Failure to do so will cause validation errors
+
+4. **Pre-Commit Validation**:
+   - Before committing changes, verify that:
+     - All prompt files have a corresponding entry in `registry.yaml`
+     - All entries in `registry.yaml` have a corresponding prompt file
+     - All `id` values match exactly between files and registry
+
+#### Validation Checklist:
+
+- [ ] All prompt files are registered in `registry.yaml`
+- [ ] All registry entries have corresponding prompt files
+- [ ] All `id` values match exactly
+- [ ] File names match their `id` values (e.g., `code-review.yaml` has `id: code-review`)
+
+### Dependencies Synchronization (MANDATORY)
+
+**Critical**: The `dependencies.partials` field must reference only existing partials. This is a mandatory requirement.
+
+#### Rules:
+
+1. **Adding Dependencies**:
+   - When adding a `dependencies.partials` entry, verify that the partial file exists in the `partials/` directory
+   - Partial files must have the `.hbs` extension
+   - The partial name in `dependencies.partials` must match the filename (without extension)
+
+2. **Renaming Partials**:
+   - If you rename a partial file, you MUST update all prompt files that reference it in their `dependencies.partials`
+   - Search for all occurrences: `grep -r "old-partial-name" . --include="*.yaml"`
+
+3. **Deleting Partials**:
+   - Before deleting a partial file, verify that no prompt files depend on it
+   - Search for dependencies: `grep -r "partial-name" . --include="*.yaml"`
+   - Remove the partial from all `dependencies.partials` entries before deleting the file
+
+4. **Pre-Commit Validation**:
+   - Before committing changes, verify that:
+     - All partials referenced in `dependencies.partials` exist in the `partials/` directory
+     - All partial files are referenced by at least one prompt (or document why they're unused)
+
+#### Validation Checklist:
+
+- [ ] All partials in `dependencies.partials` exist in `partials/` directory
+- [ ] All partial filenames match their references (without `.hbs` extension)
+- [ ] No orphaned partials (unless intentionally kept for future use)
+
 ## Prompt Guidelines
 
 ### 1. Description Format
 
 Description must include:
 - **Feature description**: Briefly explain the prompt purpose
-- **TRIGGER**: Keywords or scenarios that trigger the prompt
 - **RULES**: Rules for using the prompt (at least 3)
+
+**Note**: TRIGGER patterns are now defined in the structured `triggers.patterns` field (see below).
 
 Example:
 
 ```yaml
-description: >
-  Authority tool for comprehensive code review.
-  TRIGGER: When user mentions "review", "check code", "code quality", "analyze code", or "code audit".
-  RULES:
-  1. MUST use this tool when code review is requested.
-  2. Analyze code quality, potential bugs, security issues, and best practices.
-  3. Provide structured feedback with severity levels.
-  4. Follow strict_mode rules when enabled.
+description: |
+  Authority tool for comprehensive code review. RULES: 1. MUST use this tool when code review is requested. 2. Analyze code quality, potential bugs, security issues, and best practices. 3. Provide structured feedback with severity levels. 4. Follow strict_mode rules when enabled.
+
+triggers:
+  patterns:
+    - "review"
+    - "check code"
+    - "code quality"
+    - "analyze code"
+    - "code audit"
 ```
 
 ### 2. Template Guidelines

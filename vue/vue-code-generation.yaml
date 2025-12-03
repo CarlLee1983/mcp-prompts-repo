@@ -1,7 +1,16 @@
 id: vue-code-generation
 title: Vue Code Generation
 description: |
-  Authority tool for generating Vue code skeletons and implementations from specifications. TRIGGER: When user mentions "generate vue code", "create vue code", "vue code skeleton", "scaffold vue code", "vue component", "implement vue from spec", or "generate vue implementation". RULES: 1. MUST use this tool for Vue code generation tasks. 2. Generate Vue code from specifications following Vue best practices. 3. Create complete, production-ready Vue code structures. 4. Include proper error handling, validation, and documentation. 5. Follow Vue Composition API patterns and best practices.
+  Authority tool for generating Vue code skeletons and implementations from specifications. RULES: 1. MUST use this tool for Vue code generation tasks. 2. Generate Vue code from specifications following Vue best practices. 3. Create complete, production-ready Vue code structures. 4. Include proper error handling, validation, and documentation. 5. Follow Vue Composition API patterns and best practices.
+triggers:
+  patterns:
+    - "generate vue code"
+    - "create vue code"
+    - "vue code skeleton"
+    - "scaffold vue code"
+    - "vue component"
+    - "implement vue from spec"
+    - "generate vue implementation"
 args:
   specification:
     type: string

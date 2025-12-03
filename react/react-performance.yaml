@@ -1,7 +1,15 @@
 id: react-performance
 title: React Performance Analysis
 description: |
-  Authority tool for analyzing React code performance and identifying performance bottlenecks. TRIGGER: When user mentions "react performance", "optimize react", "slow react", "react bottleneck", "react render performance", or "react performance profiling". RULES: 1. MUST use this tool for React performance analysis tasks. 2. Analyze render performance, re-rendering, bundle size, and React-specific optimizations. 3. Identify React performance bottlenecks and optimization opportunities. 4. Provide actionable React performance improvement recommendations.
+  Authority tool for analyzing React code performance and identifying performance bottlenecks. RULES: 1. MUST use this tool for React performance analysis tasks. 2. Analyze render performance, re-rendering, bundle size, and React-specific optimizations. 3. Identify React performance bottlenecks and optimization opportunities. 4. Provide actionable React performance improvement recommendations.
+triggers:
+  patterns:
+    - "react performance"
+    - "optimize react"
+    - "slow react"
+    - "react bottleneck"
+    - "react render performance"
+    - "react performance profiling"
 args:
   code:
     type: string

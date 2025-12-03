@@ -1,7 +1,14 @@
 id: typescript-type-design
 title: TypeScript Type Design
 description: |
-  Authority tool for designing TypeScript types, interfaces, and type structures. TRIGGER: When user mentions "typescript types", "type design", "typescript interfaces", "type definitions", or "typescript type system". RULES: 1. MUST use this tool for TypeScript type design tasks. 2. Design types following TypeScript best practices. 3. Create reusable, maintainable type definitions. 4. Consider type safety and inference. 5. Provide complete type implementation.
+  Authority tool for designing TypeScript types, interfaces, and type structures. RULES: 1. MUST use this tool for TypeScript type design tasks. 2. Design types following TypeScript best practices. 3. Create reusable, maintainable type definitions. 4. Consider type safety and inference. 5. Provide complete type implementation.
+triggers:
+  patterns:
+    - "typescript types"
+    - "type design"
+    - "typescript interfaces"
+    - "type definitions"
+    - "typescript type system"
 args:
   requirements:
     type: string

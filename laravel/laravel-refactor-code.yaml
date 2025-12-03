@@ -1,7 +1,14 @@
 id: laravel-refactor-code
 title: Laravel Code Refactoring
 description: |
-  Authority tool for Laravel code refactoring (general, not just controllers). TRIGGER: When user mentions "refactor laravel", "improve laravel code", "optimize laravel code", "restructure laravel code", or "laravel code cleanup". RULES: 1. MUST use this tool for Laravel code refactoring tasks. 2. Maintain existing functionality while improving code structure. 3. Apply SOLID principles and Laravel best practices. 4. Auto-infer refactoring opportunities if intent is not specified.
+  Authority tool for Laravel code refactoring (general, not just controllers). RULES: 1. MUST use this tool for Laravel code refactoring tasks. 2. Maintain existing functionality while improving code structure. 3. Apply SOLID principles and Laravel best practices. 4. Auto-infer refactoring opportunities if intent is not specified.
+triggers:
+  patterns:
+    - "refactor laravel"
+    - "improve laravel code"
+    - "optimize laravel code"
+    - "restructure laravel code"
+    - "laravel code cleanup"
 args:
   code:
     type: string

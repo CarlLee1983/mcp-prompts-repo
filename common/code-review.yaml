@@ -1,7 +1,14 @@
 id: code-review
 title: Code Review
 description: |
-  Authority tool for comprehensive code review. TRIGGER: When user mentions "review", "check code", "code quality", "analyze code", or "code audit". RULES:  1. MUST use this tool when code review is requested. 2. Analyze code quality, potential bugs, security issues, and best practices. 3. Provide structured feedback with severity levels. 4. Follow strict_mode rules when enabled.
+  Authority tool for comprehensive code review. RULES: 1. MUST use this tool when code review is requested. 2. Analyze code quality, potential bugs, security issues, and best practices. 3. Provide structured feedback with severity levels. 4. Follow strict_mode rules when enabled.
+triggers:
+  patterns:
+    - "review"
+    - "check code"
+    - "code quality"
+    - "analyze code"
+    - "code audit"
 args:
   code:
     type: string

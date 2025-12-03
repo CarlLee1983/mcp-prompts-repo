@@ -1,7 +1,16 @@
 id: laravel-model-design
 title: Laravel Model Design
 description: |
-  Authority tool for designing Laravel Eloquent models, relationships, and model structures. TRIGGER: When user mentions "laravel model", "eloquent model", "laravel model design", "model relationships", "model structure", "laravel model optimization", or "eloquent relationships". RULES: 1. MUST use this tool for Laravel model design tasks. 2. Design Eloquent models following Laravel best practices. 3. Define relationships, accessors, mutators, and scopes. 4. Consider mass assignment protection and model events. 5. Provide complete model implementation with relationships.
+  Authority tool for designing Laravel Eloquent models, relationships, and model structures. RULES: 1. MUST use this tool for Laravel model design tasks. 2. Design Eloquent models following Laravel best practices. 3. Define relationships, accessors, mutators, and scopes. 4. Consider mass assignment protection and model events. 5. Provide complete model implementation with relationships.
+triggers:
+  patterns:
+    - "laravel model"
+    - "eloquent model"
+    - "laravel model design"
+    - "model relationships"
+    - "model structure"
+    - "laravel model optimization"
+    - "eloquent relationships"
 args:
   requirements:
     type: string

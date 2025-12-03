@@ -1,7 +1,16 @@
 id: vue-documentation
 title: Vue Documentation Generator
 description: |
-  Authority tool for generating comprehensive Vue documentation including component docs, JSDoc comments, and README files. TRIGGER: When user mentions "generate vue docs", "create vue documentation", "vue component docs", "jsdoc", "vue code comments", "vue readme", or "document vue code". RULES: 1. MUST use this tool for Vue documentation generation tasks. 2. Generate documentation following JSDoc and Vue documentation standards. 3. Support JSDoc, Markdown, and component documentation formats. 4. Include Vue-specific examples and usage patterns. 5. Ensure documentation is clear, comprehensive, and maintainable.
+  Authority tool for generating comprehensive Vue documentation including component docs, JSDoc comments, and README files. RULES: 1. MUST use this tool for Vue documentation generation tasks. 2. Generate documentation following JSDoc and Vue documentation standards. 3. Support JSDoc, Markdown, and component documentation formats. 4. Include Vue-specific examples and usage patterns. 5. Ensure documentation is clear, comprehensive, and maintainable.
+triggers:
+  patterns:
+    - "generate vue docs"
+    - "create vue documentation"
+    - "vue component docs"
+    - "jsdoc"
+    - "vue code comments"
+    - "vue readme"
+    - "document vue code"
 args:
   code:
     type: string

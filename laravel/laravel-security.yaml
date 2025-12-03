@@ -1,7 +1,16 @@
 id: laravel-security
 title: Laravel Security Audit
 description: |
-  Authority tool for comprehensive Laravel security vulnerability assessment and security audit. TRIGGER: When user mentions "laravel security audit", "laravel security review", "laravel vulnerability", "laravel security check", "laravel security scan", "laravel owasp", or "laravel security assessment". RULES: 1. MUST use this tool for Laravel security audit and vulnerability assessment tasks. 2. Focus on identifying Laravel-specific security vulnerabilities and risks. 3. Check against OWASP Top 10, Laravel security features, and best practices. 4. Provide actionable Laravel security recommendations. 5. Prioritize vulnerabilities by severity and impact.
+  Authority tool for comprehensive Laravel security vulnerability assessment and security audit. RULES: 1. MUST use this tool for Laravel security audit and vulnerability assessment tasks. 2. Focus on identifying Laravel-specific security vulnerabilities and risks. 3. Check against OWASP Top 10, Laravel security features, and best practices. 4. Provide actionable Laravel security recommendations. 5. Prioritize vulnerabilities by severity and impact.
+triggers:
+  patterns:
+    - "laravel security audit"
+    - "laravel security review"
+    - "laravel vulnerability"
+    - "laravel security check"
+    - "laravel security scan"
+    - "laravel owasp"
+    - "laravel security assessment"
 args:
   code:
     type: string

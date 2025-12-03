@@ -7,6 +7,7 @@
 - [行為準則](#行為準則)
 - [如何貢獻](#如何貢獻)
 - [建立新的 Prompt](#建立新的-prompt)
+- [同步規則](#同步規則)
 - [Prompt 規範](#prompt-規範)
 - [提交變更](#提交變更)
 - [程式碼風格](#程式碼風格)
@@ -63,13 +64,13 @@ git checkout -b fix/your-bug-fix
 ```yaml
 id: "your-prompt-id"
 title: "Your Prompt Title"
-description: >
-  Authority tool for [功能描述].
-  TRIGGER: When user mentions "[觸發關鍵字]".
-  RULES:
-  1. MUST use this tool for [使用場景].
-  2. [規則 2]
-  3. [規則 3]
+description: |
+  Authority tool for [功能描述]. RULES: 1. MUST use this tool for [使用場景]. 2. [規則 2]. 3. [規則 3].
+
+triggers:
+  patterns:
+    - "[觸發關鍵字 1]"
+    - "[觸發關鍵字 2]"
 
 args:
   param1:
@@ -91,7 +92,8 @@ template: |
 
 - **id**: Prompt 的唯一識別碼（小寫，使用連字號分隔）
 - **title**: Prompt 的標題（簡潔明瞭）
-- **description**: 詳細描述，包含 TRIGGER 和 RULES
+- **description**: 詳細描述，包含 RULES（TRIGGER 現在在 `triggers.patterns` 中定義）
+- **triggers**: 觸發模式定義（包含 `patterns` 陣列）
 - **args**: 參數定義（可選，但建議提供）
 - **template**: Handlebars 模板內容
 
@@ -121,26 +123,94 @@ prompts:
     deprecated: false
 ```
 
+## 同步規則
+
+### Registry 同步規則（強制要求）
+
+**重要**：`registry.yaml` 檔案必須與所有 prompt 檔案保持 100% 同步。這是強制要求。
+
+#### 規則：
+
+1. **新增 Prompt**：
+   - 建立新的 prompt 檔案時，必須在 `registry.yaml` 中添加對應的條目
+   - prompt 檔案中的 `id` 必須與 `registry.yaml` 中的 `id` 完全一致
+   - `registry.yaml` 中的 `group` 必須與 prompt 檔案所在的目錄匹配
+
+2. **修改 Prompt ID**：
+   - 如果修改 prompt 檔案中的 `id` 欄位，必須同步更新 `registry.yaml` 中的對應條目
+   - 檔案名稱也應該更新以匹配新的 `id`（例如：`old-id.yaml` → `new-id.yaml`）
+
+3. **刪除 Prompt**：
+   - 移除 prompt 檔案時，必須從 `registry.yaml` 中移除對應的條目
+   - 未同步移除將導致驗證錯誤
+
+4. **提交前驗證**：
+   - 在提交變更前，請驗證：
+     - 所有 prompt 檔案都在 `registry.yaml` 中有對應的條目
+     - `registry.yaml` 中的所有條目都有對應的 prompt 檔案
+     - 所有 `id` 值在檔案和 registry 之間完全匹配
+
+#### 驗證檢查清單：
+
+- [ ] 所有 prompt 檔案都已註冊在 `registry.yaml` 中
+- [ ] 所有 registry 條目都有對應的 prompt 檔案
+- [ ] 所有 `id` 值完全匹配
+- [ ] 檔案名稱與其 `id` 值匹配（例如：`code-review.yaml` 的 `id` 為 `code-review`）
+
+### Dependencies 同步規則（強制要求）
+
+**重要**：`dependencies.partials` 欄位必須只引用存在的 partials。這是強制要求。
+
+#### 規則：
+
+1. **新增 Dependencies**：
+   - 添加 `dependencies.partials` 條目時，請確認 partial 檔案存在於 `partials/` 目錄中
+   - Partial 檔案必須具有 `.hbs` 副檔名
+   - `dependencies.partials` 中的 partial 名稱必須與檔案名稱匹配（不含副檔名）
+
+2. **重新命名 Partials**：
+   - 如果重新命名 partial 檔案，必須更新所有在 `dependencies.partials` 中引用它的 prompt 檔案
+   - 搜尋所有出現位置：`grep -r "old-partial-name" . --include="*.yaml"`
+
+3. **刪除 Partials**：
+   - 刪除 partial 檔案前，請確認沒有 prompt 檔案依賴它
+   - 搜尋依賴關係：`grep -r "partial-name" . --include="*.yaml"`
+   - 在刪除檔案前，從所有 `dependencies.partials` 條目中移除該 partial
+
+4. **提交前驗證**：
+   - 在提交變更前，請驗證：
+     - `dependencies.partials` 中引用的所有 partials 都存在於 `partials/` 目錄中
+     - 所有 partial 檔案至少被一個 prompt 引用（或記錄為何保留未使用的 partial）
+
+#### 驗證檢查清單：
+
+- [ ] `dependencies.partials` 中的所有 partials 都存在於 `partials/` 目錄中
+- [ ] 所有 partial 檔案名稱與其引用匹配（不含 `.hbs` 副檔名）
+- [ ] 沒有孤立的 partials（除非有意保留供未來使用）
+
 ## Prompt 規範
 
 ### 1. Description 格式
 
 Description 必須包含：
 - **功能描述**: 簡要說明此 prompt 的用途
-- **TRIGGER**: 觸發此 prompt 的關鍵字或情境
 - **RULES**: 使用此 prompt 的規則（至少 3 條）
+
+**注意**：TRIGGER 模式現在定義在結構化的 `triggers.patterns` 欄位中（見下方）。
 
 範例：
 
 ```yaml
-description: >
-  Authority tool for comprehensive code review.
-  TRIGGER: When user mentions "review", "check code", "code quality", "analyze code", or "code audit".
-  RULES:
-  1. MUST use this tool when code review is requested.
-  2. Analyze code quality, potential bugs, security issues, and best practices.
-  3. Provide structured feedback with severity levels.
-  4. Follow strict_mode rules when enabled.
+description: |
+  Authority tool for comprehensive code review. RULES: 1. MUST use this tool when code review is requested. 2. Analyze code quality, potential bugs, security issues, and best practices. 3. Provide structured feedback with severity levels. 4. Follow strict_mode rules when enabled.
+
+triggers:
+  patterns:
+    - "review"
+    - "check code"
+    - "code quality"
+    - "analyze code"
+    - "code audit"
 ```
 
 ### 2. Template 規範

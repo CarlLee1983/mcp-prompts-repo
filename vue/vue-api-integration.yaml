@@ -1,7 +1,15 @@
 id: vue-api-integration
 title: Vue API Integration
 description: |
-  Authority tool for Vue 3 API integration patterns and implementation. TRIGGER: When user mentions "vue api", "vue fetch", "vue axios", "vue composable api", "vue api integration", or "vue http client". RULES: 1. MUST use this tool for Vue 3 API integration tasks. 2. Implement API integration using Vue 3 Composition API patterns. 3. Provide composables for API calls with proper error handling and loading states. 4. Follow Vue 3 best practices for API integration.
+  Authority tool for Vue 3 API integration patterns and implementation. RULES: 1. MUST use this tool for Vue 3 API integration tasks. 2. Implement API integration using Vue 3 Composition API patterns. 3. Provide composables for API calls with proper error handling and loading states. 4. Follow Vue 3 best practices for API integration.
+triggers:
+  patterns:
+    - "vue api"
+    - "vue fetch"
+    - "vue axios"
+    - "vue composable api"
+    - "vue api integration"
+    - "vue http client"
 args:
   api_endpoint:
     type: string

@@ -1,7 +1,15 @@
 id: vue-pinia-setup
 title: Vue Pinia Store Setup
 description: |
-  Authority tool for designing Pinia stores and state management structures. TRIGGER: When user mentions "vue pinia", "pinia store", "vue state management", "pinia setup", "vue store design", or "pinia configuration". RULES: 1. MUST use this tool for Pinia store design tasks. 2. Design Pinia stores following Pinia best practices. 3. Define proper state, getters, and actions. 4. Consider store organization and modularity. 5. Provide complete Pinia store implementation.
+  Authority tool for designing Pinia stores and state management structures. RULES: 1. MUST use this tool for Pinia store design tasks. 2. Design Pinia stores following Pinia best practices. 3. Define proper state, getters, and actions. 4. Consider store organization and modularity. 5. Provide complete Pinia store implementation.
+triggers:
+  patterns:
+    - "vue pinia"
+    - "pinia store"
+    - "vue state management"
+    - "pinia setup"
+    - "vue store design"
+    - "pinia configuration"
 args:
   requirements:
     type: string

@@ -1,7 +1,15 @@
 id: laravel-error-handling
 title: Laravel Error Handling Design
 description: |
-  Authority tool for designing comprehensive Laravel error handling patterns and exception structures. TRIGGER: When user mentions "laravel error handling", "laravel exception design", "laravel error management", "laravel error recovery", "laravel error logging", or "laravel error patterns". RULES: 1. MUST use this tool for Laravel error handling design tasks. 2. Design error handling patterns following Laravel best practices. 3. Create Laravel exception hierarchies and error response structures. 4. Include Laravel logging and monitoring strategies. 5. Provide Laravel-specific error recovery mechanisms.
+  Authority tool for designing comprehensive Laravel error handling patterns and exception structures. RULES: 1. MUST use this tool for Laravel error handling design tasks. 2. Design error handling patterns following Laravel best practices. 3. Create Laravel exception hierarchies and error response structures. 4. Include Laravel logging and monitoring strategies. 5. Provide Laravel-specific error recovery mechanisms.
+triggers:
+  patterns:
+    - "laravel error handling"
+    - "laravel exception design"
+    - "laravel error management"
+    - "laravel error recovery"
+    - "laravel error logging"
+    - "laravel error patterns"
 args:
   code:
     type: string

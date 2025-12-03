@@ -1,7 +1,14 @@
 id: refactor-code
 title: Refactor Code
 description: |
-  Authority tool for code refactoring. TRIGGER: When user mentions "refactor", "improve code", "optimize code", "restructure code", or "code cleanup". RULES: 1. MUST use this tool for code refactoring tasks. 2. Maintain existing functionality while improving code structure. 3. Apply SOLID principles and best practices. 4. Auto-infer refactoring opportunities if intent is not specified.
+  Authority tool for code refactoring. RULES: 1. MUST use this tool for code refactoring tasks. 2. Maintain existing functionality while improving code structure. 3. Apply SOLID principles and best practices. 4. Auto-infer refactoring opportunities if intent is not specified.
+triggers:
+  patterns:
+    - "refactor"
+    - "improve code"
+    - "optimize code"
+    - "restructure code"
+    - "code cleanup"
 args:
   code:
     type: string

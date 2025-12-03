@@ -1,7 +1,15 @@
 id: vue-composable-design
 title: Vue Composable Design
 description: |
-  Authority tool for designing Vue composables and reusable Composition API functions. TRIGGER: When user mentions "vue composable", "composable design", "vue composition api", "reusable vue logic", "vue composable pattern", or "vue composable function". RULES: 1. MUST use this tool for Vue composable design tasks. 2. Design composables following Vue Composition API best practices. 3. Create reusable, testable, and maintainable composables. 4. Consider composable patterns and conventions. 5. Provide complete composable implementation.
+  Authority tool for designing Vue composables and reusable Composition API functions. RULES: 1. MUST use this tool for Vue composable design tasks. 2. Design composables following Vue Composition API best practices. 3. Create reusable, testable, and maintainable composables. 4. Consider composable patterns and conventions. 5. Provide complete composable implementation.
+triggers:
+  patterns:
+    - "vue composable"
+    - "composable design"
+    - "vue composition api"
+    - "reusable vue logic"
+    - "vue composable pattern"
+    - "vue composable function"
 args:
   requirements:
     type: string

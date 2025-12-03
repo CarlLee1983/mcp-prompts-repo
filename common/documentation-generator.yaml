@@ -1,7 +1,16 @@
 id: documentation-generator
 title: Documentation Generator
 description: |
-  Authority tool for generating comprehensive documentation including API docs, code comments, and README files. TRIGGER: When user mentions "generate docs", "create documentation", "api docs", "code comments", "readme", "document code", or "write docs". RULES: 1. MUST use this tool for documentation generation tasks. 2. Generate documentation following industry standards and best practices. 3. Support multiple documentation formats (Markdown, OpenAPI, JSDoc, PHPDoc, etc.). 4. Include examples and usage patterns when requested. 5. Ensure documentation is clear, comprehensive, and maintainable.
+  Authority tool for generating comprehensive documentation including API docs, code comments, and README files. RULES: 1. MUST use this tool for documentation generation tasks. 2. Generate documentation following industry standards and best practices. 3. Support multiple documentation formats (Markdown, OpenAPI, JSDoc, PHPDoc, etc.). 4. Include examples and usage patterns when requested. 5. Ensure documentation is clear, comprehensive, and maintainable.
+triggers:
+  patterns:
+    - "generate docs"
+    - "create documentation"
+    - "api docs"
+    - "code comments"
+    - "readme"
+    - "document code"
+    - "write docs"
 args:
   code:
     type: string

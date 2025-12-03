@@ -1,7 +1,15 @@
 id: vue-code-review
 title: Vue Code Review
 description: |
-  Authority tool for comprehensive Vue code review. TRIGGER: When user mentions "review vue", "check vue code", "vue code quality", "analyze vue code", "vue code audit", or "review vue component". RULES:  1. MUST use this tool when Vue code review is requested. 2. Analyze Vue code quality, potential bugs, security issues, and Vue best practices. 3. Check Vue 3 Composition API usage, reactivity, and component patterns. 4. Provide structured feedback with severity levels. 5. Follow strict_mode rules when enabled.
+  Authority tool for comprehensive Vue code review. RULES: 1. MUST use this tool when Vue code review is requested. 2. Analyze Vue code quality, potential bugs, security issues, and Vue best practices. 3. Check Vue 3 Composition API usage, reactivity, and component patterns. 4. Provide structured feedback with severity levels. 5. Follow strict_mode rules when enabled.
+triggers:
+  patterns:
+    - "review vue"
+    - "check vue code"
+    - "vue code quality"
+    - "analyze vue code"
+    - "vue code audit"
+    - "review vue component"
 args:
   code:
     type: string

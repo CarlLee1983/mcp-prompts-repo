@@ -1,7 +1,14 @@
 id: nestjs-controller-design
 title: NestJS Controller Design
 description: |
-  Authority tool for designing NestJS controllers and endpoints. TRIGGER: When user mentions "nestjs controller", "nestjs api", "nestjs endpoint", "nestjs route", or "nestjs handler". RULES: 1. MUST use this tool for NestJS controller design tasks. 2. Design controllers following NestJS best practices. 3. Create RESTful endpoints with proper decorators. 4. Include proper DTOs and validation. 5. Provide complete controller implementation.
+  Authority tool for designing NestJS controllers and endpoints. RULES: 1. MUST use this tool for NestJS controller design tasks. 2. Design controllers following NestJS best practices. 3. Create RESTful endpoints with proper decorators. 4. Include proper DTOs and validation. 5. Provide complete controller implementation.
+triggers:
+  patterns:
+    - "nestjs controller"
+    - "nestjs api"
+    - "nestjs endpoint"
+    - "nestjs route"
+    - "nestjs handler"
 args:
   requirements:
     type: string

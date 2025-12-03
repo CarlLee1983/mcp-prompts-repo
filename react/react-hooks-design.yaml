@@ -1,7 +1,15 @@
 id: react-hooks-design
 title: React Hooks Design
 description: |
-  Authority tool for designing React custom hooks and hooks patterns. TRIGGER: When user mentions "react hooks", "custom hooks", "react hooks design", "hooks pattern", "react hooks implementation", or "react hooks best practices". RULES: 1. MUST use this tool for React hooks design tasks. 2. Design hooks following React Hooks best practices. 3. Create reusable, testable, and maintainable hooks. 4. Consider hooks patterns and conventions. 5. Provide complete hooks implementation.
+  Authority tool for designing React custom hooks and hooks patterns. RULES: 1. MUST use this tool for React hooks design tasks. 2. Design hooks following React Hooks best practices. 3. Create reusable, testable, and maintainable hooks. 4. Consider hooks patterns and conventions. 5. Provide complete hooks implementation.
+triggers:
+  patterns:
+    - "react hooks"
+    - "custom hooks"
+    - "react hooks design"
+    - "hooks pattern"
+    - "react hooks implementation"
+    - "react hooks best practices"
 args:
   requirements:
     type: string

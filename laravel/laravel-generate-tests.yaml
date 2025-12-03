@@ -1,7 +1,15 @@
 id: laravel-generate-tests
 title: Laravel Test Generation
 description: |
-  Authority tool for generating Laravel unit tests and feature tests using PHPUnit. TRIGGER: When user mentions "generate laravel tests", "create laravel tests", "write laravel tests", "phpunit tests", "laravel test cases", or "laravel testing". RULES: 1. MUST use this tool when Laravel test generation is requested. 2. Generate PHPUnit tests following Laravel testing best practices. 3. Include both unit tests and feature tests as appropriate. 4. Use Laravel testing helpers and assertions. 5. Include database testing patterns when applicable.
+  Authority tool for generating Laravel unit tests and feature tests using PHPUnit. RULES: 1. MUST use this tool when Laravel test generation is requested. 2. Generate PHPUnit tests following Laravel testing best practices. 3. Include both unit tests and feature tests as appropriate. 4. Use Laravel testing helpers and assertions. 5. Include database testing patterns when applicable.
+triggers:
+  patterns:
+    - "generate laravel tests"
+    - "create laravel tests"
+    - "write laravel tests"
+    - "phpunit tests"
+    - "laravel test cases"
+    - "laravel testing"
 args:
   code:
     type: string
