@@ -1,7 +1,7 @@
 id: django-view-design
 title: Django View Design
 description: |
-  Authority tool for designing Django views and API endpoints. RULES: 1. MUST use this tool for Django view design tasks. 2. Design views following Django best practices. 3. Create RESTful endpoints with Django REST Framework. 4. Include proper serialization and validation. 5. Provide complete view implementation.
+  Authority tool for designing Django views and API endpoints.
 triggers:
   patterns:
     - "django view"
@@ -9,6 +9,12 @@ triggers:
     - "django endpoint"
     - "django rest"
     - "django viewset"
+rules:
+  - MUST use this tool for Django view design tasks.
+  - Design views following Django best practices.
+  - Create RESTful endpoints with Django REST Framework.
+  - Include proper serialization and validation.
+  - Provide complete view implementation.
 args:
   requirements:
     type: string

@@ -1,7 +1,7 @@
 id: vue-performance
 title: Vue Performance Analysis
 description: |
-  Authority tool for analyzing Vue code performance and identifying performance bottlenecks. RULES: 1. MUST use this tool for Vue performance analysis tasks. 2. Analyze render performance, reactivity, bundle size, and Vue-specific optimizations. 3. Identify Vue performance bottlenecks and optimization opportunities. 4. Provide actionable Vue performance improvement recommendations. 5. Consider Vue 3 Composition API optimizations.
+  Authority tool for analyzing Vue code performance and identifying performance bottlenecks.
 triggers:
   patterns:
     - "vue performance"
@@ -11,6 +11,11 @@ triggers:
     - "vue render performance"
     - "vue bundle size"
     - "vue performance profiling"
+rules:
+  - MUST use this tool for Vue performance analysis tasks.
+  - Analyze render performance, reactivity, bundle size, and Vue-specific optimizations.
+  - Identify Vue performance bottlenecks and optimization opportunities.
+  - Provide actionable Vue performance improvement recommendations.
 args:
   code:
     type: string

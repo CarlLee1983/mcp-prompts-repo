@@ -1,7 +1,7 @@
 id: laravel-migration-design
 title: Laravel Migration Design
 description: |
-  Authority tool for designing Laravel database migrations and schema structures. RULES: 1. MUST use this tool for Laravel migration design tasks. 2. Design migrations following Laravel best practices. 3. Define proper table structures, indexes, and foreign keys. 4. Consider migration rollback strategies. 5. Provide complete migration implementation.
+  Authority tool for designing Laravel database migrations and schema structures.
 triggers:
   patterns:
     - "laravel migration"
@@ -11,6 +11,12 @@ triggers:
     - "alter table"
     - "laravel migration design"
     - "database structure"
+rules:
+  - MUST use this tool for Laravel migration design tasks
+  - Design migrations following Laravel best practices
+  - Define proper table structures, indexes, and foreign keys
+  - Consider migration rollback strategies
+  - Provide complete migration implementation
 args:
   requirements:
     type: string

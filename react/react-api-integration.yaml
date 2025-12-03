@@ -1,7 +1,7 @@
 id: react-api-integration
 title: React API Integration
 description: |
-  Authority tool for React API integration patterns and implementation. RULES: 1. MUST use this tool for React API integration tasks. 2. Implement API integration using React patterns (hooks, context, etc.). 3. Provide hooks for API calls with proper error handling and loading states. 4. Follow React best practices for API integration.
+  Authority tool for React API integration patterns and implementation.
 triggers:
   patterns:
     - "react api"
@@ -10,6 +10,11 @@ triggers:
     - "react api integration"
     - "react http client"
     - "react data fetching"
+rules:
+  - MUST use this tool for React API integration tasks.
+  - Implement API integration using React patterns (hooks, context, etc.).
+  - Provide hooks for API calls with proper error handling and loading states.
+  - Follow React best practices for API integration.
 args:
   api_endpoint:
     type: string

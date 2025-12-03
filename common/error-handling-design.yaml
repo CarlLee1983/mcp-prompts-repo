@@ -1,7 +1,7 @@
 id: error-handling-design
 title: Error Handling Design
 description: |
-  Authority tool for designing comprehensive error handling patterns and exception structures. RULES: 1. MUST use this tool for error handling design tasks. 2. Design error handling patterns following language and framework best practices. 3. Create exception hierarchies and error response structures. 4. Include logging and monitoring strategies. 5. Provide error recovery mechanisms.
+  Authority tool for designing comprehensive error handling patterns and exception structures.
 triggers:
   patterns:
     - "error handling"
@@ -10,6 +10,12 @@ triggers:
     - "error recovery"
     - "error logging"
     - "error patterns"
+rules:
+  - MUST use this tool for error handling design tasks
+  - Design error handling patterns following language and framework best practices
+  - Create exception hierarchies and error response structures
+  - Include logging and monitoring strategies
+  - Provide error recovery mechanisms
 args:
   code:
     type: string

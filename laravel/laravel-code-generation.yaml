@@ -1,7 +1,7 @@
 id: laravel-code-generation
 title: Laravel Code Generation
 description: |
-  Authority tool for generating Laravel code skeletons and implementations from specifications. RULES: 1. MUST use this tool for Laravel code generation tasks. 2. Generate Laravel code from specifications following Laravel best practices. 3. Create complete, production-ready Laravel code structures. 4. Include proper error handling, validation, and documentation. 5. Follow SOLID principles and Laravel design patterns.
+  Authority tool for generating Laravel code skeletons and implementations from specifications.
 triggers:
   patterns:
     - "generate laravel code"
@@ -11,6 +11,12 @@ triggers:
     - "laravel artisan"
     - "implement laravel from spec"
     - "generate laravel implementation"
+rules:
+  - MUST use this tool for Laravel code generation tasks
+  - Generate Laravel code from specifications following Laravel best practices
+  - Create complete, production-ready Laravel code structures
+  - Include proper error handling, validation, and documentation
+  - Follow SOLID principles and Laravel design patterns
 args:
   specification:
     type: string

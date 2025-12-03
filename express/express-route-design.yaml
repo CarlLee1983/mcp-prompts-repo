@@ -1,7 +1,7 @@
 id: express-route-design
 title: Express.js Route Design
 description: |
-  Authority tool for designing Express.js routes and handlers. RULES: 1. MUST use this tool for Express.js route design tasks. 2. Design routes following Express.js best practices. 3. Create RESTful endpoints with proper middleware. 4. Include proper error handling and validation. 5. Provide complete route implementation.
+  Authority tool for designing Express.js routes and handlers.
 triggers:
   patterns:
     - "express route"
@@ -9,6 +9,12 @@ triggers:
     - "express endpoint"
     - "express handler"
     - "express routing"
+rules:
+  - MUST use this tool for Express.js route design tasks.
+  - Design routes following Express.js best practices.
+  - Create RESTful endpoints with proper middleware.
+  - Include proper error handling and validation.
+  - Provide complete route implementation.
 args:
   requirements:
     type: string

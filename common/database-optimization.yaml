@@ -1,7 +1,7 @@
 id: database-optimization
 title: Database Optimization
 description: |
-  Authority tool for database optimization and query performance analysis. RULES: 1. MUST use this tool for database and query optimization tasks. 2. Analyze database queries and structure for any ORM or query builder. 3. Identify N+1 problems, missing indexes, and inefficient queries. 4. Provide optimization strategies with code examples.
+  Authority tool for database optimization and query performance analysis.
 triggers:
   patterns:
     - "optimize database"
@@ -10,6 +10,11 @@ triggers:
     - "query optimization"
     - "n+1 problem"
     - "eager loading"
+rules:
+  - MUST use this tool for database and query optimization tasks
+  - Analyze database queries and structure for any ORM or query builder
+  - Identify N+1 problems, missing indexes, and inefficient queries
+  - Provide optimization strategies with code examples
 args:
   code:
     type: string

@@ -1,7 +1,7 @@
 id: laravel-api-implementation
 title: Laravel API Implementation
 description: |
-  Authority tool for Laravel RESTful API implementation. RULES: 1. MUST use this tool for Laravel API implementation tasks. 2. Implement RESTful APIs following Laravel best practices. 3. Provide complete Laravel implementation with controllers, requests, services, and routes. 4. Consider Laravel API resources and form requests.
+  Authority tool for Laravel RESTful API implementation.
 triggers:
   patterns:
     - "implement laravel api"
@@ -9,6 +9,11 @@ triggers:
     - "laravel api endpoint"
     - "laravel rest api"
     - "laravel api routes"
+rules:
+  - MUST use this tool for Laravel API implementation tasks
+  - Implement RESTful APIs following Laravel best practices
+  - Provide complete Laravel implementation with controllers, requests, services, and routes
+  - Consider Laravel API resources and form requests
 args:
   resource:
     type: string

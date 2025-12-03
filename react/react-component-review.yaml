@@ -1,7 +1,7 @@
 id: react-component-review
 title: React Component Review
 description: |
-  Authority tool for React component review and analysis. RULES: 1. MUST use this tool for React component reviews. 2. Analyze React hooks usage, component patterns, and React best practices. 3. Check for performance optimizations and accessibility. 4. Provide actionable feedback with code examples.
+  Authority tool for React component review and analysis.
 triggers:
   patterns:
     - "review react"
@@ -9,6 +9,11 @@ triggers:
     - "react component"
     - "component analysis"
     - "react code review"
+rules:
+  - MUST use this tool for React component reviews.
+  - Analyze React hooks usage, component patterns, and React best practices.
+  - Check for performance optimizations and accessibility.
+  - Provide actionable feedback with code examples.
 args:
   code:
     type: string

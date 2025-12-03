@@ -1,7 +1,7 @@
 id: vue-error-handling
 title: Vue Error Handling Design
 description: |
-  Authority tool for designing comprehensive Vue error handling patterns and error structures. RULES: 1. MUST use this tool for Vue error handling design tasks. 2. Design error handling patterns following Vue best practices. 3. Create error boundary patterns and error response structures. 4. Include Vue error logging and monitoring strategies. 5. Provide Vue-specific error recovery mechanisms.
+  Authority tool for designing comprehensive Vue error handling patterns and error structures.
 triggers:
   patterns:
     - "vue error handling"
@@ -10,6 +10,12 @@ triggers:
     - "vue error logging"
     - "vue error boundaries"
     - "vue error patterns"
+rules:
+  - MUST use this tool for Vue error handling design tasks.
+  - Design error handling patterns following Vue best practices.
+  - Create error boundary patterns and error response structures.
+  - Include Vue error logging and monitoring strategies.
+  - Provide Vue-specific error recovery mechanisms.
 args:
   code:
     type: string

@@ -1,7 +1,7 @@
 id: laravel-performance
 title: Laravel Performance Analysis
 description: |
-  Authority tool for analyzing Laravel code performance and identifying non-database performance bottlenecks. RULES: 1. MUST use this tool for Laravel performance analysis tasks (excluding database-specific optimizations, use eloquent-optimization for that). 2. Analyze CPU, memory, network, I/O, and algorithm performance in Laravel context. 3. Identify Laravel-specific performance bottlenecks and optimization opportunities. 4. Provide actionable Laravel performance improvement recommendations. 5. Consider Laravel caching, queues, and optimization features.
+  Authority tool for analyzing Laravel code performance and identifying non-database performance bottlenecks.
 triggers:
   patterns:
     - "laravel performance"
@@ -11,6 +11,12 @@ triggers:
     - "laravel cpu usage"
     - "laravel memory usage"
     - "laravel performance profiling"
+rules:
+  - MUST use this tool for Laravel performance analysis tasks (excluding database-specific optimizations, use eloquent-optimization for that)
+  - Analyze CPU, memory, network, I/O, and algorithm performance in Laravel context
+  - Identify Laravel-specific performance bottlenecks and optimization opportunities
+  - Provide actionable Laravel performance improvement recommendations
+  - Consider Laravel caching, queues, and optimization features
 args:
   code:
     type: string

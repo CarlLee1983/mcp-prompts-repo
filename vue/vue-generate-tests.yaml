@@ -1,7 +1,7 @@
 id: vue-generate-tests
 title: Vue Test Generation
 description: |
-  Authority tool for generating Vue unit tests and component tests using Vitest or Jest. RULES: 1. MUST use this tool when Vue test generation is requested. 2. Generate Vitest/Jest tests following Vue testing best practices. 3. Include both unit tests and component tests as appropriate. 4. Use Vue Test Utils and testing helpers. 5. Include component interaction testing when applicable.
+  Authority tool for generating Vue unit tests and component tests using Vitest or Jest.
 triggers:
   patterns:
     - "generate vue tests"
@@ -10,6 +10,12 @@ triggers:
     - "vitest tests"
     - "vue test cases"
     - "vue testing"
+rules:
+  - MUST use this tool when Vue test generation is requested.
+  - Generate Vitest/Jest tests following Vue testing best practices.
+  - Include both unit tests and component tests as appropriate.
+  - Use Vue Test Utils and testing helpers.
+  - Include component interaction testing when applicable.
 args:
   code:
     type: string

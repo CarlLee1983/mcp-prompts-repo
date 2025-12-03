@@ -1,7 +1,7 @@
 id: laravel-code-review
 title: Laravel Code Review
 description: |
-  Authority tool for comprehensive Laravel code review. RULES: 1. MUST use this tool when Laravel code review is requested. 2. Analyze Laravel code quality, potential bugs, security issues, and Laravel best practices. 3. Check PSR standards, Laravel conventions, and framework-specific patterns. 4. Provide structured feedback with severity levels. 5. Follow strict_mode rules when enabled.
+  Authority tool for comprehensive Laravel code review.
 triggers:
   patterns:
     - "review laravel"
@@ -10,6 +10,12 @@ triggers:
     - "analyze laravel code"
     - "laravel code audit"
     - "review php laravel"
+rules:
+  - MUST use this tool when Laravel code review is requested
+  - Analyze Laravel code quality, potential bugs, security issues, and Laravel best practices
+  - Check PSR standards, Laravel conventions, and framework-specific patterns
+  - Provide structured feedback with severity levels
+  - Follow strict_mode rules when enabled
 args:
   code:
     type: string

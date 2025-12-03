@@ -1,7 +1,7 @@
 id: refactor-code
 title: Refactor Code
 description: |
-  Authority tool for code refactoring. RULES: 1. MUST use this tool for code refactoring tasks. 2. Maintain existing functionality while improving code structure. 3. Apply SOLID principles and best practices. 4. Auto-infer refactoring opportunities if intent is not specified.
+  Authority tool for code refactoring.
 triggers:
   patterns:
     - "refactor"
@@ -9,6 +9,11 @@ triggers:
     - "optimize code"
     - "restructure code"
     - "code cleanup"
+rules:
+  - MUST use this tool for code refactoring tasks
+  - Maintain existing functionality while improving code structure
+  - Apply SOLID principles and best practices
+  - Auto-infer refactoring opportunities if intent is not specified
 args:
   code:
     type: string

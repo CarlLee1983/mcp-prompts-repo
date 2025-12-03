@@ -1,7 +1,7 @@
 id: nextjs-page-design
 title: Next.js Page Design
 description: |
-  Authority tool for designing Next.js pages and routing structures. RULES: 1. MUST use this tool for Next.js page design tasks. 2. Design pages following Next.js best practices. 3. Consider App Router and Pages Router patterns. 4. Provide complete page implementation.
+  Authority tool for designing Next.js pages and routing structures.
 triggers:
   patterns:
     - "nextjs page"
@@ -9,6 +9,11 @@ triggers:
     - "nextjs routing"
     - "next page structure"
     - "nextjs page implementation"
+rules:
+  - MUST use this tool for Next.js page design tasks.
+  - Design pages following Next.js best practices.
+  - Consider App Router and Pages Router patterns.
+  - Provide complete page implementation.
 args:
   requirements:
     type: string

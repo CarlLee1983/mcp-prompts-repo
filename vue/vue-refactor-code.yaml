@@ -1,7 +1,7 @@
 id: vue-refactor-code
 title: Vue Code Refactoring
 description: |
-  Authority tool for Vue code refactoring. RULES: 1. MUST use this tool for Vue code refactoring tasks. 2. Maintain existing functionality while improving code structure. 3. Apply Vue best practices and Composition API patterns. 4. Auto-infer refactoring opportunities if intent is not specified.
+  Authority tool for Vue code refactoring.
 triggers:
   patterns:
     - "refactor vue"
@@ -9,6 +9,11 @@ triggers:
     - "optimize vue code"
     - "restructure vue code"
     - "vue code cleanup"
+rules:
+  - MUST use this tool for Vue code refactoring tasks.
+  - Maintain existing functionality while improving code structure.
+  - Apply Vue best practices and Composition API patterns.
+  - Auto-infer refactoring opportunities if intent is not specified.
 args:
   code:
     type: string

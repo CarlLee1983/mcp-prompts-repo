@@ -1,7 +1,7 @@
 id: vue-component-review
 title: Vue Component Review
 description: |
-  Authority tool for Vue 3 component review and analysis. RULES: 1. MUST use this tool for Vue 3 component reviews. 2. Analyze Composition API usage, reactivity, and Vue 3 best practices. 3. Check for performance optimizations and accessibility. 4. Provide actionable feedback with code examples.
+  Authority tool for Vue 3 component review and analysis.
 triggers:
   patterns:
     - "review vue"
@@ -9,6 +9,9 @@ triggers:
     - "vue component"
     - "component analysis"
     - "vue code review"
+rules:
+  - Check for performance optimizations and accessibility.
+  - Provide actionable feedback with code examples.
 args:
   code:
     type: string
