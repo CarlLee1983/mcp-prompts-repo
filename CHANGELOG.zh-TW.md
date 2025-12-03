@@ -7,21 +7,22 @@
 
 ## [Unreleased]
 
-### 已移除 (Removed)
-
-#### 移除功能代碼，轉換為純資料結構倉庫
-- CLI 工具 (`scripts/pm.js`) - 所有驗證、文檔生成等功能已由通用 CLI 工具處理
-- `package.json` - 不再需要 Node.js 依賴和腳本
-- `pnpm-lock.yaml` - 不再需要依賴管理
-
 ### 已變更 (Changed)
 
-#### 文檔更新
+- 所有 prompt 檔案現在使用結構化的 `triggers.patterns` 欄位，而非在 description 中使用 TRIGGER 文字
+- 所有使用 `{{> partial }}` 的 prompt 檔案現在都有明確的 `dependencies.partials` 聲明
+- `registry.yaml` 與所有 YAML prompt 檔案現在已 100% 同步
 - 所有文檔已更新，移除 CLI 工具相關內容
   - `README.md` - 更新為純資料倉庫說明
   - `README.zh-TW.md` - 同步更新繁體中文文檔
   - `USAGE.md` - 簡化為資料結構說明
-  - `CONTRIBUTING.md` - 移除驗證和安裝步驟
+  - `CONTRIBUTING.md` - 移除驗證和安裝步驟，並補上 registry 與 dependencies 強制同步規則
+
+### 已移除 (Removed)
+
+- CLI 工具 (`scripts/pm.js`) - 所有驗證、文檔生成等功能已由通用 CLI 工具處理
+- `package.json` - 不再需要 Node.js 依賴和腳本
+- `pnpm-lock.yaml` - 不再需要依賴管理
 
 #### 說明
 本倉庫現在是一個**純資料結構倉庫**，專注於儲存 prompt 模板和配置檔案。所有功能代碼（驗證、文檔生成等）已移至通用的 CLI 工具中，以實現更好的關注點分離和可維護性。

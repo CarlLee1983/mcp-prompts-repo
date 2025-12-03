@@ -8,6 +8,9 @@ and this project is licensed under [CC0 1.0](https://creativecommons.org/publicd
 ## [Unreleased]
 
 ### Changed
+- All prompt files now use structured `triggers.patterns` field instead of TRIGGER text in descriptions
+- All prompt files using `{{> partial }}` now have explicit `dependencies.partials` declarations
+- `registry.yaml` and all YAML prompt files are now 100% synchronized
 - All documentation updated to remove CLI-related content
   - `README.md` — rewritten as a data-only repository guide
   - `README.zh-TW.md` — Traditional Chinese docs updated in sync

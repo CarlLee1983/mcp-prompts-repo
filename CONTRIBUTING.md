@@ -129,6 +129,13 @@ prompts:
     deprecated: false
 ```
 
+**⚠️ CRITICAL**: After creating or modifying a prompt file, you **MUST** ensure:
+1. The prompt is registered in `registry.yaml` with matching `id` and `group`
+2. If using `{{> partial }}` in the template, the partial is declared in `dependencies.partials`
+3. All partials referenced in `dependencies.partials` exist in the `partials/` directory
+
+See [Synchronization Rules](#synchronization-rules) below for detailed requirements and validation checklists.
+
 ## Synchronization Rules
 
 **⚠️ IMPORTANT**: The synchronization rules below are **MANDATORY** and **NON-NEGOTIABLE**. Pull requests that violate these rules will be **automatically rejected**. Please ensure all synchronization requirements are met before submitting your PR.
