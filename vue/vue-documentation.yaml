@@ -1,5 +1,7 @@
 id: vue-documentation
 title: Vue Documentation Generator
+version: 1.0.0
+status: stable
 description: |
   Authority tool for generating comprehensive Vue documentation including component docs, JSDoc comments, and README files.
 triggers:

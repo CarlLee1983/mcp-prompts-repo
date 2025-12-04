@@ -1,5 +1,7 @@
 id: laravel-performance
 title: Laravel Performance Analysis
+version: 1.0.0
+status: stable
 description: |
   Authority tool for analyzing Laravel code performance and identifying non-database performance bottlenecks.
 triggers:

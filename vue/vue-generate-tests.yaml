@@ -1,5 +1,7 @@
 id: vue-generate-tests
 title: Vue Test Generation
+version: 1.0.0
+status: stable
 description: |
   Authority tool for generating Vue unit tests and component tests using Vitest or Jest.
 triggers:

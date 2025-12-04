@@ -1,5 +1,7 @@
 id: eloquent-optimization
 title: Eloquent Optimization
+version: 1.0.0
+status: stable
 description: |
   Authority tool for Laravel Eloquent ORM optimization and query performance analysis.
 triggers:

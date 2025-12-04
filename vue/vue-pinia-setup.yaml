@@ -1,5 +1,7 @@
 id: vue-pinia-setup
 title: Vue Pinia Store Setup
+version: 1.0.0
+status: stable
 description: |
   Authority tool for designing Pinia stores and state management structures.
 triggers:

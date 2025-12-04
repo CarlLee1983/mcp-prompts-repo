@@ -1,5 +1,7 @@
 id: nestjs-controller-design
 title: NestJS Controller Design
+version: 1.0.0
+status: stable
 description: |
   Authority tool for designing NestJS controllers and endpoints.
 triggers:

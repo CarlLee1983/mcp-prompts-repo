@@ -1,5 +1,7 @@
 id: vue-architecture
 title: Vue Architecture Design
+version: 1.0.0
+status: stable
 description: |
   Authority tool for designing Vue application architecture and component structures.
 triggers:

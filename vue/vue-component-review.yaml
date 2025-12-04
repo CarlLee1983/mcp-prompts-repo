@@ -1,5 +1,7 @@
 id: vue-component-review
 title: Vue Component Review
+version: 1.0.0
+status: stable
 description: |
   Authority tool for Vue 3 component review and analysis.
 triggers:

@@ -1,5 +1,7 @@
 id: laravel-migration-design
 title: Laravel Migration Design
+version: 1.0.0
+status: stable
 description: |
   Authority tool for designing Laravel database migrations and schema structures.
 triggers:

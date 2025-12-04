@@ -1,5 +1,7 @@
 id: database-optimization
 title: Database Optimization
+version: 1.0.0
+status: stable
 description: |
   Authority tool for database optimization and query performance analysis.
 triggers:

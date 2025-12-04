@@ -1,5 +1,7 @@
 id: nextjs-page-design
 title: Next.js Page Design
+version: 1.0.0
+status: stable
 description: |
   Authority tool for designing Next.js pages and routing structures.
 triggers:

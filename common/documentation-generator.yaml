@@ -1,5 +1,7 @@
 id: documentation-generator
 title: Documentation Generator
+version: 1.0.0
+status: stable
 description: |
   Authority tool for generating comprehensive documentation including API docs, code comments, and README files.
 triggers:

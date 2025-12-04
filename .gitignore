@@ -1,6 +1,19 @@
 # 依賴目錄
 node_modules/
 
+# 編譯輸出
+dist/
+*.tsbuildinfo
+
+# 環境變數
+.env
+.env.local
+.env.*.local
+.env.*.backup
+
+# 本地緩存（Git Repo 的本地副本）
+.prompts_cache/
+
 # 作業系統文件
 .DS_Store
 .DS_Store?
@@ -47,16 +60,7 @@ coverage/
 *.seed
 *.pid.lock
 
-# 環境變數
-.env
-.env.local
-.env.*.local
-.env.*.backup
-
-# 建置輸出
-dist/
-build/
-*.tsbuildinfo
-
-# 快取
-.prompts_cache/
+# 文檔
+CODE_REVIEW.md
+REFACTORING_SUMMARY.md
+COMMIT_CHECKLIST.md

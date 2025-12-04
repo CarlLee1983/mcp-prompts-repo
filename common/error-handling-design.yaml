@@ -1,5 +1,7 @@
 id: error-handling-design
 title: Error Handling Design
+version: 1.0.0
+status: stable
 description: |
   Authority tool for designing comprehensive error handling patterns and exception structures.
 triggers:

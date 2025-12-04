@@ -1,5 +1,7 @@
 id: django-view-design
 title: Django View Design
+version: 1.0.0
+status: stable
 description: |
   Authority tool for designing Django views and API endpoints.
 triggers:

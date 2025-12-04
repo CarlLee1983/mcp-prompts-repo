@@ -1,5 +1,7 @@
 id: react-api-integration
 title: React API Integration
+version: 1.0.0
+status: stable
 description: |
   Authority tool for React API integration patterns and implementation.
 triggers:

@@ -1,5 +1,7 @@
 id: vue-router-config
 title: Vue Router Configuration
+version: 1.0.0
+status: stable
 description: |
   Authority tool for designing Vue Router configurations and routing structures.
 triggers:

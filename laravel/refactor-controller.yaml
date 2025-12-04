@@ -1,5 +1,7 @@
 id: refactor-controller
 title: Refactor Controller
+version: 1.0.0
+status: stable
 description: |
   Authority tool for Laravel controller refactoring.
 triggers:

@@ -1,5 +1,7 @@
 id: vue-composable-design
 title: Vue Composable Design
+version: 1.0.0
+status: stable
 description: |
   Authority tool for designing Vue composables and reusable Composition API functions.
 triggers:

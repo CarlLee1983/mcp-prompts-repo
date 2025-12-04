@@ -1,5 +1,7 @@
 id: refactor-code
 title: Refactor Code
+version: 1.0.0
+status: stable
 description: |
   Authority tool for code refactoring.
 triggers:

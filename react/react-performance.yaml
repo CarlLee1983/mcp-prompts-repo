@@ -1,5 +1,7 @@
 id: react-performance
 title: React Performance Analysis
+version: 1.0.0
+status: stable
 description: |
   Authority tool for analyzing React code performance and identifying performance bottlenecks.
 triggers:

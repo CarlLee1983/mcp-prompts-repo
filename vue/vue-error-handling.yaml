@@ -1,5 +1,7 @@
 id: vue-error-handling
 title: Vue Error Handling Design
+version: 1.0.0
+status: stable
 description: |
   Authority tool for designing comprehensive Vue error handling patterns and error structures.
 triggers:

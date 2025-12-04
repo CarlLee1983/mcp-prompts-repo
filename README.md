@@ -1,225 +1,1149 @@
-# Prompt Repository
+# MCP Prompt Manager (Git-Driven)
 
-這是一個純資料結構倉庫，包含用於 MCP Prompt Manager 的 prompt 模板和配置檔案。
+<div align="center">
 
-## 📋 專案說明
+**Git-driven Model Context Protocol (MCP) Server for managing and providing Prompt templates**
 
-本倉庫是一個**純資料結構倉庫**，不包含任何功能代碼或 CLI 工具。所有驗證、文檔生成等功能已由通用的 CLI 工具處理。
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/CarlLee1983/mcp-prompt-manager)
+[![License](https://img.shields.io/badge/license-ISC-green.svg)](LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9+-blue.svg)](https://www.typescriptlang.org/)
+[![Node](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
 
-## 📂 資料結構
+[English](README.md) | [繁體中文](README.zh-TW.md)
 
-### 核心檔案
+</div>
 
-- **`registry.yaml`** - Prompt 註冊表，定義所有可用的 prompts 及其元資料
-- **`partials/`** - Handlebars partials 模板目錄
+## 📋 Introduction
 
-### Prompt 檔案
+This is a Git-driven Model Context Protocol (MCP) Server designed for managing and providing Prompt templates. It allows you to store Prompts in a separate Git Repository and use them directly in AI editors like Cursor, Claude Desktop, etc., through the MCP protocol.
 
-Prompts 按群組組織在不同的目錄中：
+**Key Benefits:**
+- 🔄 Team Collaboration: Ensure unified Prompt versions across teams through Git version control
+- 🎯 Dynamic Templates: Support Handlebars syntax to create reusable dynamic Prompts
+- 🚀 Zero-Downtime Reload: Hot-reload support to update Prompts without restarting
+- 🔍 Smart Management: Built-in Prompt version management, state tracking, and group filtering
+- 📊 Complete Monitoring: System health status and Prompt statistics
 
-- **`common/`** - 通用 prompts，適用於所有語言和框架
-- **`laravel/`** - Laravel 特定的 prompts
-- **`vue/`** - Vue.js 特定的 prompts
-- **`react/`** - React 特定的 prompts
-- **`nestjs/`** - NestJS 特定的 prompts
-- **`nextjs/`** - Next.js 特定的 prompts
-- **`express/`** - Express.js 特定的 prompts
-- **`fastapi/`** - FastAPI 特定的 prompts
-- **`spring/`** - Spring Boot 特定的 prompts
-- **`django/`** - Django 特定的 prompts
-- **`typescript/`** - TypeScript 特定的 prompts
+## ✨ Features
 
-每個 prompt 檔案是 YAML 格式，包含以下欄位：
+- **Git Sync**: Prompts are synced directly from the specified Git Repository, ensuring teams use unified Prompt versions.
+- **Handlebars Templates**: Support powerful Handlebars syntax to create dynamic, reusable Prompt templates.
+- **Partials Support**: Support Handlebars Partials for splitting and reusing Prompt fragments (e.g., role settings, output formats).
+- **Local Cache**: Automatically cache Git Repo content to local `.prompts_cache` directory for faster reads.
+- **Cache Expiration Strategy**: Automatically clean up expired cache items periodically to prevent memory leaks and ensure data consistency.
+- **Group Filtering**: Support filtering prompts by group, loading only what you need.
+- **Error Handling**: Complete error statistics and reporting for issue tracking.
+- **Retry Mechanism**: Automatic retry for Git operations to improve reliability.
+- **Type Safety**: Use Zod to validate configuration and prompt definitions for type safety.
+- **Professional Logging**: Use pino logging system with structured logs and multiple log levels.
 
-```yaml
-id: "prompt-id"
-title: "Prompt Title"
-description: "詳細描述，包含 TRIGGER 和 RULES"
-args:
-  param1:
-    type: "string"
-    description: "參數描述"
-template: |
-  {{> role-expert}}
-  
-  # 模板內容
-```
+## 🚀 Quick Start
 
-## 📚 文檔
+### 1. Installation
 
-- [使用指南](./USAGE.md) - 資料結構說明和與 MCP Prompt Manager 整合
-- [貢獻指南](./CONTRIBUTING.md) - 如何為專案做出貢獻
-- [變更日誌](./CHANGELOG.md) - 版本變更記錄
-- [繁體中文文檔](./README.zh-TW.md) - 繁體中文說明
-
-## 🔗 與 MCP Prompt Manager 整合
-
-### 設定環境變數
-
-在 MCP Prompt Manager 的配置中設定：
+First, clone this project and install dependencies:
 
 ```bash
-# 本地路徑
-PROMPT_REPO_URL=/path/to/prompts-repo
-
-# 或 Git URL
-PROMPT_REPO_URL=https://github.com/yourusername/prompts-repo.git
-
-# 指定要載入的群組
-MCP_GROUPS=laravel,vue,react
+git clone <project URL>
+cd mcp-prompt-manager
+npm install
+# or use pnpm (recommended)
+pnpm install
 ```
 
-### 群組過濾
+> Note: Installs are enforced with pnpm; npm/yarn will fail because of the preinstall check.
 
-- **根目錄** (`/`): 永遠載入
-- **common 群組**: 永遠載入
-- **其他群組**: 需在 `MCP_GROUPS` 中指定
+### 2. Configure Environment Variables
 
-範例：
-- `MCP_GROUPS=laravel,vue` → 載入 common、laravel、vue
-- `MCP_GROUPS=` → 只載入 common
+Copy the example configuration file and create `.env`:
 
-## 📦 統計
+```bash
+cp .env.example .env
+```
 
-- **總 Prompts**: 53 個
-- **框架覆蓋**: 11 個框架/語言
-- **通用 Prompts**: 11 個
-- **框架特定 Prompts**: 42 個
+Edit the `.env` file to set your Prompt Git Repository path or URL:
 
-## 📂 群組：common（通用）
+```bash
+# Git Repository source (required)
+# Local path example
+PROMPT_REPO_URL=/Users/yourname/Desktop/my-local-prompts
 
-- **api-design**: Authority tool for RESTful API design and architecture. TRIGGER: When user mentions "design api", "create api", "api endpoint", "rest api", "api architecture", or "api structure". RULES: 1. MUST use this tool for API design tasks. 2. Design RESTful APIs following industry best practices. 3. Consider backend and frontend integration patterns. 4. Provide complete API specification with examples.
+# Or remote Git URL examples
+# PROMPT_REPO_URL=https://github.com/yourusername/my-prompts.git
+# PROMPT_REPO_URL=git@github.com:yourusername/my-prompts.git
 
-- **architecture-design**: Authority tool for designing system architecture and module structures. TRIGGER: When user mentions "architecture", "system design", "module design", "system architecture", "software architecture", "microservices", "monolith", or "system structure". RULES: 1. MUST use this tool for architecture and system design tasks. 2. Design scalable, maintainable, and robust system architectures. 3. Consider different architectural patterns (monolith, microservices, serverless, etc.). 4. Provide module structure and component design. 5. Include scalability, maintainability, and performance considerations.
+# Output language setting (optional, default: en)
+MCP_LANGUAGE=en  # or zh
 
-- **code-generation**: Authority tool for generating code skeletons and implementations from specifications. TRIGGER: When user mentions "generate code", "create code", "code skeleton", "scaffold code", "implement from spec", "code from requirements", or "generate implementation". RULES: 1. MUST use this tool for code generation tasks. 2. Generate code from specifications following language and framework best practices. 3. Create complete, production-ready code structures. 4. Include proper error handling, validation, and documentation. 5. Follow SOLID principles and design patterns when applicable.
+# Group filter setting (optional, defaults to loading only common group when not set)
+# Example: MCP_GROUPS="laravel,vue,react"
+# Note: When not set, the system will explicitly prompt in logs about using default groups
+MCP_GROUPS=laravel,vue
 
-- **code-review**: Authority tool for comprehensive code review. TRIGGER: When user mentions "review", "check code", "code quality", "analyze code", or "code audit". RULES:  1. MUST use this tool when code review is requested. 2. Analyze code quality, potential bugs, security issues, and best practices. 3. Provide structured feedback with severity levels. 4. Follow strict_mode rules when enabled.
+# Custom storage directory (optional, default: .prompts_cache)
+STORAGE_DIR=/custom/path
 
-- **database-optimization**: Authority tool for database optimization and query performance analysis. TRIGGER: When user mentions "optimize database", "slow query", "database performance", "query optimization", "n+1 problem", or "eager loading". RULES: 1. MUST use this tool for database and query optimization tasks. 2. Analyze database queries and structure for any ORM or query builder. 3. Identify N+1 problems, missing indexes, and inefficient queries. 4. Provide optimization strategies with code examples.
+# Git branch (optional, default: main)
+GIT_BRANCH=main
 
-- **documentation-generator**: Authority tool for generating comprehensive documentation including API docs, code comments, and README files. TRIGGER: When user mentions "generate docs", "create documentation", "api docs", "code comments", "readme", "document code", or "write docs". RULES: 1. MUST use this tool for documentation generation tasks. 2. Generate documentation following industry standards and best practices. 3. Support multiple documentation formats (Markdown, OpenAPI, JSDoc, PHPDoc, etc.). 4. Include examples and usage patterns when requested. 5. Ensure documentation is clear, comprehensive, and maintainable.
+# Git retry count (optional, default: 3)
+GIT_MAX_RETRIES=3
 
-- **error-handling-design**: Authority tool for designing comprehensive error handling patterns and exception structures. TRIGGER: When user mentions "error handling", "exception design", "error management", "error recovery", "error logging", or "error patterns". RULES: 1. MUST use this tool for error handling design tasks. 2. Design error handling patterns following language and framework best practices. 3. Create exception hierarchies and error response structures. 4. Include logging and monitoring strategies. 5. Provide error recovery mechanisms.
+# Cache cleanup interval (optional, default: 10000 milliseconds)
+# Set the interval time (in milliseconds) for periodic cleanup of expired cache items
+# Default is 10 seconds (CACHE_TTL * 2) to ensure expired items are cleaned up promptly
+# Recommended values: 5000-30000 milliseconds, adjust based on usage frequency
+CACHE_CLEANUP_INTERVAL=10000
 
-- **generate-unit-tests**: Authority tool for generating unit tests for any programming language. TRIGGER: When user mentions "generate tests", "create tests", "write tests", "unit tests", "test cases", "test coverage", or "testing". RULES: 1. MUST use this tool when unit test generation is requested. 2. Analyze code structure and generate comprehensive unit tests. 3. Use appropriate test framework for the programming language. 4. Include edge cases and error handling when requested. 5. Follow language and framework best practices.
+# Log level (optional)
+# Options: fatal, error, warn, info, debug, trace, silent
+# Notes:
+# - stderr only outputs warn/error/fatal level logs (to avoid being marked as error)
+# - info/debug/trace level logs only output to file (if LOG_FILE is set)
+# - If LOG_FILE is not set, info level logs are completely suppressed (to avoid confusion)
+# - Production environment defaults to warn (only warnings and errors), development defaults to info
+# - Setting silent completely disables log output
+LOG_LEVEL=info
 
-- **performance-analysis**: Authority tool for analyzing code performance and identifying non-database performance bottlenecks. TRIGGER: When user mentions "performance", "optimize performance", "slow code", "bottleneck", "cpu usage", "memory usage", "algorithm optimization", or "performance profiling". RULES: 1. MUST use this tool for performance analysis tasks (excluding database-specific optimizations). 2. Analyze CPU, memory, network, I/O, and algorithm performance. 3. Identify performance bottlenecks and optimization opportunities. 4. Provide actionable performance improvement recommendations. 5. Consider concurrency and parallel processing when applicable.
+# Log file path (optional, strongly recommended)
+# After setting this variable, all level logs will be written to file (JSON format)
+# stderr still only outputs warn/error/fatal (to avoid being marked as error)
+# Can be absolute or relative path (relative to project root)
+# Examples:
+# LOG_FILE=/tmp/mcp-prompt-manager.log
+# LOG_FILE=logs/mcp.log
+# Note: File is written in append mode, will not overwrite existing content
+# Recommendation: Set this variable to view complete logs (including info level)
+LOG_FILE=logs/mcp.log
+```
 
-- **refactor-code**: Authority tool for code refactoring. TRIGGER: When user mentions "refactor", "improve code", "optimize code", "restructure code", or "code cleanup". RULES: 1. MUST use this tool for code refactoring tasks. 2. Maintain existing functionality while improving code structure. 3. Apply SOLID principles and best practices. 4. Auto-infer refactoring opportunities if intent is not specified.
+### 3. Build
 
-- **security-audit**: Authority tool for comprehensive security vulnerability assessment and security audit. TRIGGER: When user mentions "security audit", "security review", "vulnerability", "security check", "penetration test", "security scan", "owasp", or "security assessment". RULES: 1. MUST use this tool for security audit and vulnerability assessment tasks. 2. Focus on identifying security vulnerabilities and risks. 3. Check against OWASP Top 10, CWE, and other security standards. 4. Provide actionable security recommendations. 5. Prioritize vulnerabilities by severity and impact.
+```bash
+npm run build
+# or
+pnpm run build
+```
 
+## 🛠️ Usage
 
-## 📂 群組：django
+### Testing with Inspector
 
-- **django-view-design**: Authority tool for designing Django views and API endpoints. TRIGGER: When user mentions "django view", "django api", "django endpoint", "django rest", or "django viewset". RULES: 1. MUST use this tool for Django view design tasks. 2. Design views following Django best practices. 3. Create RESTful endpoints with Django REST Framework. 4. Include proper serialization and validation. 5. Provide complete view implementation.
+We provide a convenient command to start the MCP Inspector for testing:
 
+#### Basic Usage
 
-## 📂 群組：express
+**Important**: Inspector runs the compiled `dist/index.js`, so if you've modified the source code, you need to compile first:
 
-- **express-route-design**: Authority tool for designing Express.js routes and handlers. TRIGGER: When user mentions "express route", "express api", "express endpoint", "express handler", or "express routing". RULES: 1. MUST use this tool for Express.js route design tasks. 2. Design routes following Express.js best practices. 3. Create RESTful endpoints with proper middleware. 4. Include proper error handling and validation. 5. Provide complete route implementation.
+```bash
+# 1. Compile first (if source code was modified)
+pnpm run build
 
+# 2. Start Inspector
+pnpm run inspector
+```
 
-## 📂 群組：fastapi
+#### Quick Development Mode
 
-- **fastapi-endpoint-design**: Authority tool for designing FastAPI endpoints and routes. TRIGGER: When user mentions "fastapi endpoint", "fastapi route", "fastapi api", "fastapi handler", or "fastapi router". RULES: 1. MUST use this tool for FastAPI endpoint design tasks. 2. Design endpoints following FastAPI best practices. 3. Create RESTful endpoints with proper Pydantic models. 4. Include proper validation and documentation. 5. Provide complete endpoint implementation.
+If you're developing, you can use a combined command that automatically compiles before starting Inspector:
 
+```bash
+pnpm run inspector:dev
+```
 
-## 📂 群組：laravel
+This automatically runs `build` and then starts Inspector, ensuring you're testing the latest compiled code.
 
-- **eloquent-optimization**: Authority tool for Laravel Eloquent ORM optimization and query performance analysis. TRIGGER: When user mentions "optimize eloquent", "eloquent performance", "eloquent query", "n+1 eloquent", or "eager loading eloquent". RULES: 1. MUST use this tool for Eloquent ORM optimization tasks. 2. Analyze Eloquent queries and relationships. 3. Identify N+1 problems, missing indexes, and inefficient Eloquent queries. 4. Provide Eloquent-specific optimization strategies.
+#### Inspector Features
 
-- **laravel-api-implementation**: Authority tool for Laravel RESTful API implementation. TRIGGER: When user mentions "implement laravel api", "create laravel api", "laravel api endpoint", "laravel rest api", or "laravel api routes". RULES: 1. MUST use this tool for Laravel API implementation tasks. 2. Implement RESTful APIs following Laravel best practices. 3. Provide complete Laravel implementation with controllers, requests, services, and routes. 4. Consider Laravel API resources and form requests.
+Inspector launches a web interface where you can:
 
-- **laravel-architecture**: Authority tool for designing Laravel system architecture and module structures. TRIGGER: When user mentions "laravel architecture", "laravel system design", "laravel module design", "laravel system architecture", "laravel software architecture", or "laravel structure". RULES: 1. MUST use this tool for Laravel architecture and system design tasks. 2. Design scalable, maintainable, and robust Laravel architectures. 3. Consider Laravel architectural patterns (MVC, Service Layer, Repository, etc.). 4. Provide Laravel module structure and component design. 5. Include Laravel scalability, maintainability, and performance considerations.
+- View all loaded prompts
+- Test prompt output
+- Check error messages
+- Verify environment variable settings
 
-- **laravel-code-generation**: Authority tool for generating Laravel code skeletons and implementations from specifications. TRIGGER: When user mentions "generate laravel code", "create laravel code", "laravel code skeleton", "scaffold laravel code", "laravel artisan", "implement laravel from spec", or "generate laravel implementation". RULES: 1. MUST use this tool for Laravel code generation tasks. 2. Generate Laravel code from specifications following Laravel best practices. 3. Create complete, production-ready Laravel code structures. 4. Include proper error handling, validation, and documentation. 5. Follow SOLID principles and Laravel design patterns.
+### Using in Cursor
 
-- **laravel-code-review**: Authority tool for comprehensive Laravel code review. TRIGGER: When user mentions "review laravel", "check laravel code", "laravel code quality", "analyze laravel code", "laravel code audit", or "review php laravel". RULES:  1. MUST use this tool when Laravel code review is requested. 2. Analyze Laravel code quality, potential bugs, security issues, and Laravel best practices. 3. Check PSR standards, Laravel conventions, and framework-specific patterns. 4. Provide structured feedback with severity levels. 5. Follow strict_mode rules when enabled.
+#### Configuration File Location
 
-- **laravel-documentation**: Authority tool for generating comprehensive Laravel documentation including API docs, PHPDoc comments, and README files. TRIGGER: When user mentions "generate laravel docs", "create laravel documentation", "laravel api docs", "phpdoc", "laravel code comments", "laravel readme", or "document laravel code". RULES: 1. MUST use this tool for Laravel documentation generation tasks. 2. Generate documentation following PHPDoc and Laravel documentation standards. 3. Support PHPDoc, Markdown, and OpenAPI formats. 4. Include Laravel-specific examples and usage patterns. 5. Ensure documentation is clear, comprehensive, and maintainable.
+**macOS:**
 
-- **laravel-error-handling**: Authority tool for designing comprehensive Laravel error handling patterns and exception structures. TRIGGER: When user mentions "laravel error handling", "laravel exception design", "laravel error management", "laravel error recovery", "laravel error logging", or "laravel error patterns". RULES: 1. MUST use this tool for Laravel error handling design tasks. 2. Design error handling patterns following Laravel best practices. 3. Create Laravel exception hierarchies and error response structures. 4. Include Laravel logging and monitoring strategies. 5. Provide Laravel-specific error recovery mechanisms.
+```
+~/Library/Application Support/Cursor/User/globalStorage/cursor.mcp/mcp.json
+```
 
-- **laravel-generate-tests**: Authority tool for generating Laravel unit tests and feature tests using PHPUnit. TRIGGER: When user mentions "generate laravel tests", "create laravel tests", "write laravel tests", "phpunit tests", "laravel test cases", or "laravel testing". RULES: 1. MUST use this tool when Laravel test generation is requested. 2. Generate PHPUnit tests following Laravel testing best practices. 3. Include both unit tests and feature tests as appropriate. 4. Use Laravel testing helpers and assertions. 5. Include database testing patterns when applicable.
+**Windows:**
 
-- **laravel-migration-design**: Authority tool for designing Laravel database migrations and schema structures. TRIGGER: When user mentions "laravel migration", "database migration", "laravel schema", "create table", "alter table", "laravel migration design", or "database structure". RULES: 1. MUST use this tool for Laravel migration design tasks. 2. Design migrations following Laravel best practices. 3. Define proper table structures, indexes, and foreign keys. 4. Consider migration rollback strategies. 5. Provide complete migration implementation.
+```
+%APPDATA%\Cursor\User\globalStorage\cursor.mcp\mcp.json
+```
 
-- **laravel-model-design**: Authority tool for designing Laravel Eloquent models, relationships, and model structures. TRIGGER: When user mentions "laravel model", "eloquent model", "laravel model design", "model relationships", "model structure", "laravel model optimization", or "eloquent relationships". RULES: 1. MUST use this tool for Laravel model design tasks. 2. Design Eloquent models following Laravel best practices. 3. Define relationships, accessors, mutators, and scopes. 4. Consider mass assignment protection and model events. 5. Provide complete model implementation with relationships.
+**Linux:**
 
-- **laravel-performance**: Authority tool for analyzing Laravel code performance and identifying non-database performance bottlenecks. TRIGGER: When user mentions "laravel performance", "optimize laravel performance", "slow laravel code", "laravel bottleneck", "laravel cpu usage", "laravel memory usage", or "laravel performance profiling". RULES: 1. MUST use this tool for Laravel performance analysis tasks (excluding database-specific optimizations, use eloquent-optimization for that). 2. Analyze CPU, memory, network, I/O, and algorithm performance in Laravel context. 3. Identify Laravel-specific performance bottlenecks and optimization opportunities. 4. Provide actionable Laravel performance improvement recommendations. 5. Consider Laravel caching, queues, and optimization features.
+```
+~/.config/Cursor/User/globalStorage/cursor.mcp/mcp.json
+```
 
-- **laravel-refactor-code**: Authority tool for Laravel code refactoring (general, not just controllers). TRIGGER: When user mentions "refactor laravel", "improve laravel code", "optimize laravel code", "restructure laravel code", or "laravel code cleanup". RULES: 1. MUST use this tool for Laravel code refactoring tasks. 2. Maintain existing functionality while improving code structure. 3. Apply SOLID principles and Laravel best practices. 4. Auto-infer refactoring opportunities if intent is not specified.
+#### Configuration Steps
 
-- **laravel-security**: Authority tool for comprehensive Laravel security vulnerability assessment and security audit. TRIGGER: When user mentions "laravel security audit", "laravel security review", "laravel vulnerability", "laravel security check", "laravel security scan", "laravel owasp", or "laravel security assessment". RULES: 1. MUST use this tool for Laravel security audit and vulnerability assessment tasks. 2. Focus on identifying Laravel-specific security vulnerabilities and risks. 3. Check against OWASP Top 10, Laravel security features, and best practices. 4. Provide actionable Laravel security recommendations. 5. Prioritize vulnerabilities by severity and impact.
+1. **Find the configuration file**:
+    - Method 1: In Cursor, press `Cmd/Ctrl + Shift + P`, search for "MCP: Add server"
+    - Method 2: Directly edit the `mcp.json` file at the path above
 
-- **laravel-service-provider**: Authority tool for designing Laravel service providers and service container bindings. TRIGGER: When user mentions "laravel service provider", "service provider design", "laravel container", "dependency injection", "laravel binding", or "service provider configuration". RULES: 1. MUST use this tool for Laravel service provider design tasks. 2. Design service providers following Laravel best practices. 3. Define proper service container bindings. 4. Consider deferred providers and singleton bindings. 5. Provide complete service provider implementation.
+2. **Edit the configuration file**:
 
-- **refactor-controller**: Authority tool for Laravel controller refactoring. TRIGGER: When user mentions "refactor controller", "improve controller", "optimize controller", or "restructure controller". RULES: 1. MUST use this tool for Laravel controller refactoring tasks. 2. Maintain existing functionality while improving code structure. 3. Apply SOLID principles and Laravel best practices. 4. Auto-infer refactoring opportunities if intent is not specified.
+```json
+{
+    "mcpServers": {
+        "mcp-prompt-manager": {
+            "command": "node",
+            "args": ["/path/to/mcp-prompt-manager/dist/index.js"],
+            "env": {
+                "PROMPT_REPO_URL": "/Users/yourname/Desktop/my-local-prompts",
+                "MCP_LANGUAGE": "zh",
+                "MCP_GROUPS": "laravel,vue"
+            }
+        }
+    }
+}
+```
 
+3. **Important Configuration Notes**:
+    - `command`: Use `node` to execute the compiled JavaScript file
+    - `args`: Must be an **absolute path** pointing to `dist/index.js`
+    - `env`: Environment variables (optional, if already set in `.env`)
+
+4. **Verify Configuration**:
+    - Restart Cursor
+    - In Cursor, press `Cmd/Ctrl + Shift + P`, search for "MCP: Show servers"
+    - Confirm that `mcp-prompt-manager` shows as connected
+
+> **Note**:
+>
+> - Replace `/path/to/mcp-prompt-manager` with the actual absolute path of this project
+> - If environment variables are already set in `.env`, the `env` block can be omitted, but specifying directly in JSON is usually more robust
+> - If the configuration file doesn't exist, you need to create the `mcp.json` file first
 
-## 📂 群組：nestjs
+### Using in Claude Desktop
 
-- **nestjs-controller-design**: Authority tool for designing NestJS controllers and endpoints. TRIGGER: When user mentions "nestjs controller", "nestjs api", "nestjs endpoint", "nestjs route", or "nestjs handler". RULES: 1. MUST use this tool for NestJS controller design tasks. 2. Design controllers following NestJS best practices. 3. Create RESTful endpoints with proper decorators. 4. Include proper DTOs and validation. 5. Provide complete controller implementation.
+#### Configuration File Location
 
+**macOS:**
 
-## 📂 群組：nextjs
+```
+~/Library/Application Support/Claude/claude_desktop_config.json
+```
 
-- **nextjs-api-routes**: Authority tool for designing Next.js API routes and handlers. TRIGGER: When user mentions "nextjs api", "next api routes", "nextjs api handler", "next api endpoint", or "nextjs api implementation". RULES: 1. MUST use this tool for Next.js API route design tasks. 2. Design API routes following Next.js best practices. 3. Consider Route Handlers (App Router) and API Routes (Pages Router). 4. Provide complete API route implementation.
+**Windows:**
 
-- **nextjs-page-design**: Authority tool for designing Next.js pages and routing structures. TRIGGER: When user mentions "nextjs page", "next page design", "nextjs routing", "next page structure", or "nextjs page implementation". RULES: 1. MUST use this tool for Next.js page design tasks. 2. Design pages following Next.js best practices. 3. Consider App Router and Pages Router patterns. 4. Provide complete page implementation.
+```
+%APPDATA%\Claude\claude_desktop_config.json
+```
 
+**Linux:**
 
-## 📂 群組：react
+```
+~/.config/Claude/claude_desktop_config.json
+```
 
-- **react-api-integration**: Authority tool for React API integration patterns and implementation. TRIGGER: When user mentions "react api", "react fetch", "react axios", "react api integration", "react http client", or "react data fetching". RULES: 1. MUST use this tool for React API integration tasks. 2. Implement API integration using React patterns (hooks, context, etc.). 3. Provide hooks for API calls with proper error handling and loading states. 4. Follow React best practices for API integration.
+#### Configuration Steps
 
-- **react-component-review**: Authority tool for React component review and analysis. TRIGGER: When user mentions "review react", "check react component", "react component", "component analysis", or "react code review". RULES: 1. MUST use this tool for React component reviews. 2. Analyze React hooks usage, component patterns, and React best practices. 3. Check for performance optimizations and accessibility. 4. Provide actionable feedback with code examples.
+1. **Create or edit the configuration file**:
 
-- **react-hooks-design**: Authority tool for designing React custom hooks and hooks patterns. TRIGGER: When user mentions "react hooks", "custom hooks", "react hooks design", "hooks pattern", "react hooks implementation", or "react hooks best practices". RULES: 1. MUST use this tool for React hooks design tasks. 2. Design hooks following React Hooks best practices. 3. Create reusable, testable, and maintainable hooks. 4. Consider hooks patterns and conventions. 5. Provide complete hooks implementation.
+If the file doesn't exist, create it first:
 
-- **react-performance**: Authority tool for analyzing React code performance and identifying performance bottlenecks. TRIGGER: When user mentions "react performance", "optimize react", "slow react", "react bottleneck", "react render performance", or "react performance profiling". RULES: 1. MUST use this tool for React performance analysis tasks. 2. Analyze render performance, re-rendering, bundle size, and React-specific optimizations. 3. Identify React performance bottlenecks and optimization opportunities. 4. Provide actionable React performance improvement recommendations.
+```bash
+# macOS/Linux
+mkdir -p ~/Library/Application\ Support/Claude
+touch ~/Library/Application\ Support/Claude/claude_desktop_config.json
+```
 
-- **react-testing**: Authority tool for generating React tests using React Testing Library or Jest. TRIGGER: When user mentions "generate react tests", "create react tests", "react test cases", "react testing", or "react unit tests". RULES: 1. MUST use this tool when React test generation is requested. 2. Generate tests following React Testing Library best practices. 3. Include component and hook tests. 4. Use React Testing Library and Jest/Vitest.
+2. **Edit the configuration file**:
 
+```json
+{
+    "mcpServers": {
+        "mcp-prompt-manager": {
+            "command": "node",
+            "args": ["/path/to/mcp-prompt-manager/dist/index.js"],
+            "env": {
+                "PROMPT_REPO_URL": "/Users/yourname/Desktop/my-local-prompts",
+                "MCP_LANGUAGE": "zh",
+                "MCP_GROUPS": "laravel,vue"
+            }
+        }
+    }
+}
+```
 
-## 📂 群組：spring
+3. **Verify Configuration**:
+    - Completely close Claude Desktop (ensure all windows are closed)
+    - Restart Claude Desktop
+    - In conversations, Claude should be able to use your defined prompts
+
+> **Note**:
+>
+> - Configuration file must be valid JSON format
+> - Paths must use absolute paths
+> - After modifying the configuration file, you must completely restart Claude Desktop
 
-- **spring-controller-design**: Authority tool for designing Spring Boot REST controllers and endpoints. TRIGGER: When user mentions "spring controller", "spring rest controller", "spring api", "spring endpoint", or "spring boot controller". RULES: 1. MUST use this tool for Spring Boot controller design tasks. 2. Design controllers following Spring Boot best practices. 3. Create RESTful endpoints with proper annotations. 4. Include proper error handling and validation. 5. Provide complete controller implementation.
+### Using in VS Code (via Extension)
 
+VS Code can use MCP Server through MCP extensions.
 
-## 📂 群組：typescript
+#### Configuration Steps
 
-- **typescript-type-design**: Authority tool for designing TypeScript types, interfaces, and type structures. TRIGGER: When user mentions "typescript types", "type design", "typescript interfaces", "type definitions", or "typescript type system". RULES: 1. MUST use this tool for TypeScript type design tasks. 2. Design types following TypeScript best practices. 3. Create reusable, maintainable type definitions. 4. Consider type safety and inference. 5. Provide complete type implementation.
+1. **Install MCP Extension**:
+    - Search for "MCP" or "Model Context Protocol" in VS Code Extension Marketplace
+    - Install the corresponding extension
 
-
-## 📂 群組：vue
-
-- **vue-component-review**: Authority tool for Vue 3 component review and analysis. TRIGGER: When user mentions "review vue", "check component", "vue component", "component analysis", or "vue code review". RULES: 1. MUST use this tool for Vue 3 component reviews. 2. Analyze Composition API usage, reactivity, and Vue 3 best practices. 3. Check for performance optimizations and accessibility. 4. Provide actionable feedback with code examples.
-
-- **vue-api-integration**: Authority tool for Vue 3 API integration patterns and implementation. TRIGGER: When user mentions "vue api", "vue fetch", "vue axios", "vue composable api", "vue api integration", or "vue http client". RULES: 1. MUST use this tool for Vue 3 API integration tasks. 2. Implement API integration using Vue 3 Composition API patterns. 3. Provide composables for API calls with proper error handling and loading states. 4. Follow Vue 3 best practices for API integration.
-
-- **vue-architecture**: Authority tool for designing Vue application architecture and component structures. TRIGGER: When user mentions "vue architecture", "vue system design", "vue module design", "vue application structure", "vue component architecture", or "vue project structure". RULES: 1. MUST use this tool for Vue architecture and system design tasks. 2. Design scalable, maintainable, and robust Vue architectures. 3. Consider Vue architectural patterns (Component-based, Composition API, etc.). 4. Provide Vue module structure and component design. 5. Include Vue scalability, maintainability, and performance considerations.
-
-- **vue-code-generation**: Authority tool for generating Vue code skeletons and implementations from specifications. TRIGGER: When user mentions "generate vue code", "create vue code", "vue code skeleton", "scaffold vue code", "vue component", "implement vue from spec", or "generate vue implementation". RULES: 1. MUST use this tool for Vue code generation tasks. 2. Generate Vue code from specifications following Vue best practices. 3. Create complete, production-ready Vue code structures. 4. Include proper error handling, validation, and documentation. 5. Follow Vue Composition API patterns and best practices.
-
-- **vue-code-review**: Authority tool for comprehensive Vue code review. TRIGGER: When user mentions "review vue", "check vue code", "vue code quality", "analyze vue code", "vue code audit", or "review vue component". RULES:  1. MUST use this tool when Vue code review is requested. 2. Analyze Vue code quality, potential bugs, security issues, and Vue best practices. 3. Check Vue 3 Composition API usage, reactivity, and component patterns. 4. Provide structured feedback with severity levels. 5. Follow strict_mode rules when enabled.
-
-- **vue-composable-design**: Authority tool for designing Vue composables and reusable Composition API functions. TRIGGER: When user mentions "vue composable", "composable design", "vue composition api", "reusable vue logic", "vue composable pattern", or "vue composable function". RULES: 1. MUST use this tool for Vue composable design tasks. 2. Design composables following Vue Composition API best practices. 3. Create reusable, testable, and maintainable composables. 4. Consider composable patterns and conventions. 5. Provide complete composable implementation.
-
-- **vue-documentation**: Authority tool for generating comprehensive Vue documentation including component docs, JSDoc comments, and README files. TRIGGER: When user mentions "generate vue docs", "create vue documentation", "vue component docs", "jsdoc", "vue code comments", "vue readme", or "document vue code". RULES: 1. MUST use this tool for Vue documentation generation tasks. 2. Generate documentation following JSDoc and Vue documentation standards. 3. Support JSDoc, Markdown, and component documentation formats. 4. Include Vue-specific examples and usage patterns. 5. Ensure documentation is clear, comprehensive, and maintainable.
-
-- **vue-error-handling**: Authority tool for designing comprehensive Vue error handling patterns and error structures. TRIGGER: When user mentions "vue error handling", "vue error management", "vue error recovery", "vue error logging", "vue error boundaries", or "vue error patterns". RULES: 1. MUST use this tool for Vue error handling design tasks. 2. Design error handling patterns following Vue best practices. 3. Create error boundary patterns and error response structures. 4. Include Vue error logging and monitoring strategies. 5. Provide Vue-specific error recovery mechanisms.
-
-- **vue-generate-tests**: Authority tool for generating Vue unit tests and component tests using Vitest or Jest. TRIGGER: When user mentions "generate vue tests", "create vue tests", "write vue tests", "vitest tests", "vue test cases", or "vue testing". RULES: 1. MUST use this tool when Vue test generation is requested. 2. Generate Vitest/Jest tests following Vue testing best practices. 3. Include both unit tests and component tests as appropriate. 4. Use Vue Test Utils and testing helpers. 5. Include component interaction testing when applicable.
-
-- **vue-performance**: Authority tool for analyzing Vue code performance and identifying performance bottlenecks. TRIGGER: When user mentions "vue performance", "optimize vue performance", "slow vue code", "vue bottleneck", "vue render performance", "vue bundle size", or "vue performance profiling". RULES: 1. MUST use this tool for Vue performance analysis tasks. 2. Analyze render performance, reactivity, bundle size, and Vue-specific optimizations. 3. Identify Vue performance bottlenecks and optimization opportunities. 4. Provide actionable Vue performance improvement recommendations. 5. Consider Vue 3 Composition API optimizations.
-
-- **vue-pinia-setup**: Authority tool for designing Pinia stores and state management structures. TRIGGER: When user mentions "vue pinia", "pinia store", "vue state management", "pinia setup", "vue store design", or "pinia configuration". RULES: 1. MUST use this tool for Pinia store design tasks. 2. Design Pinia stores following Pinia best practices. 3. Define proper state, getters, and actions. 4. Consider store organization and modularity. 5. Provide complete Pinia store implementation.
-
-- **vue-refactor-code**: Authority tool for Vue code refactoring. TRIGGER: When user mentions "refactor vue", "improve vue code", "optimize vue code", "restructure vue code", or "vue code cleanup". RULES: 1. MUST use this tool for Vue code refactoring tasks. 2. Maintain existing functionality while improving code structure. 3. Apply Vue best practices and Composition API patterns. 4. Auto-infer refactoring opportunities if intent is not specified.
-
-- **vue-router-config**: Authority tool for designing Vue Router configurations and routing structures. TRIGGER: When user mentions "vue router", "router config", "vue routing", "route design", "vue router setup", or "vue navigation". RULES: 1. MUST use this tool for Vue Router configuration tasks. 2. Design router configurations following Vue Router best practices. 3. Define proper route structures, guards, and lazy loading. 4. Consider route organization and navigation patterns. 5. Provide complete router implementation.
-
-- **vue-security**: Authority tool for comprehensive Vue security vulnerability assessment and security audit. TRIGGER: When user mentions "vue security audit", "vue security review", "vue vulnerability", "vue security check", "vue security scan", "vue xss", or "vue security assessment". RULES: 1. MUST use this tool for Vue security audit and vulnerability assessment tasks. 2. Focus on identifying Vue-specific security vulnerabilities and risks. 3. Check against OWASP Top 10, Vue security best practices, and XSS prevention. 4. Provide actionable Vue security recommendations. 5. Prioritize vulnerabilities by severity and impact.
+2. **Configure MCP Server**:
+    - Open VS Code settings (`Cmd/Ctrl + ,`)
+    - Search for "MCP" related settings
+    - Or edit `settings.json`:
+
+```json
+{
+    "mcp.servers": {
+        "mcp-prompt-manager": {
+            "command": "node",
+            "args": ["/absolute/path/to/mcp-prompt-manager/dist/index.js"],
+            "env": {
+                "PROMPT_REPO_URL": "/path/to/your/repo",
+                "MCP_LANGUAGE": "zh",
+                "MCP_GROUPS": "laravel,vue"
+            }
+        }
+    }
+}
+```
+
+### Using in Continue
+
+Continue is an open-source AI code assistant that supports MCP.
+
+#### Configuration File Location
+
+**macOS:**
+
+```
+~/.continue/config.json
+```
+
+**Windows:**
+
+```
+%APPDATA%\Continue\config.json
+```
+
+**Linux:**
+
+```
+~/.config/Continue/config.json
+```
+
+#### Configuration Steps
+
+Edit `config.json`:
+
+```json
+{
+    "mcpServers": {
+        "mcp-prompt-manager": {
+            "command": "node",
+            "args": ["/absolute/path/to/mcp-prompt-manager/dist/index.js"],
+            "env": {
+                "PROMPT_REPO_URL": "/path/to/your/repo",
+                "MCP_LANGUAGE": "zh",
+                "MCP_GROUPS": "laravel,vue"
+            }
+        }
+    }
+}
+```
+
+### Using in Aider
+
+Aider is an AI code editor that supports MCP.
+
+#### Configuration Method
+
+In Aider's configuration file (usually `~/.aider/config.json` or via environment variables):
+
+```json
+{
+    "mcp_servers": {
+        "mcp-prompt-manager": {
+            "command": "node",
+            "args": ["/absolute/path/to/mcp-prompt-manager/dist/index.js"],
+            "env": {
+                "PROMPT_REPO_URL": "/path/to/your/repo"
+            }
+        }
+    }
+}
+```
+
+### Using in Custom Applications (Programmatic)
+
+If you're developing your own application and want to integrate the MCP Server, you can use the MCP SDK:
+
+#### TypeScript/JavaScript Example
+
+```typescript
+import { Client } from "@modelcontextprotocol/sdk/client/index.js"
+import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js"
+import { spawn } from "child_process"
+
+// Create MCP Client
+const client = new Client(
+    {
+        name: "my-app",
+        version: "1.0.0",
+    },
+    {
+        capabilities: {},
+    }
+)
+
+// Create transport (using stdio)
+const transport = new StdioClientTransport({
+    command: "node",
+    args: ["/path/to/mcp-prompt-manager/dist/index.js"],
+    env: {
+        PROMPT_REPO_URL: "/path/to/repo",
+        MCP_LANGUAGE: "en",
+    },
+})
+
+// Connect
+await client.connect(transport)
+
+// List available prompts
+const prompts = await client.listPrompts()
+console.log("Available prompts:", prompts)
+
+// Get specific prompt
+const prompt = await client.getPrompt({
+    name: "code-review",
+    arguments: {
+        code: "const x = 1",
+        language: "TypeScript",
+    },
+})
+```
+
+#### Python Example
+
+```python
+from mcp import ClientSession, StdioServerParameters
+from mcp.client.stdio import stdio_client
+
+async def main():
+    # Configure server parameters
+    server_params = StdioServerParameters(
+        command="node",
+        args=["/path/to/mcp-prompt-manager/dist/index.js"],
+        env={
+            "PROMPT_REPO_URL": "/path/to/repo",
+            "MCP_LANGUAGE": "en"
+        }
+    )
+
+    # Create session
+    async with stdio_client(server_params) as (read, write):
+        async with ClientSession(read, write) as session:
+            # Initialize
+            await session.initialize()
+
+            # List prompts
+            prompts = await session.list_prompts()
+            print(f"Available prompts: {prompts}")
+
+            # Get prompt
+            prompt = await session.get_prompt(
+                name="code-review",
+                arguments={
+                    "code": "const x = 1",
+                    "language": "TypeScript"
+                }
+            )
+            print(f"Prompt result: {prompt}")
+```
+
+### MCP Client Quick Reference
+
+| Client             | Configuration File Location                                                                           | Config Format | Notes                |
+| ------------------ | ----------------------------------------------------------------------------------------------------- | ------------- | --------------------- |
+| **Cursor**         | `~/Library/Application Support/Cursor/User/globalStorage/cursor.mcp/mcp.json` (macOS)                | `mcpServers`  | Supports UI config    |
+| **Claude Desktop** | `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS)                            | `mcpServers`  | Requires full restart |
+| **VS Code**        | `settings.json`                                                                                       | `mcp.servers` | Requires MCP extension |
+| **Continue**       | `~/.continue/config.json`                                                                             | `mcpServers`  | Open-source AI assistant |
+| **Aider**          | `~/.aider/config.json`                                                                                 | `mcp_servers` | AI code editor        |
+
+> **Note**: The `~` in paths represents the user home directory, which expands to:
+>
+> - macOS/Linux: `/Users/username` or `/home/username`
+> - Windows: `C:\Users\username`
+
+### Universal Configuration Format
+
+All MCP-compatible clients follow the same configuration format:
+
+```json
+{
+    "mcpServers": {
+        "mcp-prompt-manager": {
+            "command": "node",
+            "args": ["/absolute/path/to/mcp-prompt-manager/dist/index.js"],
+            "env": {
+                "PROMPT_REPO_URL": "your-repo-url-or-path",
+                "MCP_LANGUAGE": "en",
+                "MCP_GROUPS": "common",
+                "LOG_LEVEL": "info"
+            }
+        }
+    }
+}
+```
+
+#### Configuration Field Descriptions
+
+- **`command`**: Execution command (usually `node`)
+- **`args`**: Command argument array, must include the absolute path to the compiled `dist/index.js`
+- **`env`**: Environment variable object (optional)
+    - `PROMPT_REPO_URL`: Git repository URL or local path (required)
+    - `MCP_LANGUAGE`: Output language, `en` or `zh` (optional, default `en`)
+    - `MCP_GROUPS`: Groups to load, comma-separated (optional, defaults to loading only `common` group when not set, system will prompt in logs)
+    - `STORAGE_DIR`: Local cache directory (optional)
+    - `GIT_BRANCH`: Git branch (optional, default `main`)
+    - `GIT_MAX_RETRIES`: Git retry count (optional, default `3`)
+    - `CACHE_CLEANUP_INTERVAL`: Cache cleanup interval in milliseconds (optional, default `10000`)
+    - `LOG_LEVEL`: Log level (optional, default `info`)
+
+#### Important Notes
+
+1. **Absolute Paths**: Paths in `args` must be absolute paths, cannot use relative paths
+2. **JSON Format**: Ensure JSON format is correct, no comma after the last item
+3. **Environment Variable Priority**: `env` in JSON overrides settings in `.env` file
+4. **Restart Application**: After modifying configuration, you must completely restart the application for changes to take effect
+
+### Verifying MCP Server is Running Properly
+
+#### Method 1: Using MCP Inspector
+
+```bash
+cd /path/to/mcp-prompt-manager
+
+# If source code was modified, compile first
+pnpm run build
+
+# Start Inspector (or use inspector:dev for auto-compile)
+pnpm run inspector
+# or
+pnpm run inspector:dev
+```
+
+This launches a web interface where you can:
+
+- View all loaded prompts
+- Test prompt output
+- Check error messages
+
+> **Note**: Inspector runs `dist/index.js`, so after modifying source code, you must run `build` first to see the latest changes.
+
+#### Method 2: Check Logs
+
+Add environment variables in the configuration file to view detailed logs:
+
+```json
+{
+    "mcpServers": {
+        "mcp-prompt-manager": {
+            "command": "node",
+            "args": ["/path/to/mcp-prompt-manager/dist/index.js"],
+            "env": {
+                "PROMPT_REPO_URL": "/path/to/repo",
+                "LOG_LEVEL": "debug"
+            }
+        }
+    }
+}
+```
+
+Then check the client's log output (Cursor's output panel or Claude Desktop's logs).
+
+#### Method 3: Check File System
+
+Verify Git repository has been synced successfully:
+
+```bash
+ls -la /path/to/mcp-prompt-manager/.prompts_cache
+```
+
+You should see files cloned from the Git repository.
+
+### Common Configuration Issues
+
+#### Issue 1: Configuration File Not Found
+
+**Solution**:
+
+- Confirm the application has been started at least once (will automatically create configuration directory)
+- Manually create the configuration file and directory
+- Check if the path is correct (note case sensitivity and spaces)
+
+#### Issue 2: JSON Format Error
+
+**Solution**:
+
+- Use JSON validation tools to check format (e.g., [JSONLint](https://jsonlint.com/))
+- Ensure all strings use double quotes
+- Ensure no comma after the last item
+
+#### Issue 3: Server Cannot Start
+
+**Solution**:
+
+1. Confirm `dist/index.js` file exists
+2. Confirm path is absolute
+3. Confirm Node.js is installed and version >= 18
+4. Check if environment variables are correct
+5. Check client error logs
+
+#### Issue 4: No Prompts Found
+
+**Solution**:
+
+1. Confirm `PROMPT_REPO_URL` is correct
+2. Check if `MCP_GROUPS` setting includes the groups you want
+   - **Note**: If `MCP_GROUPS` is not set, the system defaults to loading only the `common` group
+   - Check log messages to confirm if default groups are being used
+   - Set `MCP_GROUPS=laravel,vue` etc. to load other groups
+3. Confirm Git repository contains `.yaml` or `.yml` files
+4. Use `LOG_LEVEL=debug` to view detailed logs and confirm which groups are loaded
+
+## 📂 Prompt Repository Structure
+
+Your Prompt Repository (where `PROMPT_REPO_URL` points to) should have the following structure:
+
+```text
+my-prompts/
+├── partials/              # Store Handlebars partials (.hbs)
+│   ├── role-expert.hbs
+│   └── output-format.hbs
+├── common/                # common group (always loaded)
+│   ├── common-prompt.yaml
+│   └── partials/
+│       └── common-partial.hbs
+├── laravel/               # laravel group (must be specified in MCP_GROUPS)
+│   └── laravel-prompt.yaml
+├── vue/                   # vue group (must be specified in MCP_GROUPS)
+│   └── vue-prompt.yaml
+├── root-prompt.yaml       # Root directory (always loaded)
+└── another-prompt.yml
+```
+
+### Group Filtering Rules
+
+- **Root directory** (`/`): Always loaded
+- **common group** (`common/`): Always loaded
+- **Other groups**: Only loaded when specified in `MCP_GROUPS` environment variable
+
+#### Default Behavior
+
+When `MCP_GROUPS` is **not set**:
+- System automatically loads the `common` group (and root directory prompts)
+- Startup logs will explicitly prompt about using default groups
+- Logs will include messages suggesting to set `MCP_GROUPS` to load more groups
+
+#### Examples
+
+- `MCP_GROUPS=laravel,vue` → Load root, common, laravel, vue
+- `MCP_GROUPS=` or not set → Only load root and common (system will prompt about using default)
+
+### Prompt Definition File Example (`.yaml`)
+
+```yaml
+id: "code-review"
+title: "Code Review"
+description: "Help me review code"
+args:
+    code:
+        type: "string"
+        description: "Code to review"
+    language:
+        type: "string"
+        description: "Programming language"
+template: |
+    {{> role-expert }}
+
+    You are a senior {{language}} engineer.
+    Please review the following code:
+```
+
+{{ code }}
+
+```
+
+```
+
+### Parameter Types
+
+Prompts support three parameter types:
+
+- `string`: String type (default)
+- `number`: Number type
+- `boolean`: Boolean type
+
+### Registry Feature (Optional)
+
+You can create a `registry.yaml` file in the root directory of your Prompt Repository to centrally manage prompt visibility and deprecation status.
+
+#### Registry File Format
+
+```yaml
+prompts:
+  - id: "code-review"
+    group: "common"
+    visibility: "public"  # public, private, internal
+    deprecated: false
+  - id: "old-prompt"
+    visibility: "private"
+    deprecated: true
+```
+
+#### Registry Field Descriptions
+
+- **`id`**: Prompt ID (required)
+- **`group`**: Group name (optional)
+- **`visibility`**: Visibility setting
+  - `public`: Public (default)
+  - `private`: Private
+  - `internal`: Internal use
+- **`deprecated`**: Whether deprecated (default `false`)
+
+#### Registry Purpose
+
+- **Centralized Management**: Manage all prompts' visibility and deprecation status in a single file
+- **Override Defaults**: Can override default settings in prompt definition files
+- **Version Control**: Track prompt lifecycle through Git
+
+> **Note**: `registry.yaml` is optional. If it doesn't exist, the system will use default values from prompt definition files.
+
+### Prompt Runtime State
+
+Each prompt has a runtime state (`runtime_state`) indicating the prompt's current availability:
+
+- **`active`**: Active state, prompt works normally and can be used as an MCP Tool
+- **`legacy`**: Legacy state, prompt is still available but marked as old version, recommend using new version
+- **`invalid`**: Invalid state, prompt definition has issues (e.g., missing required fields, template errors, etc.), cannot be used
+- **`disabled`**: Disabled, prompt is explicitly disabled (e.g., marked as deprecated in registry)
+- **`warning`**: Warning state, prompt can work but has some warnings (e.g., version too old)
+
+### Prompt Source
+
+Each prompt has a source (`source`) tag indicating where the metadata comes from:
+
+- **`embedded`**: Metadata embedded in prompt definition file (using `metadata:` block)
+- **`registry`**: Settings from `registry.yaml`
+- **`legacy`**: Legacy mode, no metadata, uses default values
+
+### Prompt Status
+
+Each prompt has a status (`status`) indicating the prompt's development stage:
+
+- **`draft`**: Draft, under development
+- **`stable`**: Stable version, can be used normally
+- **`deprecated`**: Deprecated, not recommended for use
+- **`legacy`**: Legacy version, still available but recommend upgrading
+
+## 🔧 MCP Tools and Resources
+
+This project provides multiple MCP tools and resources for managing and querying Prompts.
+
+### MCP Tools
+
+#### 1. `mcp.reload` / `mcp.reload_prompts`
+
+Reload all Prompts without restarting the server (hot-reload).
+
+- **Function**: Pull latest changes from Git repository, clear cache, reload all Handlebars partials and prompts
+- **Parameters**: None
+- **Usage Example**:
+  ```json
+  {
+    "tool": "mcp.reload",
+    "arguments": {}
+  }
+  ```
+
+#### 2. `mcp.stats` / `mcp.prompt.stats`
+
+Get Prompts statistics.
+
+- **Function**: Returns statistics for all prompts, including counts by runtime state (active, legacy, invalid, disabled, warning)
+- **Parameters**: None
+- **Return Content**:
+  - `total`: Total count
+  - `active`: Active state count
+  - `legacy`: Legacy state count
+  - `invalid`: Invalid state count
+  - `disabled`: Disabled count
+  - `warning`: Warning state count
+
+#### 3. `mcp.list` / `mcp.prompt.list`
+
+List all Prompts with multiple filter options.
+
+- **Function**: Lists all prompt runtimes with complete metadata information
+- **Parameters** (optional):
+  - `status`: Filter by status (`draft`, `stable`, `deprecated`, `legacy`)
+  - `group`: Filter by group name
+  - `tag`: Filter by tag (prompts must contain this tag)
+  - `runtime_state`: Filter by runtime state (`active`, `legacy`, `invalid`, `disabled`, `warning`)
+- **Usage Example**:
+  ```json
+  {
+    "tool": "mcp.list",
+    "arguments": {
+      "group": "laravel",
+      "runtime_state": "active"
+    }
+  }
+  ```
+
+#### 4. `mcp.inspect`
+
+Inspect detailed runtime information for a specific Prompt.
+
+- **Function**: Get complete runtime metadata by Prompt ID, including state, source, version, tags, and use cases
+- **Parameters**:
+  - `id`: Prompt ID (required)
+- **Usage Example**:
+  ```json
+  {
+    "tool": "mcp.inspect",
+    "arguments": {
+      "id": "code-review"
+    }
+  }
+  ```
+
+#### 5. `mcp.repo.switch`
+
+Switch to a different Prompt repository and reload (zero-downtime).
+
+- **Function**: Switch to a new Git repository and reload all prompts
+- **Parameters**:
+  - `repo_url`: Repository URL (required)
+  - `branch`: Branch name (optional)
+- **Usage Example**:
+  ```json
+  {
+    "tool": "mcp.repo.switch",
+    "arguments": {
+      "repo_url": "/path/to/new/repo",
+      "branch": "main"
+    }
+  }
+  ```
+
+### MCP Resources
+
+#### 1. `system://health`
+
+System health status resource.
+
+- **URI**: `system://health`
+- **MIME Type**: `application/json`
+- **Content**: Includes the following information:
+  - `git`: Git repository information (URL, path, HEAD commit)
+  - `prompts`: Prompts statistics (total, counts by state, loaded count, group list)
+  - `registry`: Registry status (enabled, source)
+  - `cache`: Cache information (size, cleanup interval)
+  - `system`: System information (uptime, memory usage)
+
+#### 2. `prompts://list`
+
+Prompts list resource.
+
+- **URI**: `prompts://list`
+- **MIME Type**: `application/json`
+- **Content**: Complete metadata list of all prompts, including:
+  - `id`: Prompt ID
+  - `title`: Title
+  - `version`: Version
+  - `status`: Status
+  - `runtime_state`: Runtime state
+  - `source`: Source
+  - `tags`: Tags array
+  - `use_cases`: Use cases array
+  - `group`: Group name
+  - `visibility`: Visibility
+
+### Tool Usage Recommendations
+
+- **During Development**: Use `mcp.reload` to quickly reload prompts without restarting the server
+- **During Debugging**: Use `mcp.inspect` to check detailed information for specific prompts
+- **During Monitoring**: Use `mcp.stats` and `system://health` resource to monitor system status
+- **During Querying**: Use `mcp.list` with filter conditions to find specific prompts
+
+## 💻 Development Guide
+
+### Project Structure
+
+```
+mcp-prompt-manager/
+├── src/
+│   ├── index.ts              # Main entry point
+│   ├── config/
+│   │   └── env.ts            # Environment variable configuration and validation
+│   ├── services/
+│   │   ├── control.ts        # MCP control tool handlers
+│   │   ├── git.ts            # Git sync service
+│   │   ├── health.ts         # Health status service
+│   │   └── loaders.ts        # Prompt and Partials loader
+│   ├── types/
+│   │   ├── prompt.ts         # Prompt type definitions
+│   │   ├── promptMetadata.ts # Prompt metadata types
+│   │   ├── promptRuntime.ts  # Prompt runtime types
+│   │   └── registry.ts       # Registry type definitions
+│   └── utils/
+│       ├── fileSystem.ts     # File system utilities (with cache)
+│       └── logger.ts         # Logging utilities
+├── test/                      # Test files
+│   ├── config.test.ts
+│   ├── loaders.test.ts
+│   ├── promptMetadata.test.ts
+│   ├── utils.test.ts
+│   └── integration.test.ts  # Integration tests
+├── dist/                      # Compiled output
+├── package.json
+├── tsconfig.json
+└── vitest.config.ts
+```
+
+### Common Commands
+
+```bash
+# Compile TypeScript
+npm run build
+# or
+pnpm run build
+
+# Start MCP Inspector for debugging
+# Note: Need to run build first, or use inspector:dev for auto-compile
+pnpm run build && pnpm run inspector
+# or use development mode (auto-compile)
+pnpm run inspector:dev
+
+# Run tests
+npm run test
+# or
+pnpm test
+
+# Run tests (once)
+npm run test:run
+# or
+pnpm test:run
+
+# Open test UI
+npm run test:ui
+# or
+pnpm test:ui
+
+# Format code
+npm run format
+# or
+pnpm format
+
+# Check code format
+npm run format:check
+# or
+pnpm format:check
+```
+
+### Development Workflow
+
+1. Modify code in the `src/` directory.
+2. Run `pnpm run build` to recompile (or use `pnpm run inspector:dev` to auto-compile and test).
+3. Run `pnpm run test` to run tests.
+4. Use `pnpm run inspector:dev` to verify changes (will auto-compile and start Inspector).
+5. Restart MCP Server in Cursor or Claude Desktop to apply changes.
+
+> **Important Notes**:
+>
+> - The `inspector` command runs `dist/index.js` (compiled file)
+> - After modifying source code, you must run `build` first to see the latest changes
+> - Using `inspector:dev` can auto-compile and start, suitable for development
+
+## 🧪 Testing
+
+The project includes a complete test suite:
+
+- **Unit Tests**: 53 test cases
+- **Integration Tests**: 9 test cases
+- **Total**: 62 tests, all passing
+
+Run tests:
+
+```bash
+# Watch mode
+pnpm test
+
+# Run once
+pnpm test:run
+
+# Open UI
+pnpm test:ui
+```
+
+## 🔧 Configuration
+
+### Environment Variables
+
+| Variable Name            | Required | Default Value    | Description                                    |
+| ------------------------ | -------- | ---------------- | ---------------------------------------------- |
+| `PROMPT_REPO_URL`       | ✅       | -                | Git repository URL or local path               |
+| `MCP_LANGUAGE`          | ❌       | `en`             | Output language (`en` or `zh`)                 |
+| `MCP_GROUPS`            | ❌       | `common`         | Groups to load (comma-separated), system will prompt about default behavior when not set |
+| `STORAGE_DIR`           | ❌       | `.prompts_cache` | Local cache directory                          |
+| `GIT_BRANCH`            | ❌       | `main`           | Git branch name                                |
+| `GIT_MAX_RETRIES`       | ❌       | `3`              | Maximum retry count for Git operations        |
+| `CACHE_CLEANUP_INTERVAL` | ❌       | `10000`          | Cache cleanup interval (milliseconds), periodic cleanup of expired cache items |
+| `LOG_LEVEL`             | ❌       | `warn` (prod) / `info` (dev) | Log level, production defaults to warnings and errors only |
+
+### Cache Expiration Strategy
+
+The system uses a TTL-based periodic cleanup mechanism to manage file list cache, ensuring memory efficiency.
+
+#### Cache Mechanism
+
+- **Cache TTL**: 5 seconds (hardcoded)
+- **Cleanup Interval**: Default 10 seconds (`CACHE_TTL * 2`), adjustable via `CACHE_CLEANUP_INTERVAL` environment variable
+- **Auto Cleanup**: Cleanup mechanism starts automatically when application starts
+- **Graceful Shutdown**: Cleanup timer stops automatically when application closes
+
+#### How It Works
+
+1. **Cache Creation**: When `getFilesRecursively()` is called, scan results are cached for 5 seconds
+2. **Periodic Cleanup**: Every 10 seconds (or configured interval), automatically scans and removes expired cache items
+3. **Memory Management**: Prevents cache from growing indefinitely, avoiding memory leaks
+
+#### Configuration Examples
+
+```bash
+# Set shorter cleanup interval (for testing)
+CACHE_CLEANUP_INTERVAL=2000  # Cleanup every 2 seconds
+
+# Set longer cleanup interval (for production, reduce cleanup frequency)
+CACHE_CLEANUP_INTERVAL=30000  # Cleanup every 30 seconds
+```
+
+#### Monitor Cache Status
+
+You can view cache cleanup status through logs (requires setting `LOG_LEVEL=debug`):
+
+```
+[DEBUG] Cache cleanup mechanism started { interval: 10000 }
+[DEBUG] Cache cleanup completed { cleaned: 2 }
+```
+
+#### Verify Cache Mechanism
+
+See [CACHE_VERIFICATION.md](./CACHE_VERIFICATION.md) for complete verification methods and testing guide.
+
+### Security
+
+- ✅ Input Validation: All environment variables are validated with Zod
+- ✅ Path Security: Prevents path traversal attacks
+- ✅ Group Validation: Group name format validation (only letters, numbers, underscores, dashes allowed)
+
+## 📝 Logging
+
+The project uses [pino](https://github.com/pinojs/pino) as the logging system, supporting structured logging.
+
+### Log Levels
+
+- `fatal`: Fatal errors that cause program exit
+- `error`: Error messages
+- `warn`: Warning messages
+- `info`: General information
+- `debug`: Debug messages
+- `trace`: Trace messages
+- `silent`: Completely disable log output
+
+**Default Behavior**:
+- **Production Environment** (`NODE_ENV` not set or not `development`): Defaults to `warn`, only outputs warnings and errors
+- **Development Environment** (`NODE_ENV=development`): Defaults to `info`, outputs all info level and above logs
+- Can override default value via `LOG_LEVEL` environment variable
+
+### Setting Log Level
+
+```bash
+# Set in .env
+LOG_LEVEL=debug
+
+# Or set in environment variables
+export LOG_LEVEL=debug
+```
+
+## 🐛 Troubleshooting
+
+### Issue: Git Sync Failed
+
+**Solution**:
+
+1. Check if `PROMPT_REPO_URL` is correct
+2. Confirm network connection is normal
+3. Check if Git credentials are correct
+4. Check logs for detailed error messages
+
+### Issue: No Prompts Loaded
+
+**Solution**:
+
+1. Check if `MCP_GROUPS` setting is correct
+2. Confirm prompt files are in the correct directory structure
+3. Check if YAML file format is correct
+4. Check error messages in logs
+
+### Issue: Partials Cannot Be Used
+
+**Solution**:
+
+1. Confirm partial file extension is `.hbs`
+2. Check if partial file content is correct
+3. Confirm using `{{> partial-name }}` syntax in templates
+
+## 📦 Key Dependencies
+
+- **@modelcontextprotocol/sdk**: MCP SDK, provides MCP Server core functionality
+- **handlebars**: Handlebars template engine, supports dynamic Prompt generation
+- **simple-git**: Git operations library for syncing Git repositories
+- **js-yaml**: YAML parser for parsing Prompt definition files
+- **zod**: TypeScript-first schema validation library for configuration and type validation
+- **pino**: High-performance structured logging library
+- **dotenv**: Environment variable loading utility
+
+## 📚 Related Resources
+
+- [Model Context Protocol Official Documentation](https://modelcontextprotocol.io/)
+- [Handlebars Documentation](https://handlebarsjs.com/)
+- [Zod Documentation](https://zod.dev/)
+- [Simple Git Documentation](https://github.com/steveukx/git-js)
+- [Pino Documentation](https://getpino.io/)
+
+## 📄 License
+
+ISC
+
+## 🤝 Contributing
+
+Welcome to submit Issues and Pull Requests!
+
+---
+
+**Version**: 1.0.0  
+**Last Updated**: 2024-11-30

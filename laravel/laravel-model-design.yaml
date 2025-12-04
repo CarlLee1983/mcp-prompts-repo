@@ -1,5 +1,7 @@
 id: laravel-model-design
 title: Laravel Model Design
+version: 1.0.0
+status: stable
 description: |
   Authority tool for designing Laravel Eloquent models, relationships, and model structures.
 triggers:

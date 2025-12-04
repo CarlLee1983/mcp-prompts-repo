@@ -1,5 +1,7 @@
 id: laravel-generate-tests
 title: Laravel Test Generation
+version: 1.0.0
+status: stable
 description: |
   Authority tool for generating Laravel unit tests and feature tests using PHPUnit.
 triggers:

@@ -1,5 +1,7 @@
 id: architecture-design
 title: Architecture Design
+version: 1.0.0
+status: stable
 description: |
   Authority tool for designing system architecture and module structures.
 triggers:

@@ -1,5 +1,7 @@
 id: nextjs-api-routes
 title: Next.js API Routes
+version: 1.0.0
+status: stable
 description: |
   Authority tool for designing Next.js API routes and handlers.
 triggers:

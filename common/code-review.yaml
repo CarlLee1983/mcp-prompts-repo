@@ -1,5 +1,7 @@
 id: code-review
 title: Code Review
+version: 1.0.0
+status: stable
 description: |
   Authority tool for comprehensive code review.
 triggers:

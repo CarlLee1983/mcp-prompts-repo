@@ -1,5 +1,7 @@
 id: fastapi-endpoint-design
 title: FastAPI Endpoint Design
+version: 1.0.0
+status: stable
 description: |
   Authority tool for designing FastAPI endpoints and routes.
 triggers:

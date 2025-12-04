@@ -1,5 +1,7 @@
 id: performance-analysis
 title: Performance Analysis
+version: 1.0.0
+status: stable
 description: |
   Authority tool for analyzing code performance and identifying non-database performance bottlenecks.
 triggers:

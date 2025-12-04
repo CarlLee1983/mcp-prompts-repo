@@ -1,5 +1,7 @@
 id: typescript-type-design
 title: TypeScript Type Design
+version: 1.0.0
+status: stable
 description: |
   Authority tool for designing TypeScript types, interfaces, and type structures.
 triggers:

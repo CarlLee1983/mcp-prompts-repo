@@ -1,5 +1,7 @@
 id: spring-controller-design
 title: Spring Boot Controller Design
+version: 1.0.0
+status: stable
 description: |
   Authority tool for designing Spring Boot REST controllers and endpoints.
 triggers:

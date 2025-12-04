@@ -1,5 +1,7 @@
 id: code-generation
 title: Code Generation
+version: 1.0.0
+status: stable
 description: |
   Authority tool for generating code skeletons and implementations from specifications.
 triggers:

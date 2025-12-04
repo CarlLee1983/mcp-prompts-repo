@@ -1,5 +1,7 @@
 id: vue-performance
 title: Vue Performance Analysis
+version: 1.0.0
+status: stable
 description: |
   Authority tool for analyzing Vue code performance and identifying performance bottlenecks.
 triggers:

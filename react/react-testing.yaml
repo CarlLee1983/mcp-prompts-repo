@@ -1,5 +1,7 @@
 id: react-testing
 title: React Test Generation
+version: 1.0.0
+status: stable
 description: |
   Authority tool for generating React tests using React Testing Library or Jest.
 triggers:

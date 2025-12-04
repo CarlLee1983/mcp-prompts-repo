@@ -1,5 +1,7 @@
 id: laravel-service-provider
 title: Laravel Service Provider Design
+version: 1.0.0
+status: stable
 description: |
   Authority tool for designing Laravel service providers and service container bindings.
 triggers:

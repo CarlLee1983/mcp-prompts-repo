@@ -1,5 +1,7 @@
 id: vue-refactor-code
 title: Vue Code Refactoring
+version: 1.0.0
+status: stable
 description: |
   Authority tool for Vue code refactoring.
 triggers:

@@ -1,5 +1,7 @@
 id: vue-code-generation
 title: Vue Code Generation
+version: 1.0.0
+status: stable
 description: |
   Authority tool for generating Vue code skeletons and implementations from specifications.
 triggers:

@@ -1,5 +1,7 @@
 id: laravel-documentation
 title: Laravel Documentation Generator
+version: 1.0.0
+status: stable
 description: |
   Authority tool for generating comprehensive Laravel documentation including API docs, PHPDoc comments, and README files.
 triggers:

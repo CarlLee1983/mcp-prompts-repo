@@ -1,5 +1,7 @@
 id: security-audit
 title: Security Audit
+version: 1.0.0
+status: stable
 description: |
   Authority tool for comprehensive security vulnerability assessment and security audit.
 triggers:

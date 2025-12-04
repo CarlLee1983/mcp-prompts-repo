@@ -1,5 +1,7 @@
 id: vue-api-integration
 title: Vue API Integration
+version: 1.0.0
+status: stable
 description: |
   Authority tool for Vue 3 API integration patterns and implementation.
 triggers:

@@ -1,5 +1,7 @@
 id: react-component-review
 title: React Component Review
+version: 1.0.0
+status: stable
 description: |
   Authority tool for React component review and analysis.
 triggers:

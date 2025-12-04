@@ -1,5 +1,7 @@
 id: vue-code-review
 title: Vue Code Review
+version: 1.0.0
+status: stable
 description: |
   Authority tool for comprehensive Vue code review.
 triggers:

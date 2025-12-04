@@ -1,5 +1,7 @@
 id: react-hooks-design
 title: React Hooks Design
+version: 1.0.0
+status: stable
 description: |
   Authority tool for designing React custom hooks and hooks patterns.
 triggers:
