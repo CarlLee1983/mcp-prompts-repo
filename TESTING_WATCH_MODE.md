@@ -50,6 +50,21 @@ pnpm run inspector:dev
 或直接執行（請替換為您的實際路徑）：
 
 ```bash
+# 方案 1: 將日誌輸出到檔案（推薦，可以看到所有日誌）
+WATCH_MODE=true \
+PROMPT_REPO_URL=/path/to/your/prompts-repo \
+STORAGE_DIR=/path/to/your/prompts-repo \
+LOG_LEVEL=debug \
+LOG_FILE=./watch-mode.log \
+node dist/index.js
+
+# 在另一個終端機監控日誌
+tail -f ./watch-mode.log
+```
+
+```bash
+# 方案 2: 使用 development 模式（會使用 pino-pretty 格式化輸出）
+NODE_ENV=development \
 WATCH_MODE=true \
 PROMPT_REPO_URL=/path/to/your/prompts-repo \
 STORAGE_DIR=/path/to/your/prompts-repo \
@@ -57,16 +72,44 @@ LOG_LEVEL=debug \
 node dist/index.js
 ```
 
+> **注意**: MCP Server 使用 stdio transport，stdout 用於協議通訊，所以日誌只輸出到 stderr。如果沒有設定 `LOG_FILE` 或 `NODE_ENV=development`，只有 `warn`/`error`/`fatal` 級別的日誌會顯示，`info`/`debug` 級別的日誌不會顯示。
+
 #### 步驟 3: 驗證監聽已啟動
 
-在日誌中應該看到：
+**重要**: 如果使用 `LOG_FILE`，請在另一個終端機執行 `tail -f ./watch-mode.log` 來查看日誌。
 
+在日誌中應該看到以下關鍵訊息（按順序）：
+
+1. **Watch mode 啟動訊息**：
+```
+{"level":30,"time":...,"msg":"Watch mode enabled, starting file watchers and Git polling"}
+{"level":30,"time":...,"msg":"Starting watch mode for repositories"}
+```
+
+2. **檔案監聽器啟動訊息**（LocalSource）：
 ```
 {"level":30,"time":...,"msg":"Starting file watcher for local repository","repoPath":"...","storageDir":"...","watchPath":"..."}
 {"level":30,"time":...,"msg":"File watcher ready","path":"..."}
 {"level":30,"time":...,"msg":"File watcher started successfully","path":"..."}
-{"level":30,"time":...,"msg":"Watch mode started for all repositories"}
 ```
+
+3. **Git Polling 啟動訊息**（GitSource）：
+```
+{"level":30,"time":...,"msg":"Starting Git polling","repoUrl":"...","branch":"main","interval":300000}
+{"level":30,"time":...,"msg":"Initial commit hash recorded","commitHash":"..."}
+{"level":30,"time":...,"msg":"Git polling started successfully","interval":300000}
+```
+
+4. **完成訊息**：
+```
+{"level":30,"time":...,"msg":"Watch mode started for all repositories"}
+{"level":30,"time":...,"msg":"Watch mode started successfully"}
+```
+
+> **驗證要點**：
+> - 如果看到 "Watch mode started successfully"，表示 watch mode 已啟動
+> - 如果看到 "File watcher started successfully" 或 "Git polling started successfully"，表示對應的監聽機制已啟動
+> - 如果**沒有看到這些訊息**，即使沒有錯誤，watch mode 也可能沒有正常啟動
 
 #### 步驟 4: 測試檔案變更
 
@@ -138,11 +181,16 @@ LOG_LEVEL=debug
 #### 步驟 2: 啟動 MCP Server
 
 ```bash
+# 使用 LOG_FILE 來查看所有日誌
 WATCH_MODE=true \
 GIT_POLLING_INTERVAL=60000 \
 PROMPT_REPO_URL=https://github.com/your-username/prompts-repo.git \
 LOG_LEVEL=debug \
+LOG_FILE=./watch-mode.log \
 node dist/index.js
+
+# 在另一個終端機監控日誌
+tail -f ./watch-mode.log
 ```
 
 #### 步驟 3: 驗證 Polling 已啟動
@@ -203,13 +251,21 @@ node dist/index.js
 
 ## 🔍 驗證檢查清單
 
+### 啟動驗證（必須檢查）
+
+- [ ] 看到 "Watch mode enabled, starting file watchers and Git polling" 訊息
+- [ ] 看到 "Watch mode started successfully" 訊息
+- [ ] LocalSource: 看到 "File watcher started successfully" 訊息
+- [ ] GitSource: 看到 "Git polling started successfully" 訊息
+- [ ] **如果沒有看到上述訊息，即使沒有錯誤，watch mode 也可能沒有啟動**
+
 ### LocalSource 檔案監聽
 
 - [ ] 監聽成功啟動（日誌中有 "File watcher started successfully"）
-- [ ] 修改檔案時觸發 reload（日誌中有 "File changed, triggering reload"）
+- [ ] 修改檔案時觸發 reload（日誌中有 "File change detected" 或 "Single prompt reloaded successfully"）
 - [ ] 新增檔案時觸發 reload（日誌中有 "File added, triggering reload"）
 - [ ] 刪除檔案時移除 prompt（日誌中有 "File deleted, triggering reload"）
-- [ ] Prompt 變更立即生效（無需重啟 Server）
+- [ ] Prompt 變更立即生效（無需重啟 Server，可在 MCP Inspector 中驗證）
 - [ ] 錯誤處理正常（失敗時 fallback 到全部 reload）
 
 ### GitSource Polling
@@ -219,6 +275,7 @@ node dist/index.js
 - [ ] 遠端更新被偵測到（日誌中有 "Git repository update detected"）
 - [ ] 自動觸發全部 reload（日誌中有 "Git update detected, reloading all prompts"）
 - [ ] Prompts 成功重新載入（日誌中有 "Prompts reload completed"）
+- [ ] **定期檢查日誌，確認 polling 正在執行（每 GIT_POLLING_INTERVAL 時間會檢查一次）**
 
 ### 通用功能
 
@@ -226,7 +283,55 @@ node dist/index.js
 - [ ] 錯誤不會導致 Server 崩潰
 - [ ] 日誌記錄完整且清晰
 
+### 功能驗證（實際測試）
+
+- [ ] **修改 prompt 檔案後，在 MCP Inspector 或 Cursor 中檢查 tool 是否更新**
+- [ ] **確認變更立即生效，無需重啟 Server**
+- [ ] **如果 tool 沒有更新，即使沒有錯誤，watch mode 也可能沒有正常運作**
+
 ## 🐛 疑難排解
+
+### 問題 0: 看不到任何日誌輸出
+
+**可能原因**：
+- MCP Server 使用 stdio transport，stdout 用於協議通訊
+- 如果沒有設定 `LOG_FILE` 或 `NODE_ENV=development`，只有 `warn`/`error`/`fatal` 級別的日誌會顯示
+- `info`/`debug` 級別的日誌不會輸出到 stderr（避免被誤認為錯誤）
+
+**解決方法**：
+- **方案 1（推薦）**：設定 `LOG_FILE` 環境變數，將日誌輸出到檔案
+  ```bash
+  LOG_FILE=./watch-mode.log node dist/index.js
+  # 在另一個終端機監控
+  tail -f ./watch-mode.log
+  ```
+- **方案 2**：設定 `NODE_ENV=development` 啟用 pino-pretty 格式化輸出
+  ```bash
+  NODE_ENV=development LOG_LEVEL=debug node dist/index.js
+  ```
+
+### 問題 0.5: 如何確認 Watch Mode 真的在運作？
+
+**沒有異常 log 不代表一切正常！** 請確認以下幾點：
+
+1. **檢查啟動日誌**：
+   - 必須看到 "Watch mode started successfully"
+   - LocalSource 必須看到 "File watcher started successfully"
+   - GitSource 必須看到 "Git polling started successfully"
+
+2. **實際測試檔案變更**：
+   - 修改一個 prompt 檔案
+   - 應該在日誌中看到 "File change detected" 或 "Single prompt reloaded successfully"
+   - 如果沒有看到這些訊息，watch mode 可能沒有正常運作
+
+3. **檢查日誌級別**：
+   - 確保使用 `LOG_LEVEL=debug` 或 `LOG_FILE` 來查看所有日誌
+   - 某些關鍵訊息可能是 `info` 或 `debug` 級別
+
+4. **使用 MCP Inspector 驗證**：
+   - 啟動後，修改 prompt 檔案
+   - 在 Inspector 中檢查 tool 列表，確認變更已生效
+   - 如果 tool 沒有更新，watch mode 可能沒有正常運作
 
 ### 問題 1: 檔案監聽沒有啟動
 
